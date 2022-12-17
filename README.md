@@ -1,2 +1,3 @@
-# refds-design-system
-Design system library in SwiftUI
+# RefdsUI
+
+A description of this package.
