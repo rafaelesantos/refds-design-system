@@ -5,6 +5,12 @@ import PackageDescription
 
 let package = Package(
     name: "RefdsUI",
+    platforms: [
+        .iOS(.v13),
+        .macOS(.v12),
+        .macCatalyst(.v15),
+        .tvOS(.v13)
+    ],
     products: [
         .library(
             name: "RefdsUI",
