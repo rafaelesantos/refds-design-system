@@ -10,13 +10,13 @@ import SwiftUI
 public struct RefdsText: View {
     @Environment(\.sizeCategory) var sizeCategory
     
-    let content: String
-    let size: Size
-    let color: Color
-    let weight: Font.Weight
-    let family: RefdsFontFamily
-    let alignment: TextAlignment
-    let lineLimit: Int?
+    private let content: String
+    private let size: Size
+    private let color: Color
+    private let weight: Font.Weight
+    private let family: RefdsFontFamily
+    private let alignment: TextAlignment
+    private let lineLimit: Int?
     
     public var body: some View {
         Text(content)
@@ -35,7 +35,7 @@ public struct RefdsText: View {
 extension RefdsText {
     public init (
         _ content: String,
-        size: Size = .extraLarge,
+        size: Size = .normal,
         color: Color = .primary,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .moderat,
@@ -73,7 +73,15 @@ extension Text {
 
 struct RefdsText_Previews: PreviewProvider {
     static var previews: some View {
-        RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, weight: .bold, family: .moderatMono, alignment: .trailing, lineLimit: 2)
+        Group {
+            GroupBox {
+                RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, weight: .bold, family: .moderatMono, alignment: .trailing, lineLimit: 2)
+            }
             .padding()
+            GroupBox {
+                RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, color: .orange, weight: .bold, family: .moderat, alignment: .center)
+            }
+            .padding()
+        }
     }
 }
