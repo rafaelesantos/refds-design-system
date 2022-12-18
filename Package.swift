@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "RefdsUI",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v14),
         .macOS(.v12),
         .macCatalyst(.v15),
         .tvOS(.v13)
@@ -21,6 +21,19 @@ let package = Package(
     targets: [
         .target(
             name: "RefdsUI",
-            dependencies: []),
+            resources: [
+                .copy("Resource/Fonts/Moderat-Thin.ttf"),
+                .copy("Resource/Fonts/Moderat-Light.ttf"),
+                .copy("Resource/Fonts/Moderat-Regular.ttf"),
+                .copy("Resource/Fonts/Moderat-Medium.ttf"),
+                .copy("Resource/Fonts/Moderat-Bold.ttf"),
+                .copy("Resource/Fonts/Moderat-Black.ttf"),
+                .copy("Resource/Fonts/Moderat-Mono-Thin.ttf"),
+                .copy("Resource/Fonts/Moderat-Mono-Light.ttf"),
+                .copy("Resource/Fonts/Moderat-Mono-Regular.ttf"),
+                .copy("Resource/Fonts/Moderat-Mono-Medium.ttf"),
+                .copy("Resource/Fonts/Moderat-Mono-Bold.ttf"),
+                .copy("Resource/Fonts/Moderat-Mono-Black.ttf")
+            ]),
     ]
 )
