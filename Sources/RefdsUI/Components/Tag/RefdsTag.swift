@@ -34,7 +34,7 @@ extension RefdsTag {
         _ content: String,
         size: RefdsText.Size = .extraSmall,
         color: Color,
-        family: RefdsFontFamily = .moderat,
+        family: RefdsFontFamily = RefdsUI.shared.defaultFontFamily,
         lineLimit: Int? = nil
     ) {
         self.content = content
