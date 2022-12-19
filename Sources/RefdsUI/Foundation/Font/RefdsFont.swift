@@ -43,7 +43,6 @@ public final class RefdsFont {
             }
             self.fontNames[family] = fontNames
         }
-        //UINavigationBar.appearance().largeTitleTextAttributes = [.font: Font.custom(self.fontNames[.moderat]?[.bold] ?? "", size: 30, relativeTo: .largeTitle)]
     }
     
     private func registerFont(at url: URL) -> CGFont? {
@@ -66,7 +65,7 @@ extension Font {
     public static func refds(
         size: CGFloat,
         scaledSize: CGFloat,
-        family: RefdsFontFamily = .moderat,
+        family: RefdsFontFamily = RefdsUI.shared.defaultFontFamily,
         weight: Font.Weight = .regular,
         style: Font.TextStyle = .body
     ) -> Font {
