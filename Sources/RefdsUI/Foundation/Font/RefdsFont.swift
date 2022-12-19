@@ -17,21 +17,21 @@ public final class RefdsFont {
         if fontNames.isEmpty {
             return nonScalingSystemFont(size: scaledSize, weight: weight)
         }
-
+        
         guard let fontName = fontNames[family]?[weight] else {
             assertionFailure("Unsupported font weight")
             return nonScalingSystemFont(size: scaledSize, weight: weight)
         }
-
+        
         return customFont(fontName, size: size, style: style)
     }
     
     private func nonScalingSystemFont(size: CGFloat, weight: Font.Weight) -> Font {
         Font.system(size: size, weight: weight)
     }
-
+    
     private func customFont(_ name: String, size: CGFloat, style: Font.TextStyle = .body) -> Font {
-        Font.custom(name, size: size, relativeTo: style) 
+        Font.custom(name, size: size, relativeTo: style)
     }
     
     private func registerRefdsFont() {
@@ -57,7 +57,7 @@ public final class RefdsFont {
         if CTFontManagerRegisterGraphicsFont(font, &error) == false {
             print("Custom font registration error: \(String(describing: error))")
         }
-
+        
         return font
     }
 }
@@ -96,6 +96,80 @@ public extension ContentSizeCategory {
         case .accessibilityExtraExtraLarge: return 2.75
         case .accessibilityExtraExtraExtraLarge: return 3.1
         @unknown default: return 1
+        }
+    }
+}
+
+extension Font.Weight {
+    public var uiKit: UIFont.Weight {
+        switch self {
+        case .regular: return .regular
+        case .bold: return .bold
+        case .medium: return .medium
+        case .black: return .black
+        default: return .regular
+        }
+    }
+}
+
+extension UIFont {
+    public enum Size: Int, Comparable {
+        /// Size 10.
+        case smaller = 10
+        /// Size 12. Equals to `Title 5`.
+        case small = 12
+        /// Size 14. Equals to `Title 4`.
+        case normal = 14
+        /// Size 16. Equals to `Title 3`.
+        case large = 16
+        /// Size 18. Non-RefdsUI. Will be removed.
+        case xLarge = 18
+        /// Size 22. Equals to `Display Subtitle`.
+        case title2 = 22
+        /// Size 28.
+        case title1 = 28
+        /// Size 40.
+        case displayTitle = 40
+        /// Size 11.
+        case tabBar = 11
+        /// Size 17.
+        case navigationBar = 17
+
+        public static func < (lhs: Size, rhs: Size) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
+
+        public var cgFloat: CGFloat {
+            CGFloat(self.rawValue)
+        }
+    }
+    
+    static func refds(size: UIFont.Size = .normal, weight: Weight = .regular, family: RefdsFontFamily = .moderat) -> UIFont {
+        if RefdsFont.shared.fontNames.isEmpty {
+            return .systemFont(ofSize: size.cgFloat, weight: weight)
+        }
+
+        guard let fontName = RefdsFont.shared.fontNames[family]?[weight.swiftUI], let font = UIFont(name: fontName, size: size.cgFloat) else {
+            assertionFailure("Unsupported font weight")
+            return .systemFont(ofSize: size.cgFloat, weight: weight)
+        }
+
+        return font
+    }
+
+    static var refds: UIFont {
+        refds(size: .normal, weight: .regular, family: .moderat)
+    }
+}
+
+private extension UIFont.Weight {
+    var swiftUI: Font.Weight {
+        switch self {
+        case .regular: return .regular
+        case .bold: return .bold
+        case .medium: return .medium
+        case .black: return .black
+        default: return .regular
         }
     }
 }
