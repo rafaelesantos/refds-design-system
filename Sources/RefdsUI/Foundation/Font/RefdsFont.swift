@@ -100,6 +100,7 @@ public extension ContentSizeCategory {
 }
 
 extension Font.Weight {
+    #if os(iOS)
     public var uiKit: UIFont.Weight {
         switch self {
         case .regular: return .regular
@@ -109,8 +110,10 @@ extension Font.Weight {
         default: return .regular
         }
     }
+    #endif
 }
 
+#if os(iOS)
 public extension UIFont {
     enum Size: Int, Comparable {
         /// Size 10.
@@ -172,3 +175,4 @@ private extension UIFont.Weight {
         }
     }
 }
+#endif
