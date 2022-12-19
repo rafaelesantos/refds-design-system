@@ -73,15 +73,18 @@ extension Text {
 
 struct RefdsText_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            GroupBox {
-                RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, weight: .bold, family: .moderatMono, alignment: .trailing, lineLimit: 2)
-            }
-            .padding()
-            GroupBox {
-                RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, color: .orange, weight: .bold, family: .moderat, alignment: .center)
-            }
-            .padding()
+        GroupBox {
+            RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, weight: .bold, family: .moderatMono, alignment: .trailing, lineLimit: 2)
         }
+        .padding()
+        .previewDisplayName("Defaul")
+        .previewLayout(.sizeThatFits)
+        
+        GroupBox {
+            RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, color: .orange, weight: .bold, family: .moderat, alignment: .center)
+        }
+        .padding()
+        .previewDisplayName("Customization")
+        .previewLayout(.sizeThatFits)
     }
 }
