@@ -112,8 +112,8 @@ extension Font.Weight {
     }
 }
 
-extension UIFont {
-    public enum Size: Int, Comparable {
+public extension UIFont {
+    enum Size: Int, Comparable {
         /// Size 10.
         case smaller = 10
         /// Size 12. Equals to `Title 5`.
@@ -144,7 +144,7 @@ extension UIFont {
         }
     }
     
-    public static func refds(size: UIFont.Size = .normal, weight: Weight = .regular, family: RefdsFontFamily = .moderat) -> UIFont {
+    static func refds(size: UIFont.Size = .normal, weight: Weight = .regular, family: RefdsFontFamily = .moderat) -> UIFont {
         if RefdsFont.shared.fontNames.isEmpty {
             return .systemFont(ofSize: size.cgFloat, weight: weight)
         }
@@ -157,7 +157,7 @@ extension UIFont {
         return font
     }
 
-    public static var refds: UIFont {
+    static var refds: UIFont {
         refds(size: .normal, weight: .regular, family: .moderat)
     }
 }
