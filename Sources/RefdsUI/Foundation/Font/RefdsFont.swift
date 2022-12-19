@@ -3,7 +3,7 @@ import SwiftUI
 public final class RefdsFont {
     public static var shared = RefdsFont()
     
-    var fontNames: [RefdsFontFamily: [Font.Weight: String]] = [:]
+    public private(set) var fontNames: [RefdsFontFamily: [Font.Weight: String]] = [:]
     
     private init() { registerRefdsFont() }
     
@@ -43,6 +43,7 @@ public final class RefdsFont {
             }
             self.fontNames[family] = fontNames
         }
+        //UINavigationBar.appearance().largeTitleTextAttributes = [.font: Font.custom(self.fontNames[.moderat]?[.bold] ?? "", size: 30, relativeTo: .largeTitle)]
     }
     
     private func registerFont(at url: URL) -> CGFont? {
