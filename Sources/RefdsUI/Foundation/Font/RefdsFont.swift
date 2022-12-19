@@ -3,14 +3,14 @@ import SwiftUI
 public final class RefdsFont {
     public static var shared = RefdsFont()
     
-    public private(set) var fontNames: [RefdsFontFamily: [Font.Weight: String]] = [:]
+    public private(set) var fontNames: [FontFamily: [Font.Weight: String]] = [:]
     
     private init() { registerRefdsFont() }
     
     public func refds(
         size: CGFloat,
         scaledSize: CGFloat,
-        family: RefdsFontFamily = .moderat,
+        family: RefdsFontFamily = .defaultConfiguration,
         weight: Font.Weight = .regular,
         style: Font.TextStyle = .body
     ) -> Font {
@@ -18,7 +18,7 @@ public final class RefdsFont {
             return nonScalingSystemFont(size: scaledSize, weight: weight)
         }
         
-        guard let fontName = fontNames[family]?[weight] else {
+        guard let fontName = fontNames[family.font]?[weight] else {
             assertionFailure("Unsupported font weight")
             return nonScalingSystemFont(size: scaledSize, weight: weight)
         }
@@ -35,7 +35,7 @@ public final class RefdsFont {
     }
     
     private func registerRefdsFont() {
-        for family in RefdsFontFamily.allCases {
+        for family in FontFamily.allCases {
             var fontNames: [Font.Weight: String] = [:]
             for case let (weight, url?) in family.fonts {
                 guard let font = registerFont(at: url) else { continue }
@@ -65,7 +65,7 @@ extension Font {
     public static func refds(
         size: CGFloat,
         scaledSize: CGFloat,
-        family: RefdsFontFamily = RefdsUI.shared.defaultFontFamily,
+        family: RefdsFontFamily = .defaultConfiguration,
         weight: Font.Weight = .regular,
         style: Font.TextStyle = .body
     ) -> Font {
@@ -151,7 +151,7 @@ public extension UIFont {
             return .systemFont(ofSize: size.cgFloat, weight: weight)
         }
 
-        guard let fontName = RefdsFont.shared.fontNames[family]?[weight.swiftUI], let font = UIFont(name: fontName, size: size.cgFloat) else {
+        guard let fontName = RefdsFont.shared.fontNames[family.font]?[weight.swiftUI], let font = UIFont(name: fontName, size: size.cgFloat) else {
             assertionFailure("Unsupported font weight")
             return .systemFont(ofSize: size.cgFloat, weight: weight)
         }
