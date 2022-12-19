@@ -144,7 +144,7 @@ extension UIFont {
         }
     }
     
-    static func refds(size: UIFont.Size = .normal, weight: Weight = .regular, family: RefdsFontFamily = .moderat) -> UIFont {
+    public static func refds(size: UIFont.Size = .normal, weight: Weight = .regular, family: RefdsFontFamily = .moderat) -> UIFont {
         if RefdsFont.shared.fontNames.isEmpty {
             return .systemFont(ofSize: size.cgFloat, weight: weight)
         }
@@ -157,7 +157,7 @@ extension UIFont {
         return font
     }
 
-    static var refds: UIFont {
+    public static var refds: UIFont {
         refds(size: .normal, weight: .regular, family: .moderat)
     }
 }
