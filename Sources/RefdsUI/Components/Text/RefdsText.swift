@@ -23,7 +23,7 @@ public struct RefdsText: View {
             .refdsFont(
                 size: size,
                 weight: weight,
-                family: family,
+                family: Double(content) == nil ? family : .moderatMono,
                 sizeCategory: sizeCategory
             )
             .lineLimit(lineLimit)
@@ -74,10 +74,10 @@ extension Text {
 struct RefdsText_Previews: PreviewProvider {
     static var previews: some View {
         GroupBox {
-            RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, weight: .bold, family: .moderatMono, alignment: .trailing, lineLimit: 2)
+            RefdsText("0.5 amvdocd", size: .normal, weight: .bold, family: .moderat, alignment: .trailing, lineLimit: 2)
         }
         .padding()
-        .previewDisplayName("Defaul")
+        .previewDisplayName("Default")
         .previewLayout(.sizeThatFits)
         
         GroupBox {
