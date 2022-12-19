@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct RefdsUI {
+public class RefdsUI {
     public static let shared = RefdsUI()
     
     public var defaultFontFamily: FontFamily = .moderat
