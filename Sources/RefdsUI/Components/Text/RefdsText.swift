@@ -38,7 +38,7 @@ extension RefdsText {
         size: Size = .normal,
         color: Color = .primary,
         weight: Font.Weight = .regular,
-        family: RefdsFontFamily = RefdsUI.shared.defaultFontFamily,
+        family: RefdsFontFamily = .defaultConfiguration,
         alignment: TextAlignment = .leading,
         lineLimit: Int? = nil
     ) {
@@ -56,7 +56,7 @@ extension Text {
     public func refdsFont(
         size: RefdsText.Size = .normal,
         weight: Font.Weight = .regular,
-        family: RefdsFontFamily = RefdsUI.shared.defaultFontFamily,
+        family: RefdsFontFamily = .defaultConfiguration,
         sizeCategory: ContentSizeCategory
     ) -> Self {
         return self.font(

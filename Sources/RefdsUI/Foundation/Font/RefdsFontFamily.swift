@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-public enum RefdsFontFamily: CaseIterable {
+public enum FontFamily: CaseIterable {
     case moderat
     case moderatMono
     
@@ -15,5 +15,19 @@ public enum RefdsFontFamily: CaseIterable {
             .bold: Bundle.current.url(forResource: "Moderat-\(family)Bold.ttf", withExtension: nil),
             .black: Bundle.current.url(forResource: "Moderat-\(family)Black.ttf", withExtension: nil)
         ]
+    }
+}
+
+public enum RefdsFontFamily {
+    case moderat
+    case moderatMono
+    case defaultConfiguration
+    
+    var font: FontFamily {
+        switch self {
+        case .moderatMono: return .moderatMono
+        case .moderat: return .moderat
+        case .defaultConfiguration: return RefdsUI.shared.defaultFontFamily
+        }
     }
 }
