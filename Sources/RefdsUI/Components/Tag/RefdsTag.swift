@@ -32,7 +32,7 @@ public struct RefdsTag: View {
 extension RefdsTag {
     public init(
         _ content: String,
-        size: RefdsText.Size = .extraSmall,
+        size: RefdsText.Size = .custom(8),
         color: Color,
         family: RefdsFontFamily = RefdsUI.shared.defaultFontFamily,
         lineLimit: Int? = nil
