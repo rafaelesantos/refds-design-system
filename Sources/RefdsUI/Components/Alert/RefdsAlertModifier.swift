@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct RefdsAlertModifier {
+public struct RefdsAlertModifier {
     @Binding private var isPresented: Bool
 
     private let title: String
@@ -20,14 +20,14 @@ struct RefdsAlertModifier {
 
 
 extension RefdsAlertModifier: ViewModifier {
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content.fullScreenCover(isPresented: $isPresented) {
             RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: primaryButton, secondaryButton: secondaryButton)
         }
     }
 }
 
-extension RefdsAlertModifier {
+public extension RefdsAlertModifier {
     init(title: String = "", message: String = "", dismissButton: RefdsAlertButton, isPresented: Binding<Bool>) {
         self.title = title
         self.message = message
@@ -47,14 +47,14 @@ extension RefdsAlertModifier {
     }
 }
 
-extension View {
-    public func refdsAlert(title: String, message: String, dismissButton: RefdsAlertButton = RefdsAlertButton("Ok"), isPresented: Binding<Bool>) -> some View {
+public extension View {
+    func refdsAlert(title: String, message: String, dismissButton: RefdsAlertButton = RefdsAlertButton("Ok"), isPresented: Binding<Bool>) -> some View {
         let title = NSLocalizedString(title, comment: "")
         let message = NSLocalizedString(message, comment: "")
         return modifier(RefdsAlertModifier(title: title, message: message, dismissButton: dismissButton, isPresented: isPresented))
     }
     
-    public func refdsAlert(title: String, message: String, primaryButton: RefdsAlertButton, secondaryButton: RefdsAlertButton, isPresented: Binding<Bool>) -> some View {
+    func refdsAlert(title: String, message: String, primaryButton: RefdsAlertButton, secondaryButton: RefdsAlertButton, isPresented: Binding<Bool>) -> some View {
         let title = NSLocalizedString(title, comment: "")
         let message = NSLocalizedString(message, comment: "")
         return modifier(RefdsAlertModifier(title: title, message: message, primaryButton: primaryButton, secondaryButton: secondaryButton, isPresented: isPresented))
