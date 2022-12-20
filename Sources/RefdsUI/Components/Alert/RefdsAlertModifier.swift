@@ -48,13 +48,13 @@ extension RefdsAlertModifier {
 }
 
 extension View {
-    func refdsAlert(title: String, message: String, dismissButton: RefdsAlertButton = RefdsAlertButton("Ok"), isPresented: Binding<Bool>) -> some View {
+    public func refdsAlert(title: String, message: String, dismissButton: RefdsAlertButton = RefdsAlertButton("Ok"), isPresented: Binding<Bool>) -> some View {
         let title = NSLocalizedString(title, comment: "")
         let message = NSLocalizedString(message, comment: "")
         return modifier(RefdsAlertModifier(title: title, message: message, dismissButton: dismissButton, isPresented: isPresented))
     }
     
-    func refdsAlert(title: String, message: String, primaryButton: RefdsAlertButton, secondaryButton: RefdsAlertButton, isPresented: Binding<Bool>) -> some View {
+    public func refdsAlert(title: String, message: String, primaryButton: RefdsAlertButton, secondaryButton: RefdsAlertButton, isPresented: Binding<Bool>) -> some View {
         let title = NSLocalizedString(title, comment: "")
         let message = NSLocalizedString(message, comment: "")
         return modifier(RefdsAlertModifier(title: title, message: message, primaryButton: primaryButton, secondaryButton: secondaryButton, isPresented: isPresented))
