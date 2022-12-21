@@ -24,6 +24,7 @@ extension RefdsAlertModifier: ViewModifier {
         content.fullScreenCover(isPresented: $isPresented) {
             RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: primaryButton, secondaryButton: secondaryButton, isPresented: $isPresented)
                 .background(FullScreenCoverBackgroundRemovalView())
+                .onTapGesture { isPresented.toggle() }
         }
     }
 }
