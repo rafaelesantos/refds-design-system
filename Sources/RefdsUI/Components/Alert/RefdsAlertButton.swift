@@ -21,9 +21,9 @@ public struct RefdsAlertButton: View {
     public var body: some View {
         Button { action?() } label: {
             RefdsText(content, size: .large, color: style.foregroundColor, weight: .medium, lineLimit: 1)
+                .frame(maxWidth: .infinity)
                 .padding()
         }
-        .frame(maxWidth: .infinity)
         .background(style.backgroundColor)
         .cornerRadius(10)
     }
