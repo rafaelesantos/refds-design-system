@@ -22,7 +22,7 @@ public struct RefdsAlertModifier {
 extension RefdsAlertModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content.fullScreenCover(isPresented: $isPresented) {
-            RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: primaryButton, secondaryButton: secondaryButton)
+            RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: primaryButton, secondaryButton: secondaryButton, isPresented: $isPresented)
         }
     }
 }
