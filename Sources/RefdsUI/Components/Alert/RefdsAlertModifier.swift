@@ -23,8 +23,24 @@ extension RefdsAlertModifier: ViewModifier {
     public func body(content: Content) -> some View {
         content.fullScreenCover(isPresented: $isPresented) {
             RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: primaryButton, secondaryButton: secondaryButton, isPresented: $isPresented)
+                .background(FullScreenCoverBackgroundRemovalView())
         }
     }
+}
+
+private struct FullScreenCoverBackgroundRemovalView: UIViewRepresentable {
+    private class BackgroundRemovalView: UIView {
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            superview?.superview?.backgroundColor = .clear
+        }
+    }
+    
+    func makeUIView(context: Context) -> UIView {
+        return BackgroundRemovalView()
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
 public extension RefdsAlertModifier {

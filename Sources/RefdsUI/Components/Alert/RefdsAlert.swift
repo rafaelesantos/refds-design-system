@@ -30,11 +30,12 @@ public struct RefdsAlert: View {
     
     public var body: some View {
         ZStack {
+            dimView
             alertView
                 .scaleEffect(scale)
                 .opacity(opacity)
         }
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.all)
         .task { animate(isShown: true) }
     }
     
@@ -46,9 +47,9 @@ public struct RefdsAlert: View {
         }
         .padding(24)
         .frame(width: 320)
-        .background(.bar)
+        .background(Color(uiColor: .systemBackground))
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.1), radius: 16, x: 0, y: 12)
+        .shadow(color: Color.black.opacity(0.2), radius: 16, x: 0, y: 12)
     }
     
     @ViewBuilder
@@ -118,8 +119,9 @@ public struct RefdsAlert: View {
     }
     
     private var dimView: some View {
-        Color.gray
-            .opacity(0)
+        Color(uiColor: .secondarySystemBackground)
+            .opacity(0.5)
+            .opacity(backgroundOpacity)
     }
     
     private func animate(isShown: Bool, completion: (() -> Void)? = nil) {
@@ -128,7 +130,7 @@ public struct RefdsAlert: View {
             opacity = 1
             
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9, blendDuration: 0).delay(0.5)) {
-                backgroundOpacity = 0
+                backgroundOpacity = 1
                 scale = 1
             }
             
@@ -148,16 +150,12 @@ struct RefdsAlert_Previews: PreviewProvider {
     static let dismissButton = RefdsAlertButton("OK")
     static let primaryButton = RefdsAlertButton("OK")
     static let secondaryButton = RefdsAlertButton("Cancel", style: .cancel)
-    @State static var isPresented = true
     
     static let title = "This is your life. Do what you want and do it often."
     static let message = "If you don't like something, change it.\nIf you don't like your job, quit.\nIf you don't have enough time, stop watching TV."
     
     static var previews: some View {
-        VStack {
-            RefdsText("Test custom alert")
-        }
-        .refdsAlert(title: title, message: message, isPresented: $isPresented)
+        RefdsAlert(title: title, message: message, isPresented: Binding(get: { true }, set: { _ in }))
             .previewDisplayName("Alert ok button")
         
         RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: nil, secondaryButton: nil, isPresented: Binding(get: { true }, set: { _ in }))
