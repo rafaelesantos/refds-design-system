@@ -17,16 +17,16 @@ public struct RefdsAlert: View {
     @State private var opacity: CGFloat = 0
     @State private var backgroundOpacity: CGFloat = 0
     @State private var scale: CGFloat = 0.001
+    @Binding private var isPresented: Bool
     
-    public init(title: String, message: String, dismissButton: RefdsAlertButton? = nil, primaryButton: RefdsAlertButton? = nil, secondaryButton: RefdsAlertButton? = nil) {
+    public init(title: String, message: String, dismissButton: RefdsAlertButton? = nil, primaryButton: RefdsAlertButton? = nil, secondaryButton: RefdsAlertButton? = nil, isPresented: Binding<Bool>) {
         self.title = title
         self.message = message
         self.dismissButton = dismissButton
         self.primaryButton = primaryButton
         self.secondaryButton = secondaryButton
+        self._isPresented = isPresented
     }
-    
-    @Environment(\.dismiss) private var dismiss
     
     public var body: some View {
         ZStack {
@@ -35,11 +35,9 @@ public struct RefdsAlert: View {
                 .opacity(opacity)
         }
         .ignoresSafeArea()
-        .transition(.opacity)
         .task { animate(isShown: true) }
     }
     
-    // MARK: Private
     private var alertView: some View {
         VStack(spacing: 10) {
             titleView
@@ -84,9 +82,7 @@ public struct RefdsAlert: View {
     private var primaryButtonView: some View {
         if let button = primaryButton {
             RefdsAlertButton(button.content, style: button.style) {
-                animate(isShown: false) {
-                    dismiss()
-                }
+                animate(isShown: false) { isPresented.toggle() }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     button.action?()
@@ -99,7 +95,7 @@ public struct RefdsAlert: View {
     private var secondaryButtonView: some View {
         if let button = secondaryButton {
             RefdsAlertButton(button.content, style: button.style) {
-                animate(isShown: false) { dismiss() }
+                animate(isShown: false) { isPresented.toggle() }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     button.action?()
@@ -112,9 +108,7 @@ public struct RefdsAlert: View {
     private var dismissButtonView: some View {
         if let button = dismissButton {
             RefdsAlertButton(button.content, style: button.style) {
-                animate(isShown: false) {
-                    dismiss()
-                }
+                animate(isShown: false) { isPresented.toggle() }
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                     button.action?()
@@ -123,13 +117,18 @@ public struct RefdsAlert: View {
         }
     }
     
+    private var dimView: some View {
+        Color.gray
+            .opacity(0)
+    }
+    
     private func animate(isShown: Bool, completion: (() -> Void)? = nil) {
         switch isShown {
         case true:
             opacity = 1
             
             withAnimation(.spring(response: 0.3, dampingFraction: 0.9, blendDuration: 0).delay(0.5)) {
-                backgroundOpacity = 1
+                backgroundOpacity = 0
                 scale = 1
             }
             
@@ -155,13 +154,16 @@ struct RefdsAlert_Previews: PreviewProvider {
     static let message = "If you don't like something, change it.\nIf you don't like your job, quit.\nIf you don't have enough time, stop watching TV."
     
     static var previews: some View {
-        RefdsAlert(title: title, message: message, primaryButton: nil, secondaryButton: nil)
+        VStack {
+            RefdsText("Test custom alert")
+        }
+        .refdsAlert(title: title, message: message, isPresented: $isPresented)
             .previewDisplayName("Alert ok button")
         
-        RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: nil, secondaryButton: nil)
+        RefdsAlert(title: title, message: message, dismissButton: dismissButton, primaryButton: nil, secondaryButton: nil, isPresented: Binding(get: { true }, set: { _ in }))
             .previewDisplayName("Alert ok button")
         
-        RefdsAlert(title: title, message: message, dismissButton: nil, primaryButton: primaryButton, secondaryButton: secondaryButton)
+        RefdsAlert(title: title, message: message, dismissButton: nil, primaryButton: primaryButton, secondaryButton: secondaryButton, isPresented: Binding(get: { true }, set: { _ in }))
             .previewDisplayName("Alert two buttons")
     }
 }
