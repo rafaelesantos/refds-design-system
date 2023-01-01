@@ -4,12 +4,24 @@ import SwiftUI
 class CurrencyUITextField: UITextField {
     @Binding private var value: Double
     private let formatter: NumberFormatter
+    private let color: UIColor
+    private let style: RefdsCurrency.Style
+    private let alignment: NSTextAlignment
     
-    init(formatter: NumberFormatter, value: Binding<Double>, color: UIColor = .secondaryLabel) {
+    init(
+        formatter: NumberFormatter,
+        value: Binding<Double>,
+        color: UIColor = .secondaryLabel,
+        style: RefdsCurrency.Style = .regular,
+        alignment: NSTextAlignment = .left
+    ) {
         self.formatter = formatter
+        self.color = color
+        self.style = style
+        self.alignment = alignment
         self._value = value
         super.init(frame: .zero)
-        setupViews(textColor: color)
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
@@ -20,7 +32,7 @@ class CurrencyUITextField: UITextField {
         addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         addTarget(self, action: #selector(resetSelection), for: .allTouchEvents)
         keyboardType = .numberPad
-        textAlignment = .center
+        textAlignment = alignment
         sendActions(for: .editingChanged)
     }
     
@@ -29,10 +41,10 @@ class CurrencyUITextField: UITextField {
         sendActions(for: .editingChanged)
     }
     
-    private func setupViews(textColor: UIColor) {
+    private func setupViews() {
         tintColor = .clear
-        self.textColor = textColor
-        font = .refds(size: .displayTitle, weight: .light, family: .moderatMono)
+        textColor = color
+        font = .refds(size: style.size, weight: .regular, family: .moderatMono)
     }
     
     @objc private func editingChanged() {
