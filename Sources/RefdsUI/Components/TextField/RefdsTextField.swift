@@ -46,7 +46,7 @@ public struct RefdsTextField: View {
     }
     
     public var body: some View {
-        TextField(placeholder, text: $text, axis: .vertical)
+        TextField(placeholder, text: $text, axis: axis)
             .refdsFont(
                 size: size,
                 weight: weight,
