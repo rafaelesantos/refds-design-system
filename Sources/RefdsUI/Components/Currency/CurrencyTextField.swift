@@ -5,12 +5,24 @@ struct CurrencyTextField: UIViewRepresentable {
     
     private var numberFormatter: NumberFormatter
     let currencyField: CurrencyUITextField
+    private let color: Color
+    private let style: RefdsCurrency.Style
+    private let alignment: NSTextAlignment
     
-    init(numberFormatter: NumberFormatter = NumberFormatter(), value: Binding<Double>) {
+    init(
+        numberFormatter: NumberFormatter = NumberFormatter(),
+        value: Binding<Double>,
+        color: Color = .secondary,
+        style: RefdsCurrency.Style = .regular,
+        alignment: NSTextAlignment = .left
+    ) {
         self.numberFormatter = numberFormatter
         self.numberFormatter.numberStyle = .currency
         self.numberFormatter.locale = Locale.current
-        currencyField = CurrencyUITextField(formatter: numberFormatter, value: value)
+        self.color = color
+        self.style = style
+        self.alignment = alignment
+        currencyField = CurrencyUITextField(formatter: numberFormatter, value: value, color: UIColor(color), style: style, alignment: alignment)
     }
     
     func makeUIView(context: Context) -> CurrencyUITextField {

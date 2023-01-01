@@ -52,13 +52,13 @@ extension RefdsText {
     }
 }
 
-extension Text {
+extension View {
     public func refdsFont(
         size: RefdsText.Size = .normal,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
         sizeCategory: ContentSizeCategory
-    ) -> Self {
+    ) -> some View {
         return self.font(
             .refds(
                 size: size.value,
