@@ -7,9 +7,9 @@ let package = Package(
     name: "RefdsUI",
     platforms: [
         .iOS(.v15),
-        .macOS(.v12),
         .macCatalyst(.v15),
-        .tvOS(.v13)
+        .tvOS(.v15),
+        .macOS(.v12)
     ],
     products: [
         .library(

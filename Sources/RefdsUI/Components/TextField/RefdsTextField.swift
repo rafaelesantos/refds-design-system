@@ -17,9 +17,12 @@ public struct RefdsTextField: View {
     private let weight: Font.Weight
     private let family: RefdsFontFamily
     private let alignment: TextAlignment
+    #if os(iOS)
     private let keyboardType: UIKeyboardType
     private let textInputAutocapitalization: TextInputAutocapitalization
+    #endif
     
+    #if os(iOS)
     public init(
         _ placeholder: String,
         text: Binding<String>,
@@ -44,6 +47,32 @@ public struct RefdsTextField: View {
         self.keyboardType = keyboardType
         self.textInputAutocapitalization = textInputAutocapitalization
     }
+    #endif
+    
+    public init(
+        _ placeholder: String,
+        text: Binding<String>,
+        axis: Axis = .horizontal,
+        size: RefdsText.Size = .normal,
+        color: Color = .primary,
+        weight: Font.Weight = .regular,
+        family: RefdsFontFamily = .defaultConfiguration,
+        alignment: TextAlignment = .leading,
+        lineLimit: Int? = nil
+    ) {
+        self._text = text
+        self.placeholder = placeholder
+        self.axis = axis
+        self.size = size
+        self.color = color
+        self.weight = weight
+        self.family = family
+        self.alignment = alignment
+        #if os(iOS)
+        self.keyboardType = .default
+        self.textInputAutocapitalization = .never
+        #endif
+    }
     
     public var body: some View {
         TextField(placeholder, text: $text)
@@ -56,15 +85,17 @@ public struct RefdsTextField: View {
             .multilineTextAlignment(alignment)
             .autocorrectionDisabled()
             .foregroundColor(color)
+        #if os(iOS)
             .keyboardType(keyboardType)
             .textInputAutocapitalization(textInputAutocapitalization)
+        #endif
     }
 }
 
 struct RefdsTextField_Previews: PreviewProvider {
     @State static var value = ""
     static var previews: some View {
-        GroupBox {
+        Group {
             RefdsTextField("Informe o texto", text: $value)
         }
         .padding()
