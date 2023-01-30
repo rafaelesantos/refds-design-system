@@ -26,18 +26,16 @@ public struct RefdsCurrency: View {
     }
     
     public var body: some View {
-        TextField(value.formatted(.currency(code: Locale.current.currencySymbol ?? "")), value: $value, format: .currency(code: Locale.current.currencySymbol ?? ""))
-            .multilineTextAlignment(alignment)
-            .refdsFont(
-                size: size,
-                weight: weight,
-                family: family,
-                sizeCategory: sizeCategory
-            )
-            .foregroundColor(color)
-        #if os(iOS)
-            .keyboardType(.numberPad)
-        #endif
+        ZStack {
+            TextField(value.formatted(.currency(code: "BRL")), value: $value, format: .currency(code: "BRL"))
+                .refdsFont(size: size, weight: weight, family: family, sizeCategory: sizeCategory)
+                .multilineTextAlignment(alignment)
+                .foregroundColor(color)
+#if os(iOS)
+                .keyboardType(.decimalPad)
+#endif
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 
