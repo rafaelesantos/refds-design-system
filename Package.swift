@@ -16,13 +16,11 @@ let package = Package(
             name: "RefdsUI",
             targets: ["RefdsUI"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/divadretlaw/WindowSceneReader", from: "1.1.0")
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "RefdsUI",
-            dependencies: ["WindowSceneReader"],
+            dependencies: [],
             resources: [
                 .copy("Resource/Fonts/Moderat-Thin.ttf"),
                 .copy("Resource/Fonts/Moderat-Light.ttf"),
