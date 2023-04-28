@@ -9,31 +9,35 @@ import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
     class NumbersOnly: ObservableObject {
+        @Binding var double: Double
         @Published var value: String = "" {
             didSet {
                 let filtered = value.replacingOccurrences(of: ",", with: ".").filter { $0.isNumber }
                 if value != filtered, let valueDouble = Double(filtered) {
                     value = filtered
+                    double = (valueDouble / 100)
                     appearText = (valueDouble / 100).formatted(.currency(code: "BRL"))
                 } else if let valueDouble = Double(value.replacingOccurrences(of: ",", with: ".")) {
+                    double = (valueDouble / 100)
                     appearText = (valueDouble / 100).formatted(.currency(code: "BRL"))
                 }
                 
                 if value.isEmpty {
+                    double = 0
                     appearText = 0.formatted(.currency(code: "BRL"))
                 }
             }
         }
         @Published var appearText: String = ""
-        init(value: String = "") {
-            self.value = value
+        init(double: Binding<Double>) {
+            self._double = double
         }
     }
     
     @Environment(\.sizeCategory) var sizeCategory
     @Binding private var value: Double
     @State private var appearText: String = ""
-    @ObservedObject private var input = NumbersOnly()
+    @StateObject private var input: NumbersOnly
     private let size: RefdsText.Size
     private let color: Color
     private let weight: Font.Weight
@@ -54,7 +58,7 @@ public struct RefdsCurrencyTextField: View {
         self.weight = weight
         self.family = family
         self.alignment = alignment
-        _input = ObservedObject(initialValue: NumbersOnly(value: value.wrappedValue.formatted(.currency(code: "BRL"))))
+        _input = StateObject(wrappedValue: NumbersOnly(double: value))
     }
     
     public var body: some View {
@@ -67,13 +71,7 @@ public struct RefdsCurrencyTextField: View {
                 family: .moderatMono,
                 alignment: alignment
             )
-            TextField("", text: Binding(get: {
-                input.value
-            }, set: {
-                input.value = $0
-                guard let double = Double(input.value) else { return }
-                value = double
-            }))
+            TextField("", text: $input.value)
                 .refdsFont(
                     size: size,
                     weight: weight,
