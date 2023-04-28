@@ -84,7 +84,7 @@ public struct RefdsCurrencyTextField: View {
                 .tint(.clear)
                 .autocorrectionDisabled()
     #if os(iOS)
-                .keyboardType(.numbersAndPunctuation)
+                .keyboardType(.numberPad)
     #endif
         }
     }
