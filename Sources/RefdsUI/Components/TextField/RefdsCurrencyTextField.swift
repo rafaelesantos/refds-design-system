@@ -67,7 +67,13 @@ public struct RefdsCurrencyTextField: View {
                 family: .moderatMono,
                 alignment: alignment
             )
-            TextField("", text: $input.value)
+            TextField("", text: Binding(get: {
+                input.value
+            }, set: {
+                input.value = $0
+                guard let double = Double(input.value) else { return }
+                value = double
+            }))
                 .refdsFont(
                     size: size,
                     weight: weight,
@@ -75,7 +81,7 @@ public struct RefdsCurrencyTextField: View {
                     sizeCategory: sizeCategory
                 )
                 .multilineTextAlignment(alignment)
-                .foregroundColor(.clear)
+                .opacity(0)
                 .autocorrectionDisabled()
     #if os(iOS)
                 .keyboardType(.numbersAndPunctuation)
