@@ -81,7 +81,8 @@ public struct RefdsCurrencyTextField: View {
                     sizeCategory: sizeCategory
                 )
                 .multilineTextAlignment(alignment)
-                .opacity(0)
+                .foregroundColor(.clear)
+                .tint(.clear)
                 .autocorrectionDisabled()
     #if os(iOS)
                 .keyboardType(.numbersAndPunctuation)
