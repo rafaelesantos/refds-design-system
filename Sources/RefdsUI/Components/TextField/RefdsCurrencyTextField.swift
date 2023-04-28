@@ -69,7 +69,8 @@ public struct RefdsCurrencyTextField: View {
                 color: value == 0 ? .secondary : color,
                 weight: weight,
                 family: .moderatMono,
-                alignment: alignment
+                alignment: alignment,
+                lineLimit: 1
             )
             TextField("", text: $input.value)
                 .refdsFont(
