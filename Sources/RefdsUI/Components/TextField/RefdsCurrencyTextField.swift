@@ -28,7 +28,7 @@ public struct RefdsCurrencyTextField: View {
                 }
             }
         }
-        @Published var appearText: String = ""
+        @Published var appearText: String = 0.formatted(.currency(code: "BRL"))
         init(double: Binding<Double>) {
             self._double = double
         }
