@@ -28,9 +28,12 @@ public struct RefdsCurrencyTextField: View {
                 }
             }
         }
-        @Published var appearText: String = 0.formatted(.currency(code: "BRL"))
+        @Published var appearText: String
         init(double: Binding<Double>) {
+            let doubleValue = double.wrappedValue * 10
             self._double = double
+            appearText = doubleValue.formatted(.currency(code: "BRL"))
+            value = "\(doubleValue)"
         }
     }
     
@@ -91,7 +94,7 @@ public struct RefdsCurrencyTextField: View {
 }
 
 struct RefdsCurrencyTextField_Previews: PreviewProvider {
-    @State static var value = 0.0
+    @State static var value = 50.2
     static var previews: some View {
         Group {
             RefdsCurrencyTextField(value: $value)
