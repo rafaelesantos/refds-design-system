@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
-    class NumbersOnly: ObservableObject {
+    @MainActor class NumbersOnly: ObservableObject {
         @Binding var double: Double
         @Published var value: String = "" {
             didSet {
