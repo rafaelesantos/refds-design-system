@@ -8,23 +8,29 @@
 import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
-    @MainActor class NumbersOnly: ObservableObject {
+    class NumbersOnly: ObservableObject {
         @Binding var double: Double
         @Published var value: String = "" {
             didSet {
                 let filtered = value.replacingOccurrences(of: ",", with: ".").filter { $0.isNumber }
                 if value != filtered, let valueDouble = Double(filtered) {
-                    value = filtered
-                    double = (valueDouble / 100)
-                    appearText = (valueDouble / 100).formatted(.currency(code: "BRL"))
+                    Task { @MainActor in
+                        value = filtered
+                        double = (valueDouble / 100)
+                        appearText = (valueDouble / 100).formatted(.currency(code: "BRL"))
+                    }
                 } else if let valueDouble = Double(value.replacingOccurrences(of: ",", with: ".")) {
-                    double = (valueDouble / 100)
-                    appearText = (valueDouble / 100).formatted(.currency(code: "BRL"))
+                    Task { @MainActor in
+                        double = (valueDouble / 100)
+                        appearText = (valueDouble / 100).formatted(.currency(code: "BRL"))
+                    }
                 }
                 
                 if value.isEmpty {
-                    double = 0
-                    appearText = 0.formatted(.currency(code: "BRL"))
+                    Task { @MainActor in
+                        double = 0
+                        appearText = 0.formatted(.currency(code: "BRL"))
+                    }
                 }
             }
         }
