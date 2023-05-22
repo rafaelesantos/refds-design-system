@@ -104,7 +104,7 @@ public struct RefdsCurrencyTextField: View {
 }
 
 struct RefdsCurrencyTextField_Previews: PreviewProvider {
-    @State static var value = 50.2
+    @State static var value = 10.2
     static var previews: some View {
         Group {
             RefdsCurrencyTextField(value: $value)
