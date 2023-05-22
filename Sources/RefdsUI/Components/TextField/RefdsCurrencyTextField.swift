@@ -1,6 +1,6 @@
 //
 //  RefdsCurrencyTextField.swift
-//  
+//
 //
 //  Created by Rafael Santos on 27/04/23.
 //
@@ -9,11 +9,8 @@ import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
     class NumbersOnly: ObservableObject {
-        static let shared = NumbersOnly()
-        var binding: ((Double, String) -> Void)?
-        
-        var double: Double = 0
-        var value: String = "" {
+        @Binding var double: Double
+        @Published var value: String = "" {
             didSet {
                 let filtered = value.replacingOccurrences(of: ",", with: ".").filter { $0.isNumber }
                 if value != filtered, let valueDouble = Double(filtered) {
@@ -35,16 +32,21 @@ public struct RefdsCurrencyTextField: View {
                         appearText = 0.formatted(.currency(code: "BRL"))
                     }
                 }
-                binding?(double, appearText)
             }
         }
-        var appearText: String = 0.formatted(.currency(code: "BRL"))
+        @Published var appearText: String
+        init(double: Binding<Double>) {
+            let doubleValue = double.wrappedValue * 10
+            self._double = double
+            appearText = doubleValue.formatted(.currency(code: "BRL"))
+            value = "\(doubleValue)"
+        }
     }
     
     @Environment(\.sizeCategory) var sizeCategory
     @Binding private var value: Double
     @State private var appearText: String = ""
-    private var numberOnly = NumbersOnly.shared
+    @StateObject private var input: NumbersOnly
     private let size: RefdsText.Size
     private let color: Color
     private let weight: Font.Weight
@@ -65,12 +67,13 @@ public struct RefdsCurrencyTextField: View {
         self.weight = weight
         self.family = family
         self.alignment = alignment
+        _input = StateObject(wrappedValue: NumbersOnly(double: value))
     }
     
     public var body: some View {
         ZStack {
             RefdsText(
-                numberOnly.appearText,
+                input.appearText,
                 size: size,
                 color: value == 0 ? .secondary : color,
                 weight: weight,
@@ -78,7 +81,7 @@ public struct RefdsCurrencyTextField: View {
                 alignment: alignment,
                 lineLimit: 1
             )
-            TextField("", text: Binding(get: { numberOnly.value }, set: { numberOnly.value = $0 }))
+            TextField("", text: $input.value)
                 .refdsFont(
                     size: size,
                     weight: weight,
@@ -93,18 +96,11 @@ public struct RefdsCurrencyTextField: View {
                 .keyboardType(.numberPad)
     #endif
         }
-        .onAppear {
-            numberOnly.value = "\(value * 100)"
-            numberOnly.binding = { value, appearText in
-                self.value = value
-                self.appearText = appearText
-            }
-        }
     }
 }
 
 struct RefdsCurrencyTextField_Previews: PreviewProvider {
-    @State static var value = 10.2
+    @State static var value = 50.2
     static var previews: some View {
         Group {
             RefdsCurrencyTextField(value: $value)
