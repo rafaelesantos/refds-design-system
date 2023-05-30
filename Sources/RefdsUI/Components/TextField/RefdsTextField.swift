@@ -17,6 +17,8 @@ public struct RefdsTextField: View {
     private let weight: Font.Weight
     private let family: RefdsFontFamily
     private let alignment: TextAlignment
+    private let minimumScaleFactor: CGFloat
+    private let lineLimit: Int?
     #if os(iOS)
     private let keyboardType: UIKeyboardType
     private let textInputAutocapitalization: TextInputAutocapitalization
@@ -32,6 +34,7 @@ public struct RefdsTextField: View {
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
         alignment: TextAlignment = .leading,
+        minimumScaleFactor: CGFloat = 1,
         lineLimit: Int? = nil,
         keyboardType: UIKeyboardType = .default,
         textInputAutocapitalization: TextInputAutocapitalization = .never
@@ -44,6 +47,8 @@ public struct RefdsTextField: View {
         self.weight = weight
         self.family = family
         self.alignment = alignment
+        self.minimumScaleFactor = minimumScaleFactor
+        self.lineLimit = lineLimit
         self.keyboardType = keyboardType
         self.textInputAutocapitalization = textInputAutocapitalization
     }
@@ -58,6 +63,7 @@ public struct RefdsTextField: View {
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
         alignment: TextAlignment = .leading,
+        minimumScaleFactor: CGFloat = 1,
         lineLimit: Int? = nil
     ) {
         self._text = text
@@ -68,6 +74,8 @@ public struct RefdsTextField: View {
         self.weight = weight
         self.family = family
         self.alignment = alignment
+        self.minimumScaleFactor = minimumScaleFactor
+        self.lineLimit = lineLimit
         #if os(iOS)
         self.keyboardType = .default
         self.textInputAutocapitalization = .never
@@ -85,6 +93,8 @@ public struct RefdsTextField: View {
             .multilineTextAlignment(alignment)
             .autocorrectionDisabled()
             .foregroundColor(color)
+            .minimumScaleFactor(minimumScaleFactor)
+            .lineLimit(lineLimit)
         #if os(iOS)
             .keyboardType(keyboardType)
             .textInputAutocapitalization(textInputAutocapitalization)
