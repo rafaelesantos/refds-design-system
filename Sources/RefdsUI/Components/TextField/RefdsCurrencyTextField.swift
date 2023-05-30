@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
     class NumbersOnly: ObservableObject {
-        @Binding var double: Double
+        @Binding var double: Double { didSet {  } }
         @Published var value: String = "" {
             didSet {
                 let filtered = value.replacingOccurrences(of: ",", with: ".").filter { $0.isNumber }
