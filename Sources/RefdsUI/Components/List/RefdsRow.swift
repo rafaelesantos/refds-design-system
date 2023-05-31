@@ -13,17 +13,23 @@ public struct RefdsRow<Content: View>: View {
     private let presentationStyle: RefdsPresentationStyle
     private let content: () -> Content
     private let destination: (() -> any View)?
+    private let action: (() -> Void)?
     
-    public init(_ presentationStyle: RefdsPresentationStyle = .push, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil) {
+    public init(_ presentationStyle: RefdsPresentationStyle = .push, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil, action: (() -> Void)? = nil) {
         self.presentationStyle = presentationStyle
         self.content = content
         self.destination = destination
+        self.action = action
     }
     
     @ViewBuilder
     public var body: some View {
-        if let destination = destination {
+        if let destination = destination, let action = action {
+            button(destination: destination, action: action)
+        } else if let destination = destination {
             button(destination: destination)
+        } else if let action = action {
+            button(action: action)
         } else {
             label
         }
@@ -38,6 +44,36 @@ public struct RefdsRow<Content: View>: View {
         }
         #else
         Button(.medium) {
+            withAnimation { isPresented.toggle() }
+        } label: { label }.refdsNavigation(presentationStyle, isPresented: $isPresented) {
+            AnyView(destination())
+        }
+        #endif
+    }
+    
+    private func button(action: @escaping () -> Void) -> some View {
+        #if os(macOS)
+        label.onTapGesture {
+            withAnimation { action() }
+        }
+        #else
+        Button(.medium) {
+            withAnimation { action() }
+        } label: { label }
+        #endif
+    }
+    
+    private func button(destination: @escaping () -> any View, action: @escaping () -> Void) -> some View {
+        #if os(macOS)
+        label.onTapGesture {
+            action()
+            withAnimation { isPresented.toggle() }
+        }.refdsNavigation(presentationStyle, isPresented: $isPresented) {
+            AnyView(destination())
+        }
+        #else
+        Button(.medium) {
+            action()
             withAnimation { isPresented.toggle() }
         } label: { label }.refdsNavigation(presentationStyle, isPresented: $isPresented) {
             AnyView(destination())
