@@ -95,6 +95,7 @@ public struct RefdsTextField: View {
             .foregroundColor(color)
             .minimumScaleFactor(minimumScaleFactor)
             .lineLimit(lineLimit)
+            .textFieldStyle(.plain)
         #if os(iOS)
             .keyboardType(keyboardType)
             .textInputAutocapitalization(textInputAutocapitalization)
