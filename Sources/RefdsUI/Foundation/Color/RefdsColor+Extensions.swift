@@ -50,7 +50,7 @@ public extension RefdsColor {
         var a: CGFloat = 0
         
         #if os(macOS)
-        SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
+        SystemColor(self).usingColorSpace(.genericRGB)?.getRed(&r, green: &g, blue: &b, alpha: &a)
         #else
         guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
             return nil
