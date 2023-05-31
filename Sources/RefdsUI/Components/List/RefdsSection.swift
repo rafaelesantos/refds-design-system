@@ -60,7 +60,7 @@ public struct RefdsSection<Content: View>: View {
         VStack {
             macOSHeader
             LazyVGrid(columns: .columns(width: proxy.size.width, maxAmount: maxColumns)) {
-                content().refdsCard()
+                content()
             }.padding(.horizontal)
             macOSFooter
         }
