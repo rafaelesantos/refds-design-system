@@ -77,7 +77,7 @@ public struct RefdsCurrencyTextField: View {
                 style: style,
                 color: value == 0 ? .secondary : color,
                 weight: weight,
-                family: .moderatMono,
+                family: family,
                 alignment: alignment,
                 lineLimit: 1
             )
@@ -85,13 +85,14 @@ public struct RefdsCurrencyTextField: View {
                 .refdsFont(
                     style: style,
                     weight: weight,
-                    family: .moderatMono,
+                    family: family,
                     sizeCategory: sizeCategory
                 )
                 .multilineTextAlignment(alignment)
                 .foregroundColor(.clear)
                 .tint(.clear)
                 .autocorrectionDisabled()
+                .textFieldStyle(.plain)
     #if os(iOS)
                 .keyboardType(.numberPad)
     #endif

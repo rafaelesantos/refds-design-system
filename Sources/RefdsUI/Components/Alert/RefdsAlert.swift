@@ -23,33 +23,15 @@ public struct RefdsAlert: View {
     }
     
     public var body: some View {
-        if withBackground, colorScheme == .dark {
-            GroupBox {
-                styles
-                    .frame(maxWidth: 400)
-            }
-            .background()
-            .cornerRadius(15)
-            .padding()
-            .padding()
-        } else if withBackground, colorScheme == .light {
-            Group {
-                styles
-                    .frame(maxWidth: 400)
-                    .padding(.all)
-            }
-            .background()
-            .cornerRadius(15)
-            .shadow(color: .black.opacity(0.10), radius: 20)
-            .padding()
-            .padding()
+        if withBackground {
+            styles.refdsCard()
         } else { styles }
     }
     
     @ViewBuilder
     private var styles: some View {
         switch style {
-        case let .basic(style, title, message): basic(style, title: title, message: message).padding()
+        case let .basic(style, title, message): basic(style, title: title, message: message)
         case let .inline(style, title): inline(style, title: title)
         }
     }
@@ -69,11 +51,11 @@ public struct RefdsAlert: View {
             }
             
             HStack(spacing: 15) {
-                if let primaryAction = primaryAction, primaryAction.title.isEmpty {
+                if let primaryAction = primaryAction {
                     RefdsButton(primaryAction.title, color: style.color, style: .primary, action: primaryAction.action)
                 }
                 
-                if let secondaryAction = secondaryAction, secondaryAction.title.isEmpty {
+                if let secondaryAction = secondaryAction {
                     RefdsButton(secondaryAction.title, color: style.color, style: .secondary, action: secondaryAction.action)
                 }
             }
@@ -87,7 +69,7 @@ public struct RefdsAlert: View {
             }
             RefdsText(title, style: .body)
             Spacer()
-            if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
+            if let primaryAction = primaryAction {
                 RefdsButton(primaryAction.title, color: style.color, style: .primary, maxSize: false, action: primaryAction.action)
             }
         }
@@ -275,10 +257,13 @@ struct RefdsAlert_Previews: PreviewProvider {
         
         Group {
             VStack(spacing: 30) {
+                Spacer()
                 RefdsAlert(style: .inline(.none, title), withBackground: true)
                 RefdsAlert(style: .inline(.info, title), withBackground: true, primaryAction: primaryAction)
                 RefdsAlert(style: .basic(.info, title, message), withBackground: true, primaryAction: primaryAction, secondaryAction: secondaryAction)
+                Spacer()
             }
+            .padding()
         }
     }
 }

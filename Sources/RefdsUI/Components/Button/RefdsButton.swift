@@ -11,6 +11,7 @@ public struct RefdsButton: View {
     private let title: String
     private let color: RefdsColor
     private let style: Style
+    private let content: (() -> any View)?
     private let action: (() -> Void)?
     private let maxSize: Bool
     
@@ -20,6 +21,16 @@ public struct RefdsButton: View {
         self.style = style
         self.action = action
         self.maxSize = maxSize
+        self.content = nil
+    }
+    
+    public init(action: (() -> Void)? = nil, content: (() -> any View)? = nil) {
+        self.title = ""
+        self.color = .accentColor
+        self.style = .custom
+        self.content = content
+        self.action = action
+        self.maxSize = false
     }
     
     public var body: some View {
@@ -27,13 +38,14 @@ public struct RefdsButton: View {
         case .primary: primary
         case .secondary: secondary
         case .tertiary: tertiary
+        case .custom: custom
         }
     }
     
     private var primary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .footnote, color: .white, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
@@ -42,7 +54,7 @@ public struct RefdsButton: View {
         
         #else
         HStack {
-            RefdsText(title, style: .footnote, color: .white, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
@@ -55,20 +67,27 @@ public struct RefdsButton: View {
     private var secondary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .footnote, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(color, lineWidth: 1.5)
+                }
         }
-        .background(color.opacity(0.15))
+        .background(color.opacity(0.1))
         .cornerRadius(10)
-        
         #else
         HStack {
-            RefdsText(title, style: .footnote, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(color, lineWidth: 1.5)
+                }
         }
-        .background(color.opacity(0.15))
+        .background(color.opacity(0.1))
         .cornerRadius(10)
         .onTapGesture { action?() }
         #endif
@@ -77,19 +96,35 @@ public struct RefdsButton: View {
     private var tertiary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .footnote, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
         
         #else
         HStack {
-            RefdsText(title, style: .footnote, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
         .onTapGesture { action?() }
         #endif
+    }
+    
+    @ViewBuilder
+    private var custom: some View {
+        if let content = content {
+            #if os(iOS)
+            Button(.medium) { action?() } label: {
+                AnyView(content())
+            }
+            #else
+            HStack {
+                AnyView(content())
+            }
+            .onTapGesture { action?() }
+            #endif
+        }
     }
 }
 
@@ -98,6 +133,7 @@ public extension RefdsButton {
         case primary
         case secondary
         case tertiary
+        case custom
     }
 }
 
@@ -108,5 +144,6 @@ struct RefdsButton_Previews: PreviewProvider {
             RefdsButton("Presentation Button", style: .secondary)
             RefdsButton("Presentation Button", style: .tertiary)
         }
+        .padding()
     }
 }

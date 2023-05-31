@@ -15,3 +15,12 @@ extension UIApplication {
     }
 }
 #endif
+
+public var isLargeScreen: Bool {
+    #if os(iOS)
+    UIDevice.current.userInterfaceIdiom == .mac || UIDevice.current.userInterfaceIdiom == .pad
+    #else
+    return true
+    #endif
+    
+}

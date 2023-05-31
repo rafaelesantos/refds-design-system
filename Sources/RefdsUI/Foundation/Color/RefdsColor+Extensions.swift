@@ -86,6 +86,22 @@ public extension RefdsColor {
         }
     }
     
+    static func background(scheme: ColorScheme) -> Self {
+        #if os(iOS)
+        scheme == .light ? Color(hex: "F2F2F7") : Color(uiColor: .systemBackground)
+        #else
+        scheme == .light ? Color(hex: "F2F2F7") : Color(nsColor: .windowBackgroundColor)
+        #endif
+    }
+    
+    static func secondaryBackground(scheme: ColorScheme) -> Self {
+        #if os(iOS)
+        scheme == .light ? .white : Color(uiColor: .secondarySystemBackground)
+        #else
+        scheme == .light ? .white : Color(nsColor: .controlBackgroundColor)
+        #endif
+    }
+    
     static var random: Self { Default.allCases.randomElement()!.rawValue }
     var random: Self { Self.random }
     var id: String { asHex() }
