@@ -114,26 +114,31 @@ extension Font.Weight {
 
 public extension UIFont {
     enum Size: Int, Comparable {
-        /// Size 10.
-        case smaller = 10
-        /// Size 12. Equals to `Title 5`.
-        case small = 12
-        /// Size 14. Equals to `Title 4`.
-        case normal = 14
-        /// Size 16. Equals to `Title 3`.
-        case large = 16
-        /// Size 18. Non-RefdsUI. Will be removed.
-        case xLarge = 18
-        /// Size 22. Equals to `Display Subtitle`.
-        case title2 = 22
-        /// Size 28.
+        #if os(iOS)
+        case largeTitle = 34
         case title1 = 28
-        /// Size 40.
-        case displayTitle = 40
-        /// Size 11.
-        case tabBar = 11
-        /// Size 17.
-        case navigationBar = 17
+        case title2 = 22
+        case title3 = 20
+        case callout = 16
+        case headline = 18
+        case subheadline = 15
+        case body = 17
+        case footnote = 13
+        case caption1 = 12
+        case caption2 = 11
+        #elseif os(macOS)
+        case largeTitle = 26
+        case title1 = 22
+        case title2 = 17
+        case title3 = 15
+        case callout = 12
+        case headline = 14
+        case subheadline = 11
+        case body = 13
+        case footnote = 10
+        case caption1 = 9
+        case caption2 = 8
+        #endif
 
         public static func < (lhs: Size, rhs: Size) -> Bool {
             lhs.rawValue < rhs.rawValue
@@ -144,7 +149,7 @@ public extension UIFont {
         }
     }
     
-    static func refds(size: UIFont.Size = .normal, weight: Weight = .regular, family: RefdsFontFamily = .moderat) -> UIFont {
+    static func refds(size: UIFont.Size = .body, weight: Weight = .regular, family: RefdsFontFamily = .moderat) -> UIFont {
         if RefdsFont.shared.fontNames.isEmpty {
             return .systemFont(ofSize: size.cgFloat, weight: weight)
         }
@@ -158,7 +163,7 @@ public extension UIFont {
     }
 
     static var refds: UIFont {
-        refds(size: .normal, weight: .regular, family: .moderat)
+        refds(size: .body, weight: .regular, family: .moderat)
     }
 }
 

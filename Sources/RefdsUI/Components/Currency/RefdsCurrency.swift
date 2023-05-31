@@ -5,7 +5,7 @@ public struct RefdsCurrency: View {
     @Binding private var value: Double
     private let color: Color
     private let alignment: TextAlignment
-    private let size: RefdsText.Size
+    private let style: RefdsText.Style
     private let weight: Font.Weight
     private let family: RefdsFontFamily
     
@@ -13,14 +13,14 @@ public struct RefdsCurrency: View {
         value: Binding<Double>,
         color: Color = .secondary,
         alignment: TextAlignment = .center,
-        size: RefdsText.Size = .normal,
+        style: RefdsText.Style = .body,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .moderatMono
     ) {
         self._value = value
         self.color = color
         self.alignment = alignment
-        self.size = size
+        self.style = style
         self.weight = weight
         self.family = family
     }
@@ -28,7 +28,7 @@ public struct RefdsCurrency: View {
     public var body: some View {
         ZStack {
             TextField(value.formatted(.currency(code: "BRL")), value: $value, format: .currency(code: "BRL"))
-                .refdsFont(size: size, weight: weight, family: family, sizeCategory: sizeCategory)
+                .refdsFont(style: style, weight: weight, family: family, sizeCategory: sizeCategory)
                 .multilineTextAlignment(alignment)
                 .foregroundColor(color)
 #if os(iOS)
@@ -47,8 +47,8 @@ extension RefdsCurrency {
         
         var size: UIFont.Size {
             switch self {
-            case .large: return .displayTitle
-            case .regular: return .large
+            case .large: return .largeTitle
+            case .regular: return .body
             }
         }
     }

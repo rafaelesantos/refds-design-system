@@ -47,7 +47,7 @@ public struct RefdsCurrencyTextField: View {
     @Binding private var value: Double
     @State private var appearText: String = ""
     @StateObject private var input: NumbersOnly
-    private let size: RefdsText.Size
+    private let style: RefdsText.Style
     private let color: Color
     private let weight: Font.Weight
     private let family: RefdsFontFamily
@@ -55,14 +55,14 @@ public struct RefdsCurrencyTextField: View {
     
     public init(
         value: Binding<Double>,
-        size: RefdsText.Size = .normal,
+        style: RefdsText.Style = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
         alignment: TextAlignment = .leading
     ) {
         self._value = value
-        self.size = size
+        self.style = style
         self.color = color
         self.weight = weight
         self.family = family
@@ -74,7 +74,7 @@ public struct RefdsCurrencyTextField: View {
         ZStack {
             RefdsText(
                 input.appearText,
-                size: size,
+                style: style,
                 color: value == 0 ? .secondary : color,
                 weight: weight,
                 family: .moderatMono,
@@ -83,7 +83,7 @@ public struct RefdsCurrencyTextField: View {
             )
             TextField("", text: $input.value)
                 .refdsFont(
-                    size: size,
+                    style: style,
                     weight: weight,
                     family: .moderatMono,
                     sizeCategory: sizeCategory

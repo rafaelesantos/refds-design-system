@@ -7,8 +7,8 @@ public class RefdsUI {
     
     #if os(iOS)
     public func setNavigationBarAppearance() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.refds(size: .large, weight: .bold, family: .defaultConfiguration).withSize(32)]
-        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.refds(size: .normal, weight: .bold, family: .defaultConfiguration).withSize(17)]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.refds(size: .largeTitle, weight: .bold, family: .defaultConfiguration).withSize(32)]
+        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.refds(size: .body, weight: .bold, family: .defaultConfiguration).withSize(17)]
     }
     #endif
 }

@@ -12,7 +12,7 @@ public struct RefdsTextField: View {
     @Binding private var text: String
     private let placeholder: String
     private let axis: Axis
-    private let size: RefdsText.Size
+    private let style: RefdsText.Style
     private let color: Color
     private let weight: Font.Weight
     private let family: RefdsFontFamily
@@ -29,7 +29,7 @@ public struct RefdsTextField: View {
         _ placeholder: String,
         text: Binding<String>,
         axis: Axis = .horizontal,
-        size: RefdsText.Size = .normal,
+        style: RefdsText.Style = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
@@ -42,7 +42,7 @@ public struct RefdsTextField: View {
         self._text = text
         self.placeholder = placeholder
         self.axis = axis
-        self.size = size
+        self.style = style
         self.color = color
         self.weight = weight
         self.family = family
@@ -58,7 +58,7 @@ public struct RefdsTextField: View {
         _ placeholder: String,
         text: Binding<String>,
         axis: Axis = .horizontal,
-        size: RefdsText.Size = .normal,
+        style: RefdsText.Style = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
@@ -69,7 +69,7 @@ public struct RefdsTextField: View {
         self._text = text
         self.placeholder = placeholder
         self.axis = axis
-        self.size = size
+        self.style = style
         self.color = color
         self.weight = weight
         self.family = family
@@ -85,7 +85,7 @@ public struct RefdsTextField: View {
     public var body: some View {
         TextField(placeholder, text: $text)
             .refdsFont(
-                size: size,
+                style: style,
                 weight: weight,
                 family: Double(text) == nil ? family : .moderatMono,
                 sizeCategory: sizeCategory

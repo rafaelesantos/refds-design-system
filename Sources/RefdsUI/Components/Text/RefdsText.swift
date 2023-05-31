@@ -11,7 +11,7 @@ public struct RefdsText: View {
     @Environment(\.sizeCategory) var sizeCategory
     
     private let content: String
-    private let size: Size
+    private let style: Style
     private let color: Color
     private let weight: Font.Weight
     private let family: RefdsFontFamily
@@ -21,9 +21,9 @@ public struct RefdsText: View {
     public var body: some View {
         Text(content)
             .refdsFont(
-                size: size,
+                style: style,
                 weight: weight,
-                family: Double(content) == nil ? family : .moderatMono,
+                family: family,
                 sizeCategory: sizeCategory
             )
             .lineLimit(lineLimit)
@@ -35,7 +35,7 @@ public struct RefdsText: View {
 extension RefdsText {
     public init (
         _ content: String,
-        size: Size = .normal,
+        style: Style = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
@@ -43,7 +43,7 @@ extension RefdsText {
         lineLimit: Int? = nil
     ) {
         self.content = content
-        self.size = size
+        self.style = style
         self.color = color
         self.weight = weight
         self.family = family
@@ -54,34 +54,48 @@ extension RefdsText {
 
 extension View {
     public func refdsFont(
-        size: RefdsText.Size = .normal,
+        style: RefdsText.Style = .body,
         weight: Font.Weight = .regular,
         family: RefdsFontFamily = .defaultConfiguration,
         sizeCategory: ContentSizeCategory
     ) -> some View {
         return self.font(
             .refds(
-                size: size.value,
-                scaledSize: sizeCategory.ratio * size.value,
+                size: style.value,
+                scaledSize: sizeCategory.ratio * style.value,
                 family: family,
                 weight: weight,
-                style: size.textStyle
+                style: style.textStyle
             )
         )
     }
 }
 
+public extension View {
+    @ViewBuilder
+    func refdsSkeleton(if condition: @autoclosure () -> Bool) -> some View {
+        redacted(reason: condition() ? .placeholder : [])
+    }
+}
+
+extension String {
+    static func placeholder(length: Int = .random(in: 5 ... 100)) -> String {
+        String(Array(repeating: "X", count: length))
+    }
+}
+
 struct RefdsText_Previews: PreviewProvider {
+    @State static var content: String = ""
     static var previews: some View {
         GroupBox {
-            RefdsText("0.5 amvdocd", size: .normal, weight: .bold, family: .moderat, alignment: .trailing, lineLimit: 2)
+            RefdsText(content, style: .body, weight: .bold, family: .moderat, alignment: .trailing, lineLimit: 2)
         }
         .padding()
         .previewDisplayName("Default")
         .previewLayout(.sizeThatFits)
         
         GroupBox {
-            RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", size: .normal, color: .orange, weight: .bold, family: .moderat, alignment: .center)
+            RefdsText("Plain text with defaul configuration Plain text with defaul configuration Plain text with defaul configuration", style: .body, color: .orange, weight: .bold, family: .moderat, alignment: .center)
         }
         .padding()
         .previewDisplayName("Customization")
