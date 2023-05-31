@@ -16,32 +16,36 @@ public struct RefdsSection<Content: View>: View {
     private let footerDescription: String?
     private let header: (() -> any View)?
     private let footer: (() -> any View)?
+    private let maxColumns: Int?
     
-    public init(proxy: GeometryProxy, @ViewBuilder content: @escaping () -> Content) {
+    public init(proxy: GeometryProxy, maxColumns: Int? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.proxy = proxy
         self.headerDescription = nil
         self.footerDescription = nil
         self.header = nil
         self.footer = nil
         self.content = content
+        self.maxColumns = maxColumns
     }
     
-    public init(proxy: GeometryProxy, headerDescription: String? = nil, footerDescription: String? = nil, @ViewBuilder content: @escaping () -> Content) {
+    public init(proxy: GeometryProxy, maxColumns: Int? = nil, headerDescription: String? = nil, footerDescription: String? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.proxy = proxy
         self.headerDescription = headerDescription
         self.footerDescription = footerDescription
         self.header = nil
         self.footer = nil
         self.content = content
+        self.maxColumns = maxColumns
     }
     
-    public init(proxy: GeometryProxy, header: (() -> any View)? = nil, footer: (() -> any View)? = nil, @ViewBuilder content: @escaping () -> Content) {
+    public init(proxy: GeometryProxy, maxColumns: Int? = nil, header: (() -> any View)? = nil, footer: (() -> any View)? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.proxy = proxy
         self.headerDescription = nil
         self.footerDescription = nil
         self.header = header
         self.footer = footer
         self.content = content
+        self.maxColumns = maxColumns
     }
     
     public var body: some View {
@@ -55,7 +59,7 @@ public struct RefdsSection<Content: View>: View {
     private var macOSView: some View  {
         VStack {
             macOSHeader
-            LazyVGrid(columns: .columns(width: proxy.size.width)) {
+            LazyVGrid(columns: .columns(width: proxy.size.width, maxAmount: maxColumns)) {
                 content().refdsCard()
             }.padding(.horizontal)
             macOSFooter
