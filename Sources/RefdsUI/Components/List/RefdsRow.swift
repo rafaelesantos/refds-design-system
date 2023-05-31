@@ -8,6 +8,7 @@
 import SwiftUI
 
 public struct RefdsRow<Content: View>: View {
+    @Environment(\.colorScheme) private var scheme
     @State private var isPresented: Bool = false
     
     private let presentationStyle: RefdsPresentationStyle
@@ -15,7 +16,7 @@ public struct RefdsRow<Content: View>: View {
     private let destination: (() -> any View)?
     private let action: (() -> Void)?
     
-    public init(_ presentationStyle: RefdsPresentationStyle = .push, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil, action: (() -> Void)? = nil) {
+    public init(_ presentationStyle: RefdsPresentationStyle = .push, action: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil) {
         self.presentationStyle = presentationStyle
         self.content = content
         self.destination = destination
@@ -89,6 +90,7 @@ public struct RefdsRow<Content: View>: View {
                 RefdsIcon(symbol: .chevronRight, color: .secondary, size: 17)
             }
         }
+        .background(.clear)
     }
 }
 
@@ -116,7 +118,7 @@ public extension View {
                         destination()
                             .toolbar {
                                 ToolbarItem(placement: .automatic) {
-                                    RefdsButton { isPresented.wrappedValue.toggle() } content: {
+                                    RefdsButton { isPresented.wrappedValue.toggle() } label: {
                                         RefdsIcon(symbol: .xmarkCircleFill, color: .secondary)
                                     }
                                 }

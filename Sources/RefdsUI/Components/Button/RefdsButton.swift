@@ -24,11 +24,11 @@ public struct RefdsButton: View {
         self.content = nil
     }
     
-    public init(action: (() -> Void)? = nil, content: (() -> any View)? = nil) {
+    public init(action: (() -> Void)? = nil, label: (() -> any View)? = nil) {
         self.title = ""
         self.color = .accentColor
         self.style = .custom
-        self.content = content
+        self.content = label
         self.action = action
         self.maxSize = false
     }
