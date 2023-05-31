@@ -38,7 +38,7 @@ public struct RefdsRow<Content: View>: View {
     
     private func button(destination: @escaping () -> any View) -> some View {
         #if os(macOS)
-        label.onTapGesture {
+        label.background(.clear).onTapGesture {
             withAnimation { isPresented.toggle() }
         }.refdsNavigation(presentationStyle, isPresented: $isPresented) {
             AnyView(destination())
@@ -54,7 +54,7 @@ public struct RefdsRow<Content: View>: View {
     
     private func button(action: @escaping () -> Void) -> some View {
         #if os(macOS)
-        label.onTapGesture {
+        label.background(.clear).onTapGesture {
             withAnimation { action() }
         }
         #else
@@ -66,7 +66,7 @@ public struct RefdsRow<Content: View>: View {
     
     private func button(destination: @escaping () -> any View, action: @escaping () -> Void) -> some View {
         #if os(macOS)
-        label.onTapGesture {
+        label.background(.clear).onTapGesture {
             action()
             withAnimation { isPresented.toggle() }
         }.refdsNavigation(presentationStyle, isPresented: $isPresented) {
@@ -90,7 +90,7 @@ public struct RefdsRow<Content: View>: View {
                 RefdsIcon(symbol: .chevronRight, color: .secondary, size: 17)
             }
         }
-        .background(.clear)
+        .frame(maxWidth: .infinity)
     }
 }
 

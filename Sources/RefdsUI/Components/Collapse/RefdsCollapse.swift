@@ -56,14 +56,26 @@ public struct RefdsCollapse: View {
     }
 }
 
-struct RefdsCollapse_Previews: PreviewProvider {
-    @State static var isCollapsed: Bool = true
-    static var previews: some View {
+struct CollapsedView: View {
+    @State var isCollapsed: Bool = true
+    
+    var body: some View {
         VStack(spacing: 20) {
             RefdsCollapse(isCollapsed: $isCollapsed, title: "Toggle content") {
                 ForEach(0...5, id: \.self) { _ in
                     RefdsTag("Round \(Int.random(in: 150...980))", color: .random)
                 }
+            }
+        }
+    }
+}
+
+struct RefdsCollapse_Previews: PreviewProvider {
+    static var previews: some View {
+        RefdsList { _ in
+            RefdsRow {
+                CollapsedView()
+                    .padding()
             }
         }
     }
