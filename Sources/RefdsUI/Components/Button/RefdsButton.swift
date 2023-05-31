@@ -41,13 +41,14 @@ public struct RefdsButton: View {
         .cornerRadius(10)
         
         #else
-        Button { action?() } label: {
+        HStack {
             RefdsText(title, style: .footnote, color: .white, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
         .background(color)
         .cornerRadius(10)
+        .onTapGesture { action?() }
         #endif
     }
     
@@ -62,13 +63,14 @@ public struct RefdsButton: View {
         .cornerRadius(10)
         
         #else
-        Button { action?() } label: {
+        HStack {
             RefdsText(title, style: .footnote, color: color, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
         .background(color.opacity(0.15))
         .cornerRadius(10)
+        .onTapGesture { action?() }
         #endif
     }
     
@@ -81,11 +83,12 @@ public struct RefdsButton: View {
         }
         
         #else
-        Button { action?() } label: {
+        HStack {
             RefdsText(title, style: .footnote, color: color, weight: .bold, alignment: .center)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
+        .onTapGesture { action?() }
         #endif
     }
 }

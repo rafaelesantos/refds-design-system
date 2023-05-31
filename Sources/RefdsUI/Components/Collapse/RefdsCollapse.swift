@@ -27,9 +27,9 @@ public struct RefdsCollapse: View {
     
     public var body: some View {
         #if os(macOS)
-        Button {
-            withAnimation { isCollapsed.toggle() }
-        } label: { toggle }
+        HStack { toggle }
+            .background(.clear)
+            .onTapGesture { withAnimation { isCollapsed.toggle() } }
         #else
         Button(.medium) {
             withAnimation { isCollapsed.toggle() }
@@ -61,7 +61,7 @@ struct RefdsCollapse_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 20) {
             RefdsCollapse(isCollapsed: $isCollapsed, title: "Toggle content") {
-                ForEach(0...10, id: \.self) { _ in
+                ForEach(0...5, id: \.self) { _ in
                     RefdsTag("Round \(Int.random(in: 150...980))", color: .random)
                 }
             }
