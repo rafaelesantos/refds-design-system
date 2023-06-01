@@ -41,8 +41,8 @@ public struct RefdsAlertModifier: ViewModifier {
                     RefdsAlert(
                         style: alert.style,
                         withBackground: true,
-                        primaryAction: .init(title: alert.primaryAction?.title ?? "", action: { alert.primaryAction?.action?(); self.dismissToast() }),
-                        secondaryAction: .init(title: alert.secondaryAction?.title ?? "", action: { alert.secondaryAction?.action?(); self.dismissToast() })
+                        primaryAction: .init(title: alert.primaryAction?.title ?? "", action: { alert.primaryAction?.action?(); self.dismissAlert() }),
+                        secondaryAction: .init(title: alert.secondaryAction?.title ?? "", action: { alert.secondaryAction?.action?(); self.dismissAlert() })
                     )
                     if isBasicAlert {
                         Spacer()
@@ -67,11 +67,11 @@ public struct RefdsAlertModifier: ViewModifier {
         let optionalDuration = alert.style.duration ?? (alert.primaryAction == nil && alert.secondaryAction == nil ? 5 : nil)
         guard let duration = optionalDuration else { return }
         if duration > 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + duration) { dismissToast() }
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration) { dismissAlert() }
         }
     }
     
-    private func dismissToast() {
+    private func dismissAlert() {
         withAnimation { isAppear = false }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation { alert = nil }
