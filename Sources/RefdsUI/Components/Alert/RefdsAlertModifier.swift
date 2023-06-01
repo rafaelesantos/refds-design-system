@@ -51,7 +51,7 @@ public struct RefdsAlertModifier: ViewModifier {
                 Spacer()
             }
             .transition(.move(edge: .bottom))
-            .background(.ultraThinMaterial.opacity(isAppear && isBasicAlert ? 0.7 : 0))
+            .background(Color.black.opacity(isAppear && isBasicAlert ? 0.2 : 0))
         }
     }
     

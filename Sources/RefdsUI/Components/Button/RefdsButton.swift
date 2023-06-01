@@ -45,7 +45,7 @@ public struct RefdsButton: View {
     private var primary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
@@ -54,7 +54,7 @@ public struct RefdsButton: View {
         
         #else
         HStack {
-            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
@@ -67,7 +67,7 @@ public struct RefdsButton: View {
     private var secondary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
                 .overlay {
@@ -79,7 +79,7 @@ public struct RefdsButton: View {
         .cornerRadius(10)
         #else
         HStack {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
                 .overlay {
@@ -96,14 +96,14 @@ public struct RefdsButton: View {
     private var tertiary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
         
         #else
         HStack {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center)
+            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }

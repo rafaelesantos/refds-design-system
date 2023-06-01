@@ -51,11 +51,11 @@ public struct RefdsAlert: View {
             }
             
             HStack(spacing: 15) {
-                if let primaryAction = primaryAction {
+                if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
                     RefdsButton(primaryAction.title, color: style.color, style: .primary, action: primaryAction.action)
                 }
                 
-                if let secondaryAction = secondaryAction {
+                if let secondaryAction = secondaryAction, !secondaryAction.title.isEmpty {
                     RefdsButton(secondaryAction.title, color: style.color, style: .secondary, action: secondaryAction.action)
                 }
             }
@@ -69,7 +69,7 @@ public struct RefdsAlert: View {
             }
             RefdsText(title, style: .body)
             Spacer()
-            if let primaryAction = primaryAction {
+            if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
                 RefdsButton(primaryAction.title, color: style.color, style: .primary, maxSize: false, action: primaryAction.action)
             }
         }
@@ -155,7 +155,7 @@ public extension RefdsAlert {
                 switch self {
                 case .info: return .blue
                 case .success: return .green
-                case .warning: return .yellow
+                case .warning: return .orange
                 case .critical: return .red
                 case .none: return .accentColor
                 }

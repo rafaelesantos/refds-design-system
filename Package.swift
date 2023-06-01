@@ -16,11 +16,17 @@ let package = Package(
             name: "RefdsUI",
             targets: ["RefdsUI"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/refdsenterprise/refds-resource.git", branch: "main"),
+        .package(url: "https://github.com/refdsenterprise/refds-core.git", branch: "main")
+    ],
     targets: [
         .target(
             name: "RefdsUI",
-            dependencies: [],
+            dependencies: [
+                .product(name: "RefdsResource", package: "refds-resource"),
+                .product(name: "RefdsCore", package: "refds-core")
+            ],
             resources: [
                 .copy("Resource/Fonts/Moderat-Thin.ttf"),
                 .copy("Resource/Fonts/Moderat-Light.ttf"),
