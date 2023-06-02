@@ -17,7 +17,7 @@ public struct RefdsCard: ViewModifier {
         .background(Color.secondaryBackground(scheme: scheme))
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.10), radius: 20, y: 5)
-        .padding(10)
+        .padding(.all, 2)
     }
 }
 

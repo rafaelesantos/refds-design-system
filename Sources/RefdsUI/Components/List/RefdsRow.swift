@@ -140,6 +140,12 @@ struct RefdsRow_Previews: PreviewProvider {
                     } destination: {
                         RefdsTag("Lorem Ipsum", color: .random)
                     }
+                    
+                    RefdsRow(.sheet) {
+                        RefdsText("Lorem Ipsum 2")
+                    } destination: {
+                        RefdsTag("Lorem Ipsum 1", color: .random)
+                    }
                 }
                 
                 RefdsSection(proxy: $0) {

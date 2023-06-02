@@ -11,6 +11,7 @@ public struct RefdsSection<Content: View>: View {
     @Environment(\.colorScheme) private var colorScheme
     
     private let proxy: GeometryProxy
+    private let style: Style
     private let content: () -> Content
     private let headerDescription: String?
     private let footerDescription: String?
@@ -18,8 +19,9 @@ public struct RefdsSection<Content: View>: View {
     private let footer: (() -> any View)?
     private let maxColumns: Int?
     
-    public init(proxy: GeometryProxy, maxColumns: Int? = nil, @ViewBuilder content: @escaping () -> Content) {
+    public init(proxy: GeometryProxy, style: Style = .card, maxColumns: Int? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.proxy = proxy
+        self.style = style
         self.headerDescription = nil
         self.footerDescription = nil
         self.header = nil
@@ -28,8 +30,9 @@ public struct RefdsSection<Content: View>: View {
         self.maxColumns = maxColumns
     }
     
-    public init(proxy: GeometryProxy, maxColumns: Int? = nil, headerDescription: String? = nil, footerDescription: String? = nil, @ViewBuilder content: @escaping () -> Content) {
+    public init(proxy: GeometryProxy, style: Style = .card, maxColumns: Int? = nil, headerDescription: String? = nil, footerDescription: String? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.proxy = proxy
+        self.style = style
         self.headerDescription = headerDescription
         self.footerDescription = footerDescription
         self.header = nil
@@ -38,8 +41,9 @@ public struct RefdsSection<Content: View>: View {
         self.maxColumns = maxColumns
     }
     
-    public init(proxy: GeometryProxy, maxColumns: Int? = nil, header: (() -> any View)? = nil, footer: (() -> any View)? = nil, @ViewBuilder content: @escaping () -> Content) {
+    public init(proxy: GeometryProxy, style: Style = .card, maxColumns: Int? = nil, header: (() -> any View)? = nil, footer: (() -> any View)? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.proxy = proxy
+        self.style = style
         self.headerDescription = nil
         self.footerDescription = nil
         self.header = header
@@ -59,8 +63,15 @@ public struct RefdsSection<Content: View>: View {
     private var macOSView: some View  {
         VStack {
             macOSHeader.padding(.horizontal)
-            LazyVGrid(columns: .columns(width: proxy.size.width, maxAmount: maxColumns)) {
-                content().refdsCard()
+            switch style {
+            case .card:
+                LazyVGrid(columns: .columns(width: proxy.size.width, maxAmount: maxColumns)) {
+                    content().refdsCard()
+                }
+            case .inline:
+                LazyVGrid(columns: .columns(width: proxy.size.width, maxAmount: maxColumns)) {
+                    content()
+                }
             }
             macOSFooter.padding(.horizontal)
         }
@@ -110,6 +121,13 @@ public struct RefdsSection<Content: View>: View {
                 RefdsText(footerDescription, style: .footnote, color: .secondary)
             } else if let footer = footer { AnyView(footer()) }
         }
+    }
+}
+
+public extension RefdsSection {
+    enum Style {
+        case inline
+        case card
     }
 }
 
