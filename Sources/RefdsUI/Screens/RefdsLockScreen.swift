@@ -17,9 +17,9 @@ public struct RefdsLockScreen: View {
     public var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Spacer()
-                authIcon.padding()
-                RefdsText(.refdsString(.lockScreen(.title)), style: .title2, weight: .bold)
-                RefdsText(.refdsString(.lockScreen(.description)), alignment: .center)
+            authIcon.padding()
+            RefdsText(.refdsString(.lockScreen(.title)), style: .title2, weight: .bold)
+            RefdsText(.refdsString(.lockScreen(.description)), alignment: .center)
             Spacer()
             RefdsButton(.refdsString(.lockScreen(.buttonTitle)), color: .accentColor, style: .primary, maxSize: true) {
                 authenticate()
@@ -90,8 +90,7 @@ public extension View {
 struct RefdsLockScreenView: View {
     @State private var authenticated: Bool = false
     var body: some View {
-        RefdsAlert(style: .basic(.critical, "Lorem Ipsum", nil))
-            .refdsAuth(autheticated: $authenticated)
+        RefdsLockScreen(authenticated: $authenticated)
     }
 }
 
@@ -99,4 +98,10 @@ struct RefdsLockScreen_Previews: PreviewProvider {
     static var previews: some View {
         RefdsLockScreenView()
     }
+}
+
+struct JSONData: Codable {
+    var name: String
+    var date: Date
+    var age: Int
 }

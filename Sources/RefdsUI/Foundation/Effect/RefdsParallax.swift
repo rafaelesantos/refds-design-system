@@ -24,10 +24,12 @@ public extension View {
 class MotionManager: ObservableObject {
     @Published var pitch: Double = 0.0
     @Published var roll: Double = 0.0
-    
+    #if os(iOS)
     private var manager: CMMotionManager
+    #endif
 
     init() {
+        #if os(iOS)
         self.manager = CMMotionManager()
         self.manager.deviceMotionUpdateInterval = 1/60
         self.manager.startDeviceMotionUpdates(to: .main) { (motionData, error) in
@@ -41,5 +43,6 @@ class MotionManager: ObservableObject {
                 self.roll = motionData.attitude.roll
             }
         }
+        #endif
     }
 }
