@@ -16,6 +16,10 @@ struct ParallaxMotionModifier: ViewModifier {
 }
 
 public extension View {
+    func refdsShadow(radius: CGFloat = 20, y: CGFloat = 5) -> some View {
+        self.shadow(color: .black.opacity(0.15), radius: radius, y: y)
+    }
+    
     func refdsParallax(magnitude: Double) -> some View {
         self.modifier(ParallaxMotionModifier(magnitude: magnitude))
     }
