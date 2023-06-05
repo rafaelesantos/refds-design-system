@@ -78,7 +78,7 @@ struct RefdsToggleStyle: ToggleStyle {
     
     private func leading(configuration: Configuration) -> some View {
         HStack {
-            styleView.padding(.trailing, 15)
+            styleView.padding(.trailing, 10)
             configuration.label
         }
     }
