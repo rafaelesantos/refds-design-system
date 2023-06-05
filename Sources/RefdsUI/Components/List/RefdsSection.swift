@@ -75,7 +75,7 @@ public struct RefdsSection<Content: View>: View {
             }
             macOSFooter.padding(.horizontal)
         }
-        .padding()
+        .padding(.vertical, 8)
         .padding(.horizontal)
     }
     
@@ -142,6 +142,12 @@ extension Array where Element == GridItem {
 struct RefdsSection_Previews: PreviewProvider {
     static var previews: some View {
         RefdsList {
+            RefdsSection(proxy: $0, headerDescription: "alert example", footerDescription: "Nullam non tempor purus, ut maximus sem. Sed vel erat et dolor scelerisque tincidunt eu quis ex.") {
+                RefdsAlert(style: .basic(.warning, "Lorem Ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vestibulum dignissim tellus eu viverra. In in quam mauris.\n\nMauris arcu quam, maximus iaculis nibh a, vehicula aliquet leo. Nullam non tempor purus, ut maximus sem. Sed vel erat et dolor scelerisque tincidunt eu quis ex."))
+                RefdsAlert(style: .inline(.critical, "Mauris arcu quam, maximus iaculis nibh a, vehicula aliquet leo."))
+                RefdsAlert(style: .basic(.success, "Lorem Ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vestibulum dignissim tellus eu viverra. In in quam mauris.\n\nMauris arcu quam, maximus iaculis nibh a, vehicula aliquet leo."), primaryAction: .init(title: "Primary"), secondaryAction: .init(title: "Secondary"))
+            }
+            
             RefdsSection(proxy: $0, headerDescription: "alert example", footerDescription: "Nullam non tempor purus, ut maximus sem. Sed vel erat et dolor scelerisque tincidunt eu quis ex.") {
                 RefdsAlert(style: .basic(.warning, "Lorem Ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vestibulum dignissim tellus eu viverra. In in quam mauris.\n\nMauris arcu quam, maximus iaculis nibh a, vehicula aliquet leo. Nullam non tempor purus, ut maximus sem. Sed vel erat et dolor scelerisque tincidunt eu quis ex."))
                 RefdsAlert(style: .inline(.critical, "Mauris arcu quam, maximus iaculis nibh a, vehicula aliquet leo."))
