@@ -3,6 +3,7 @@ import SwiftUI
 
 extension RefdsText {
     public enum Style {
+        case superTitle
         case largeTitle
         case title1
         case title2
@@ -19,6 +20,7 @@ extension RefdsText {
         public var value: CGFloat {
 #if os(iOS)
             switch self {
+            case .superTitle: return 40
             case .largeTitle: return 34.0
             case .title1: return 28.0
             case .title2: return 22.0
@@ -34,6 +36,7 @@ extension RefdsText {
             }
 #elseif os(macOS)
             switch self {
+            case .superTitle: return 30.5
             case .largeTitle: return 26.0
             case .title1: return 22.0
             case .title2: return 17.0
@@ -52,6 +55,7 @@ extension RefdsText {
         
         public var textStyle: Font.TextStyle {
             switch self {
+            case .superTitle: return .largeTitle
             case .largeTitle: return .largeTitle
             case .title1: return .title
             case .title2: return .title2
