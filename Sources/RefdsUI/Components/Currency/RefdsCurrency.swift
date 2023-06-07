@@ -27,7 +27,7 @@ public struct RefdsCurrency: View {
     
     public var body: some View {
         ZStack {
-            TextField(value.formatted(.currency(code: "BRL")), value: $value, format: .currency(code: "BRL"))
+            TextField(value.currency, value: $value, format: .currency(code: Locale.current.currencyCode ?? "BRL"))
                 .refdsFont(style: style, weight: weight, family: family, sizeCategory: sizeCategory)
                 .multilineTextAlignment(alignment)
                 .foregroundColor(color)
