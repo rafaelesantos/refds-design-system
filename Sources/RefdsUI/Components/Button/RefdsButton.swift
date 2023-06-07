@@ -72,10 +72,9 @@ public struct RefdsButton: View {
                 .padding()
                 .overlay {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .stroke(color, lineWidth: 1.5)
+                        .stroke(color, lineWidth: 2)
                 }
         }
-        .background(color.opacity(0.1))
         .cornerRadius(10)
         #else
         HStack {
@@ -84,10 +83,9 @@ public struct RefdsButton: View {
                 .padding()
                 .overlay {
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .stroke(color, lineWidth: 1.5)
+                        .stroke(color, lineWidth: 2)
                 }
         }
-        .background(color.opacity(0.1))
         .cornerRadius(10)
         .onTapGesture { action?() }
         #endif
