@@ -43,7 +43,12 @@ public extension View {
         self.sheet(item: item) { _ in
             if let items = item.wrappedValue?.items {
                 #if os(iOS)
-                RefdsShare(activityItems: items)
+                if #available(iOS 16.0, *) {
+                    RefdsShare(activityItems: items)
+                        .presentationDetents([.medium, .large])
+                } else {
+                    RefdsShare(activityItems: items)
+                }
                 #endif
             }
         }
