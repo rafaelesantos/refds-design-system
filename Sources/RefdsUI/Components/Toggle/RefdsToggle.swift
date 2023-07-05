@@ -45,7 +45,7 @@ struct RefdsToggleStyle: ToggleStyle {
     @ViewBuilder
     func makeBody(configuration: Configuration) -> some View {
         RefdsButton {
-            isOn.toggle()
+            withAnimation { isOn.toggle() }
         } label: {
             alignmentView(configuration: configuration)
         }
@@ -108,7 +108,7 @@ struct RefdsToggleStyle: ToggleStyle {
     
     private var toggle: some View {
         Capsule(style: .continuous)
-            .fill(isOn ? RefdsColor.accentColor : RefdsColor.secondary)
+            .fill(isOn ? RefdsColor.accentColor : RefdsColor.secondary.opacity(0.15))
             .animation(.default, value: isOn)
         #if os(macOS)
             .frame(width: 45, height: 28)
