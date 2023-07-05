@@ -91,7 +91,6 @@ public struct RefdsTextField: View {
                 sizeCategory: sizeCategory
             )
             .multilineTextAlignment(alignment)
-            .autocorrectionDisabled()
             .foregroundColor(color)
             .minimumScaleFactor(minimumScaleFactor)
             .lineLimit(lineLimit)
