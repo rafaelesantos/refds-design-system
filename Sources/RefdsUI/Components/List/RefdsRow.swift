@@ -12,12 +12,14 @@ public struct RefdsRow<Content: View>: View {
     @State private var isPresented: Bool = false
     
     private let presentationStyle: RefdsPresentationStyle
+    private let showArrowDestination: Bool
     private let content: () -> Content
     private let destination: (() -> any View)?
     private let action: (() -> Void)?
     
-    public init(_ presentationStyle: RefdsPresentationStyle = .push, action: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil) {
+    public init(_ presentationStyle: RefdsPresentationStyle = .push, showArrowDestination: Bool = true, action: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil) {
         self.presentationStyle = presentationStyle
+        self.showArrowDestination = showArrowDestination
         self.content = content
         self.destination = destination
         self.action = action
@@ -86,8 +88,8 @@ public struct RefdsRow<Content: View>: View {
         HStack {
             content()
             Spacer()
-            if destination != nil {
-                RefdsIcon(symbol: .chevronRight, color: .secondary, size: 17)
+            if showArrowDestination, destination != nil {
+                RefdsIcon(symbol: .chevronRight, color: .secondary.opacity(0.1), size: 17)
             }
         }
         .frame(maxWidth: .infinity)
