@@ -58,7 +58,7 @@ public struct RefdsSection<Content: View>: View {
         self.headerDescription = headerDescription
         self.footerDescription = nil
         self.header = nil
-        self.footer = footerContent
+        self.footer = footer
         self.content = content
         self.maxColumns = maxColumns
     }
