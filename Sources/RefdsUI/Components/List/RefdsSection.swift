@@ -52,7 +52,7 @@ public struct RefdsSection<Content: View>: View {
         self.maxColumns = maxColumns
     }
     
-    public init(proxy: GeometryProxy, style: Style = .card, maxColumns: Int? = nil, headerDescription: String? = nil, footer: (() -> any View)?, @ViewBuilder content: @escaping () -> Content) {
+    public init(proxy: GeometryProxy, style: Style = .card, maxColumns: Int? = nil, headerDescription: String?, footer: (() -> any View)?, @ViewBuilder content: @escaping () -> Content) {
         self.proxy = proxy
         self.style = style
         self.headerDescription = headerDescription
