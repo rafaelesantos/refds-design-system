@@ -89,7 +89,7 @@ public struct RefdsRow<Content: View>: View {
             content()
             Spacer()
             if showArrowDestination, destination != nil {
-                RefdsIcon(symbol: .chevronRight, color: .secondary.opacity(0.1), size: 17)
+                RefdsIcon(symbol: .chevronRight, color: .secondary.opacity(0.4), size: 17)
             }
         }
         .frame(maxWidth: .infinity)
