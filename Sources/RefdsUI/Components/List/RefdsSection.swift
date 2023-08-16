@@ -52,6 +52,17 @@ public struct RefdsSection<Content: View>: View {
         self.maxColumns = maxColumns
     }
     
+    public init(proxy: GeometryProxy, style: Style = .card, maxColumns: Int? = nil, headerDescription: String? = nil, footer: (() -> any View)? = nil, @ViewBuilder content: @escaping () -> Content) {
+        self.proxy = proxy
+        self.style = style
+        self.headerDescription = headerDescription
+        self.footerDescription = nil
+        self.header = nil
+        self.footer = footer
+        self.content = content
+        self.maxColumns = maxColumns
+    }
+    
     public var body: some View {
         if isLargeScreen {
             macOSView
