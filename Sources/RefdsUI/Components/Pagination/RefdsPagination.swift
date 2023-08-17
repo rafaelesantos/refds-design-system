@@ -92,6 +92,7 @@ public struct RefdsPagination: View {
                 }
             }
         }
+        .disabled((page > currentPage && !canChangeToNextPage()))
     }
     
     private func actionButtonPage(onPage page: Int) {
