@@ -15,6 +15,8 @@ public struct RefdsPagination: View {
             pages = pages.map({ $0 + 1 })
         } else if pages.min() == currentPage && (pages.min() ?? 0) > 1 {
             pages = pages.map({ $0 - 1 })
+        } else if pages.max() ?? 0 < currentPage {
+            pages = Array(((currentPage - 4) ... (currentPage + 1)))
         }
         self.pages = pages
         self.currentPage = currentPage
@@ -113,6 +115,6 @@ public struct RefdsPagination: View {
 
 struct RefdsPagination_Previews: PreviewProvider {
     static var previews: some View {
-        RefdsPagination(canChangeToNextPage: { false }, selectedPage: { _ in })
+        RefdsPagination(currentPage: 7, canChangeToNextPage: { false }, selectedPage: { _ in })
     }
 }
