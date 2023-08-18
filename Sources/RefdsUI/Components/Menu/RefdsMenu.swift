@@ -33,9 +33,6 @@ public struct RefdsMenu<Content: View>: View {
                     )
                     .frame(width: font.value * 1.3, height: font.value * 1.3)
                 }
-                .padding(6)
-                .background(color.opacity(0.2))
-                .cornerRadius(font.value * 0.4)
             }
             
             VStack(alignment: .leading) {
@@ -57,7 +54,7 @@ public struct RefdsMenu<Content: View>: View {
                 }
             }
             
-            Spacer()
+            Spacer(minLength: 10)
             
             if let detail = detail, !detail.isEmpty {
                 RefdsText(
