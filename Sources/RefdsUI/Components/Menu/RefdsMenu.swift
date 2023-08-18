@@ -2,12 +2,12 @@ import SwiftUI
 import RefdsCore
 
 public struct RefdsMenu<Content: View>: View {
-    @ViewBuilder private let content: () -> Content
+    private let content: () -> Content
     private let icon: RefdsIconSymbol?
     private let text: String?
     private let font: RefdsText.Style
     
-    public init(icon: RefdsIconSymbol?, text: String?, font: RefdsText.Style = .body, content: @escaping () -> Content) {
+    public init(icon: RefdsIconSymbol?, text: String?, font: RefdsText.Style = .body, @ViewBuilder content:  @escaping () -> Content) {
         self.content = content
         self.icon = icon
         self.text = text
