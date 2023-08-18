@@ -40,7 +40,7 @@ public struct RefdsMenu<Content: View>: View {
                     )
                 }
                 
-                if let description = description {
+                if let description = description, !description.isEmpty {
                     RefdsText(
                         description,
                         style: font,
@@ -52,7 +52,7 @@ public struct RefdsMenu<Content: View>: View {
             
             Spacer()
             
-            if let detail = detail {
+            if let detail = detail, !detail.isEmpty {
                 RefdsText(
                     detail,
                     style: font,
