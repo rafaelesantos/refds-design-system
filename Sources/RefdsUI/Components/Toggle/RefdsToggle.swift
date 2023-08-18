@@ -128,10 +128,6 @@ struct RefdsToggleStyle: ToggleStyle {
                 Circle().fill(.white).padding(2.5)
             }
     }
-    
-    private var none: some View {
-        
-    }
 }
 
 struct RefdsToggleView: View {
