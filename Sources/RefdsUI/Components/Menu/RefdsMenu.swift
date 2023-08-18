@@ -1,7 +1,6 @@
 import SwiftUI
 import RefdsCore
 
-@available(iOS 16.4, *)
 public struct RefdsMenu<Content: View>: View {
     @ViewBuilder private let content: () -> Content
     private let icon: RefdsIconSymbol?
@@ -46,7 +45,6 @@ public struct RefdsMenu<Content: View>: View {
     }
 }
 
-@available(iOS 16.4, *)
 struct RefdsMenu_Previews: PreviewProvider {
     static var previews: some View {
         List {
