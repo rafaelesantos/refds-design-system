@@ -54,7 +54,7 @@ public struct RefdsMenu<Content: View>: View {
                 }
             }
             
-            Spacer(minLength: 10)
+            Spacer(minLength: 0)
             
             if let detail = detail, !detail.isEmpty {
                 RefdsText(
