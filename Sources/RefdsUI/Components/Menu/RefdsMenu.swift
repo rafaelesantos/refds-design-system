@@ -22,11 +22,10 @@ public struct RefdsMenu<Content: View, Label: View>: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 10) {
                     content()
+                        .frame(maxWidth: .infinity)
                 }
-                .padding([.horizontal])
-                .frame(maxWidth: .infinity)
+                .padding()
             }
-            .padding(.vertical, 5)
             .presentationCompactAdaptation(.popover)
         }
     }
