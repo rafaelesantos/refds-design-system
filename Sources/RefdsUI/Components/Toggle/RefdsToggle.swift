@@ -53,12 +53,21 @@ struct RefdsToggleStyle: ToggleStyle {
     
     @ViewBuilder
     private func alignmentView(configuration: Configuration) -> some View {
-        switch alignment {
-        case .leading: leading(configuration: configuration)
-        case .trailing: trailing(configuration: configuration)
-        case .top: top(configuration: configuration)
-        case .bottom: bottom(configuration: configuration)
-        default: leading(configuration: configuration)
+        if style == .none {
+            VStack {
+                configuration.label
+                    .scaleEffect(isOn ? 0.9 : 1)
+            }
+            .background(isOn ? Color.accentColor : nil)
+            .cornerRadius(10)
+        } else {
+            switch alignment {
+            case .leading: leading(configuration: configuration)
+            case .trailing: trailing(configuration: configuration)
+            case .top: top(configuration: configuration)
+            case .bottom: bottom(configuration: configuration)
+            default: leading(configuration: configuration)
+            }
         }
     }
     
@@ -118,6 +127,10 @@ struct RefdsToggleStyle: ToggleStyle {
             .overlay(alignment: isOn ? .trailing: .leading) {
                 Circle().fill(.white).padding(2.5)
             }
+    }
+    
+    private var none: some View {
+        
     }
 }
 
