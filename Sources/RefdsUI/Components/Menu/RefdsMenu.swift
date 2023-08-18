@@ -19,53 +19,55 @@ public struct RefdsMenu<Content: View>: View {
         self.detail = detail
         self.font = font
     }
-
+    
     public var body: some View {
-        HStack(spacing: 15) {
-            if let icon = icon {
-                VStack {
-                    RefdsIcon(
-                        symbol: icon,
-                        color: color,
-                        size: font.value * 1.2,
-                        weight: .bold,
-                        renderingMode: .hierarchical
-                    )
-                    .frame(width: font.value * 1.3, height: font.value * 1.3)
-                }
-            }
-            
-            VStack(alignment: .leading) {
-                if let text = text {
-                    RefdsText(
-                        text,
-                        style: font,
-                        lineLimit: 1
-                    )
+        Menu { content() } label: {
+            HStack(spacing: 15) {
+                if let icon = icon {
+                    VStack {
+                        RefdsIcon(
+                            symbol: icon,
+                            color: color,
+                            size: font.value * 1.2,
+                            weight: .bold,
+                            renderingMode: .hierarchical
+                        )
+                        .frame(
+                            width: font.value * 1.3,
+                            height: font.value * 1.3
+                        )
+                    }
                 }
                 
-                if let description = description, !description.isEmpty {
+                VStack(alignment: .leading) {
+                    if let text = text {
+                        RefdsText(
+                            text,
+                            style: font,
+                            lineLimit: 1
+                        )
+                    }
+                    
+                    if let description = description, !description.isEmpty {
+                        RefdsText(
+                            description,
+                            style: font,
+                            color: .secondary,
+                            lineLimit: 1
+                        )
+                    }
+                }
+                
+                Spacer(minLength: 0)
+                
+                if let detail = detail, !detail.isEmpty {
                     RefdsText(
-                        description,
+                        detail,
                         style: font,
                         color: .secondary,
                         lineLimit: 1
                     )
                 }
-            }
-            
-            Spacer(minLength: 0)
-            
-            if let detail = detail, !detail.isEmpty {
-                RefdsText(
-                    detail,
-                    style: font,
-                    color: .secondary,
-                    lineLimit: 1
-                )
-            }
-            
-            Menu { content() } label: {
                 RefdsIcon(
                     symbol: .chevronUpChevronDown,
                     color: .secondary.opacity(0.5),
