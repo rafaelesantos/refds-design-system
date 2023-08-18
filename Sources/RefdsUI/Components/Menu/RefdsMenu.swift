@@ -23,17 +23,19 @@ public struct RefdsMenu<Content: View>: View {
     public var body: some View {
         HStack(spacing: 15) {
             if let icon = icon {
-                RefdsIcon(
-                    symbol: icon,
-                    color: color,
-                    size: font.value * 1.3,
-                    weight: .bold,
-                    renderingMode: .hierarchical
-                )
-                .frame(width: font.value * 1.5, height: font.value * 1.5)
-                .padding(5)
+                VStack {
+                    RefdsIcon(
+                        symbol: icon,
+                        color: color,
+                        size: font.value * 1.2,
+                        weight: .bold,
+                        renderingMode: .hierarchical
+                    )
+                    .frame(width: font.value * 1.3, height: font.value * 1.3)
+                }
+                .padding(6)
                 .background(color.opacity(0.2))
-                .cornerRadius(font.value * 0.3)
+                .cornerRadius(font.value * 0.4)
             }
             
             VStack(alignment: .leading) {
