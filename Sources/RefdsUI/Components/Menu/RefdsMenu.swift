@@ -2,31 +2,46 @@ import SwiftUI
 import RefdsCore
 
 @available(iOS 16.4, *)
-public struct RefdsMenu<Content: View, Label: View>: View {
+public struct RefdsMenu<Content: View>: View {
     @ViewBuilder private let content: () -> Content
-    @ViewBuilder private let label: () -> Label
-    @State private var selection: Bool = false
+    private let icon: RefdsIconSymbol?
+    private let text: String?
+    private let font: RefdsText.Style
     
-    public init(content: @escaping () -> Content, label: @escaping () -> Label) {
+    public init(icon: RefdsIconSymbol?, text: String?, font: RefdsText.Style = .body, content: @escaping () -> Content) {
         self.content = content
-        self.label = label
+        self.icon = icon
+        self.text = text
+        self.font = font
     }
 
     public var body: some View {
-        RefdsButton {
-            withAnimation { selection.toggle() }
-        } label: {
-            label()
-        }
-        .popover(isPresented: $selection) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    content()
-                        .frame(maxWidth: .infinity)
-                }
-                .padding()
+        HStack(spacing: 15) {
+            if let icon = icon {
+                RefdsIcon(
+                    symbol: icon,
+                    color: .accentColor,
+                    size: font.value * 1.1,
+                    weight: .bold,
+                    renderingMode: .hierarchical
+                )
             }
-            .presentationCompactAdaptation(.popover)
+            
+            if let text = text {
+                RefdsText(text, style: font)
+            }
+            
+            Spacer()
+            
+            Menu { content() } label: {
+                RefdsIcon(
+                    symbol: .chevronUpChevronDown,
+                    color: .secondary.opacity(0.5),
+                    size: 15,
+                    weight: .bold,
+                    renderingMode: .monochrome
+                )
+            }
         }
     }
 }
@@ -34,16 +49,14 @@ public struct RefdsMenu<Content: View, Label: View>: View {
 @available(iOS 16.4, *)
 struct RefdsMenu_Previews: PreviewProvider {
     static var previews: some View {
-        RefdsMenu {
-            ForEach(Array(0 ... 5), id: \.self) { _ in
-                HStack {
-                    VStack(alignment: .leading) {
+        List {
+            RefdsMenu(icon: .random, text: .randomWord, font: .body) {
+                ForEach(Array(0 ... 5), id: \.self) { _ in
+                    RefdsToggle(isOn: .constant(.random())) {
                         RefdsText(.randomWord)
-                        RefdsText(.randomWord, style: .footnote, color: .secondary)
                     }
-                    Spacer()
                 }
             }
-        } label: { RefdsText("Menu PopOver") }
+        }
     }
 }
