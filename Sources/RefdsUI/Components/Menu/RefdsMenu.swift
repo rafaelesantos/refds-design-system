@@ -8,8 +8,10 @@ public struct RefdsMenu<Content: View>: View {
     private let description: String?
     private let detail: String?
     private let font: RefdsText.Style
+    private let color: RefdsColor
     
-    public init(icon: RefdsIconSymbol?, text: String?, description: String? = nil, detail: String?, font: RefdsText.Style = .body, @ViewBuilder content:  @escaping () -> Content) {
+    public init(color: RefdsColor = .accentColor, icon: RefdsIconSymbol?, text: String?, description: String? = nil, detail: String?, font: RefdsText.Style = .body, @ViewBuilder content:  @escaping () -> Content) {
+        self.color = color
         self.content = content
         self.icon = icon
         self.text = text
@@ -23,12 +25,15 @@ public struct RefdsMenu<Content: View>: View {
             if let icon = icon {
                 RefdsIcon(
                     symbol: icon,
-                    color: .accentColor,
-                    size: font.value * 1.1,
+                    color: color,
+                    size: font.value * 1.3,
                     weight: .bold,
                     renderingMode: .hierarchical
                 )
-                .frame(width: font.value * 1.2, height: font.value * 1.2)
+                .frame(width: font.value * 1.5, height: font.value * 1.5)
+                .padding(5)
+                .background(color.opacity(0.2))
+                .cornerRadius(font.value * 0.3)
             }
             
             VStack(alignment: .leading) {
