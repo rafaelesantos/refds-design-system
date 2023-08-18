@@ -20,10 +20,11 @@ public struct RefdsMenu<Content: View>: View {
                 RefdsIcon(
                     symbol: icon,
                     color: .accentColor,
-                    size: font.value * 1.1,
+                    size: font.value,
                     weight: .bold,
                     renderingMode: .hierarchical
                 )
+                .frame(width: font.value * 1.1, height: font.value * 1.1)
             }
             
             if let text = text {
