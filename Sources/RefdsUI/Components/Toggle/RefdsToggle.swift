@@ -54,12 +54,15 @@ struct RefdsToggleStyle: ToggleStyle {
     @ViewBuilder
     private func alignmentView(configuration: Configuration) -> some View {
         if style == .none {
-            VStack {
-                configuration.label
-                    .scaleEffect(isOn ? 0.9 : 1)
-            }
-            .background(isOn ? Color.accentColor : nil)
-            .cornerRadius(10)
+            configuration.label
+                .overlay {
+                    VStack {
+                        Spacer()
+                        HStack { Spacer() }
+                    }
+                    .background(isOn ? RefdsColor.accentColor.opacity(0.1) : nil)
+                    .cornerRadius(10)
+                }
         } else {
             switch alignment {
             case .leading: leading(configuration: configuration)
@@ -134,8 +137,9 @@ struct RefdsToggleView: View {
     @State var isOn: Bool = false
     
     var body: some View {
-        RefdsToggle(isOn: $isOn, style: .toggle, alignment: .trailing) {
+        RefdsToggle(isOn: $isOn, style: .none, alignment: .trailing) {
             RefdsAlert(style: .inline(.critical, "Ops ocorreu um erro"))
+                .refdsCard()
         }
     }
 }
@@ -143,7 +147,6 @@ struct RefdsToggleView: View {
 struct RefdsToggle_Previews: PreviewProvider {
     static var previews: some View {
         RefdsToggleView()
-            .refdsCard()
             .padding()
     }
 }
