@@ -12,12 +12,14 @@ public struct RefdsToggle: View {
     private let style: Style
     private let content: (() -> any View)?
     private let alignment: Edge.Set
+    private let color: RefdsColor
     
-    public init(isOn: Binding<Bool>, style: Style = .toggle, alignment: Edge.Set = .trailing, content: (() -> any View)? = nil) {
+    public init(isOn: Binding<Bool>, style: Style = .toggle, alignment: Edge.Set = .trailing, color: RefdsColor = .accentColor, content: (() -> any View)? = nil) {
         self._isOn = isOn
         self.style = style
         self.content = content
         self.alignment = alignment
+        self.color = color
     }
     
     public var body: some View {
@@ -25,7 +27,7 @@ public struct RefdsToggle: View {
             if let content = content {
                 AnyView(content())
             }
-        }).toggleStyle(RefdsToggleStyle(isOn: $isOn, style: style, alignment: alignment))
+        }).toggleStyle(RefdsToggleStyle(isOn: $isOn, style: style, alignment: alignment, color: color))
     }
 }
 
@@ -41,6 +43,7 @@ struct RefdsToggleStyle: ToggleStyle {
     @Binding var isOn: Bool
     var style: RefdsToggle.Style
     var alignment: Edge.Set
+    var color: RefdsColor
     
     @ViewBuilder
     func makeBody(configuration: Configuration) -> some View {
@@ -55,7 +58,7 @@ struct RefdsToggleStyle: ToggleStyle {
     private func alignmentView(configuration: Configuration) -> some View {
         if style == .none {
             configuration.label
-                .background(isOn ? RefdsColor.accentColor.opacity(0.1) : nil)
+                .background(isOn ? color.opacity(0.1) : nil)
                 .cornerRadius(10)
         } else {
             switch alignment {
@@ -107,14 +110,14 @@ struct RefdsToggleStyle: ToggleStyle {
     }
     
     private var checkbox: some View {
-        RefdsIcon(symbol: .checkmarkCircleFill, color: isOn ? .accentColor : .secondary, size: 25, weight: .medium, renderingMode: .hierarchical)
+        RefdsIcon(symbol: .checkmarkCircleFill, color: isOn ? color : .secondary, size: 25, weight: .medium, renderingMode: .hierarchical)
             .scaleEffect(isOn ? 1 : 0.9)
             .animation(.default, value: isOn)
     }
     
     private var toggle: some View {
         Capsule(style: .continuous)
-            .fill(isOn ? RefdsColor.accentColor : RefdsColor.secondary.opacity(0.15))
+            .fill(isOn ? color : RefdsColor.secondary.opacity(0.15))
             .animation(.default, value: isOn)
         #if os(macOS)
             .frame(width: 45, height: 28)
@@ -131,7 +134,7 @@ struct RefdsToggleView: View {
     @State var isOn: Bool = false
     
     var body: some View {
-        RefdsToggle(isOn: $isOn, style: .none, alignment: .trailing) {
+        RefdsToggle(isOn: $isOn, style: .none, alignment: .trailing, color: .orange) {
             RefdsAlert(style: .inline(.critical, "Ops ocorreu um erro"))
                 .padding()
         }
@@ -141,6 +144,6 @@ struct RefdsToggleView: View {
 struct RefdsToggle_Previews: PreviewProvider {
     static var previews: some View {
         RefdsToggleView()
-            
+            .padding()
     }
 }
