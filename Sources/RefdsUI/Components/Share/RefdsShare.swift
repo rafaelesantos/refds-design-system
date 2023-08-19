@@ -7,68 +7,50 @@
 
 import SwiftUI
 
+public struct RefdsShare<Content: View>: View {
+    public typealias Callback = (_ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
+    
+    private let activityItems: [Any]
+    private let callback: Callback?
+    @ViewBuilder private let content: () -> Content
+    
+    public init(
+        activityItems: [Any],
+        callback: Callback? = nil,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.activityItems = activityItems
+        self.callback = callback
+        self.content = content
+    }
+    
+    public var body: some View {
+        RefdsButton { present() } label: { content() }
+    }
+    
+    func present() {
 #if os(iOS)
-struct RefdsShare: UIViewControllerRepresentable {
-    typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
-    
-    let activityItems: [Any]
-    let applicationActivities: [UIActivity]? = nil
-    let excludedActivityTypes: [UIActivity.ActivityType]? = nil
-    let callback: Callback? = nil
-    
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        let controller = UIActivityViewController(
-            activityItems: activityItems,
-            applicationActivities: applicationActivities)
-        controller.excludedActivityTypes = excludedActivityTypes
-        controller.completionWithItemsHandler = callback
-        return controller
-    }
-    
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) { }
-}
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        controller.completionWithItemsHandler = { _, complete, returnedItems, error in
+            self.callback?(complete, returnedItems, error)
+        }
+        let allScenes = UIApplication.shared.connectedScenes
+        let scene = allScenes.first { $0.activationState == .foregroundActive }
+        if let windowScene = scene as? UIWindowScene {
+            windowScene.keyWindow?.rootViewController?.present(
+                controller,
+                animated: true,
+                completion: nil
+            )
+        }
 #endif
-
-public struct RefdsShareItem: Identifiable {
-    public let id: UUID = .init()
-    public let items: [Any]
-    
-    public init(items: [Any]) {
-        self.items = items
-    }
-}
-
-public extension View {
-    func refdsShare(item: Binding<RefdsShareItem?>) -> some View {
-        self.sheet(item: item) { _ in
-            if let items = item.wrappedValue?.items {
-                #if os(iOS)
-                if #available(iOS 16.0, *) {
-                    RefdsShare(activityItems: items)
-                        .presentationDetents([.medium, .large])
-                } else {
-                    RefdsShare(activityItems: items)
-                }
-                #endif
-            }
-        }
-    }
-}
-
-struct RefdsShareView: View {
-    @State private var shareItem: RefdsShareItem?
-    
-    var body: some View {
-        RefdsButton("Share item") {
-            shareItem = .init(items: [URL(string: "google.com")!])
-        }
-        .refdsShare(item: $shareItem)
     }
 }
 
 struct RefdsShare_Previews: PreviewProvider {
     static var previews: some View {
-        RefdsShareView()
-            .padding()
+        RefdsShare(activityItems: [URL(string: "google.com")!]) {
+            RefdsText("Share Googlex")
+        }
     }
 }
