@@ -121,7 +121,11 @@ public extension View {
                             .toolbar {
                                 ToolbarItem(placement: .automatic) {
                                     RefdsButton { isPresented.wrappedValue.toggle() } label: {
-                                        RefdsIcon(symbol: .xmarkCircleFill, color: .secondary)
+                                        RefdsIcon(
+                                            symbol: .xmarkCircleFill,
+                                            color: .secondary.opacity(0.5),
+                                            size: 20
+                                        )
                                     }
                                 }
                             }
