@@ -17,9 +17,9 @@ public struct RefdsRow<Content: View>: View {
     private let destination: (() -> any View)?
     private let action: (() -> Void)?
     
-    public init(_ presentationStyle: RefdsPresentationStyle = .push, showArrowDestination: Bool = true, action: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil) {
+    public init(_ presentationStyle: RefdsPresentationStyle = .push, showArrowDestination: Bool = false, action: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content, destination: (() -> any View)? = nil) {
         self.presentationStyle = presentationStyle
-        self.showArrowDestination = showArrowDestination
+        self.showArrowDestination = showArrowDestination || destination != nil
         self.content = content
         self.destination = destination
         self.action = action
@@ -88,7 +88,7 @@ public struct RefdsRow<Content: View>: View {
         HStack {
             content()
             Spacer()
-            if showArrowDestination || destination != nil {
+            if showArrowDestination {
                 RefdsIcon(symbol: .chevronRight, color: .secondary.opacity(0.4), size: 17)
             }
         }
