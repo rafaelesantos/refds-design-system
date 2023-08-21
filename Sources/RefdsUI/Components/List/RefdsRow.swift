@@ -88,7 +88,7 @@ public struct RefdsRow<Content: View>: View {
         HStack {
             content()
             Spacer()
-            if showArrowDestination, destination != nil {
+            if showArrowDestination || destination != nil {
                 RefdsIcon(symbol: .chevronRight, color: .secondary.opacity(0.4), size: 17)
             }
         }
