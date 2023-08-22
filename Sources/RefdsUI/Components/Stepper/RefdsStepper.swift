@@ -1,21 +1,21 @@
 import SwiftUI
 
-public struct RefdsStepper: View {
+public struct RefdsStepper<Value: Numeric>: View {
     @Environment(\.colorScheme) private var colorScheme
-    private let byValue: Int
-    private let min: Int
-    private let max: Int
+    private let byValue: Value
+    private let min: Value
+    private let max: Value
     private let color: RefdsColor
     private let style: Style
-    @Binding private var current: Int
+    @State private var current: Value
     
-    public init(_ style: Style = .card, current: Binding<Int>, byValue: Int = 1, min: Int, max: Int, color: RefdsColor = .accentColor) {
+    public init(_ style: Style = .card, current: Binding<Value>, byValue: Value = 1, min: Value, max: Value, color: RefdsColor = .accentColor) {
         self.byValue = byValue
         self.min = min
         self.max = max
         self.color = color
         self.style = style
-        self._current = current
+        self._current = State(initialValue: current.wrappedValue)
     }
     
     public var body: some View {
@@ -41,7 +41,7 @@ public struct RefdsStepper: View {
     
     private var minusButton: some View {
         RefdsButton {
-            if current - byValue >= min {
+            if current.magnitude - byValue.magnitude >= min.magnitude {
                 current -= byValue
             }
         } label: {
@@ -53,12 +53,12 @@ public struct RefdsStepper: View {
                 renderingMode: .hierarchical
             )
         }
-        .disabled(current == min)
+        .disabled(current.magnitude == min.magnitude)
     }
     
     private var plusButton: some View {
         RefdsButton {
-            if current + byValue <= max {
+            if current.magnitude + byValue.magnitude <= max.magnitude {
                 current += byValue
             }
         } label: {
@@ -70,11 +70,11 @@ public struct RefdsStepper: View {
                 renderingMode: .hierarchical
             )
         }
-        .disabled(current == max)
+        .disabled(current.magnitude == max.magnitude)
     }
     
     private var width: CGFloat? {
-        current < 1000 ? 30 : nil
+        current.magnitude < 1000 ? 30 : nil
     }
 }
 
@@ -86,7 +86,7 @@ public extension RefdsStepper {
 }
 
 struct RefdsStepper_Previews: PreviewProvider {
-    @State static var value: Int = 100
+    @State static var value: Int = 5
     static var previews: some View {
         List {
             Section(content: {}, footer: {
