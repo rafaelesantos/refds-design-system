@@ -1,15 +1,15 @@
 import SwiftUI
 
-public struct RefdsStepper<Value: Numeric>: View {
+public struct RefdsStepper: View {
     @Environment(\.colorScheme) private var colorScheme
-    private let byValue: Value
-    private let min: Value
-    private let max: Value
+    private let byValue: Int
+    private let min: Int
+    private let max: Int
     private let color: RefdsColor
     private let style: Style
-    @Binding private var current: Value
+    @Binding private var current: Int
     
-    public init(_ style: Style = .card, current: Binding<Value>, byValue: Value = 1, min: Value, max: Value, color: RefdsColor = .accentColor) {
+    public init(_ style: Style = .card, current: Binding<Int>, byValue: Int = 1, min: Int, max: Int, color: RefdsColor = .accentColor) {
         self.byValue = byValue
         self.min = min
         self.max = max
@@ -41,7 +41,7 @@ public struct RefdsStepper<Value: Numeric>: View {
     
     private var minusButton: some View {
         RefdsButton {
-            if current.magnitude - byValue.magnitude >= min.magnitude {
+            if current - byValue >= min {
                 current -= byValue
             }
         } label: {
@@ -53,12 +53,12 @@ public struct RefdsStepper<Value: Numeric>: View {
                 renderingMode: .hierarchical
             )
         }
-        .disabled(current.magnitude == min.magnitude)
+        .disabled(current == min)
     }
     
     private var plusButton: some View {
         RefdsButton {
-            if current.magnitude + byValue.magnitude <= max.magnitude {
+            if current + byValue <= max {
                 current += byValue
             }
         } label: {
@@ -70,11 +70,11 @@ public struct RefdsStepper<Value: Numeric>: View {
                 renderingMode: .hierarchical
             )
         }
-        .disabled(current.magnitude == max.magnitude)
+        .disabled(current == max)
     }
     
     private var width: CGFloat? {
-        current.magnitude < 1000 ? 30 : nil
+        current < 1000 ? 30 : nil
     }
 }
 
