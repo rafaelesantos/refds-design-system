@@ -34,6 +34,7 @@ public struct RefdsStepper<Value: Numeric>: View {
         HStack(spacing: 20) {
             minusButton
             RefdsText("\(current)")
+                .frame(width: width)
             plusButton
         }
     }
@@ -71,6 +72,10 @@ public struct RefdsStepper<Value: Numeric>: View {
         }
         .disabled(current.magnitude == max.magnitude)
     }
+    
+    private var width: CGFloat? {
+        current.magnitude < 1000 ? 30 : nil
+    }
 }
 
 public extension RefdsStepper {
@@ -81,7 +86,7 @@ public extension RefdsStepper {
 }
 
 struct RefdsStepper_Previews: PreviewProvider {
-    @State static var value: Int = 5
+    @State static var value: Int = 100
     static var previews: some View {
         List {
             Section(content: {}, footer: {
