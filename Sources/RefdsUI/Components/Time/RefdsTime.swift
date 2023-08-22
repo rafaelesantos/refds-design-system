@@ -48,7 +48,7 @@ public struct RefdsTime: View {
                     delegate(value)
                     updateTime()
                 } label: {
-                    RefdsText(String(format: "%02.d", value))
+                    RefdsText("\(value)")
                 }
             }
         } label: {
