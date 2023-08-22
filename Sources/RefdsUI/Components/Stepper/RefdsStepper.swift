@@ -7,7 +7,7 @@ public struct RefdsStepper<Value: Numeric>: View {
     private let max: Value
     private let color: RefdsColor
     private let style: Style
-    @State private var current: Value
+    @Binding private var current: Value
     
     public init(_ style: Style = .card, current: Binding<Value>, byValue: Value = 1, min: Value, max: Value, color: RefdsColor = .accentColor) {
         self.byValue = byValue
@@ -15,7 +15,7 @@ public struct RefdsStepper<Value: Numeric>: View {
         self.max = max
         self.color = color
         self.style = style
-        self._current = State(initialValue: current.wrappedValue)
+        self._current = current
     }
     
     public var body: some View {
