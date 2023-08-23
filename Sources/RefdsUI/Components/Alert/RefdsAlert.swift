@@ -37,12 +37,9 @@ public struct RefdsAlert: View {
     }
     
     private func basic(_ style: Style.BasicType, title: String, message: String?) -> some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 15) {
                 Spacer()
-                if let icon = style.icon {
-                    RefdsIcon(symbol: icon, color: style.color, renderingMode: .hierarchical)
-                }
                 RefdsText(title, style: .title3, weight: .bold)
                 Spacer()
             }
@@ -51,17 +48,18 @@ public struct RefdsAlert: View {
                 HStack {
                     Spacer()
                     RefdsText(message, style: .subheadline, alignment: .center)
+                        .padding(.bottom, 15)
                     Spacer()
                 }
             }
             
             HStack(spacing: 5) {
                 if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
-                    RefdsButton(primaryAction.title, color: style.color, style: .primary, font: .footnote, action: primaryAction.action)
+                    RefdsButton(primaryAction.title, color: style.color, style: .primary, font: .subheadline, action: primaryAction.action)
                 }
                 
                 if let secondaryAction = secondaryAction, !secondaryAction.title.isEmpty {
-                    RefdsButton(secondaryAction.title, color: style.color, style: .secondary, font: .footnote, action: secondaryAction.action)
+                    RefdsButton(secondaryAction.title, color: style.color, style: .secondary, font: .subheadline, action: secondaryAction.action)
                 }
             }
         }

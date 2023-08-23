@@ -44,8 +44,8 @@ public struct RefdsAlertModifier: ViewModifier {
                         primaryAction: .init(title: alert.primaryAction?.title ?? "", action: { alert.primaryAction?.action?(); self.dismissAlert() }),
                         secondaryAction: .init(title: alert.secondaryAction?.title ?? "", action: { alert.secondaryAction?.action?(); self.dismissAlert() })
                     )
-                    .padding(.horizontal, isBasicAlert ? 40 : 20)
-                    .padding(.bottom, isBasicAlert ? nil : 20)
+                    .padding(.horizontal, isBasicAlert ? 30 : 15)
+                    .padding(.bottom, isBasicAlert ? nil : 15)
                     Spacer()
                 }
                 if isBasicAlert {
