@@ -54,6 +54,7 @@ public struct RefdsButton: View {
         }
         .background(color)
         .cornerRadius(6)
+        .refdsShadow(radius: 4, y: 4)
         
         #else
         HStack {
@@ -63,6 +64,7 @@ public struct RefdsButton: View {
         }
         .background(color)
         .cornerRadius(6)
+        .refdsShadow(radius: 4, y: 4)
         .onTapGesture { action?() }
         #endif
     }
@@ -79,6 +81,7 @@ public struct RefdsButton: View {
                 }
         }
         .cornerRadius(6)
+        .refdsShadow(radius: 4, y: 4)
         #else
         HStack {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
@@ -90,6 +93,7 @@ public struct RefdsButton: View {
                 }
         }
         .cornerRadius(6)
+        .refdsShadow(radius: 4, y: 4)
         .onTapGesture { action?() }
         #endif
     }
