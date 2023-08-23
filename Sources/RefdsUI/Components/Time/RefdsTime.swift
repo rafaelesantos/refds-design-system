@@ -32,34 +32,52 @@ public struct RefdsTime: View {
     @ViewBuilder
     private var menuByFormat: some View {
         switch format {
-        case .hour: menu { hour } delegate: { hour = $0 }
-        case .minute: menu { minute } delegate: { minute = $0 }
-        case .secont: menu { second } delegate: { second = $0 }
+        case .hour: menu(.hour)
+        case .minute: menu(.minute)
+        case .secont: menu(.secont)
         case .hourMinuteSecond: menuHourMinuteSecond
         case .hourMinute: menuHourMinute
         case .minuteSecond: menuMinuteSecond
         }
     }
     
-    private func menu(dataSource: @escaping () -> Int, delegate: @escaping (Int) -> Void) -> some View {
+    @ViewBuilder
+    private func menu(_ format: Format) -> some View {
         Menu {
             ForEach(Array(0...59), id: \.self) { value in
                 RefdsButton {
-                    delegate(value)
+                    switch format {
+                    case .hour: hour = value
+                    case .minute: minute = value
+                    case .secont: second = value
+                    default: break
+                    }
                     updateTime()
                 } label: {
                     RefdsText("\(value)")
                 }
             }
         } label: {
-            RefdsText("\(dataSource())", style: font, weight: .medium)
+            VStack {
+                switch format {
+                case .hour:
+                    RefdsText("hor.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
+                    RefdsText("\(hour)", style: font, weight: .bold)
+                case .minute:
+                    RefdsText("min.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
+                    RefdsText("\(minute)", style: font, weight: .bold)
+                case .secont:
+                    RefdsText("seg.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
+                    RefdsText("\(second)", style: font, weight: .bold)
+                default: EmptyView()
+                }
+            }
+            .frame(width: 25)
+            .padding(8)
+            .background(color.opacity(0.1))
+            .cornerRadius(6)
         }
-        .padding(6)
-        .frame(width: 40)
-        .overlay {
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
-                .stroke(color.opacity(0.5), lineWidth: 2)
-        }
+        
     }
     
     private func updateTime() {
@@ -68,27 +86,27 @@ public struct RefdsTime: View {
     
     private var menuHourMinuteSecond: some View {
         HStack {
-            menu { hour } delegate: { hour = $0 }
+            menu(.hour)
             RefdsText(":", style: .title2, color: color, weight: .bold)
-            menu { minute } delegate: { minute = $0 }
+            menu(.minute)
             RefdsText(":", style: .title2, color: color, weight: .bold)
-            menu { second } delegate: { second = $0 }
+            menu(.secont)
         }
     }
     
     private var menuMinuteSecond: some View {
         HStack {
-            menu { minute } delegate: { minute = $0 }
+            menu(.minute)
             RefdsText(":", style: .title2, color: color, weight: .bold)
-            menu { second } delegate: { second = $0 }
+            menu(.secont)
         }
     }
     
     private var menuHourMinute: some View {
         HStack {
-            menu { hour } delegate: { hour = $0 }
+            menu(.hour)
             RefdsText(":", style: .title2, color: color, weight: .bold)
-            menu { minute } delegate: { minute = $0 }
+            menu(.minute)
         }
     }
 }
@@ -107,7 +125,7 @@ public extension RefdsTime {
 struct RefdsTimeView: View {
     @State private var time: Int = 4200
     var body: some View {
-        RefdsTime(time: $time, format: .hourMinuteSecond, font: .body, color: .accentColor)
+        RefdsTime(time: $time, format: .minuteSecond, font: .body, color: .accentColor)
     }
 }
 
