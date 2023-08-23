@@ -94,7 +94,8 @@ public struct RefdsMenu<Content: View>: View {
             RefdsText(
                 detail,
                 style: font,
-                color: .secondary,
+                color: .accentColor,
+                weight: .medium,
                 lineLimit: 1
             ).padding(.trailing, 5)
         }
