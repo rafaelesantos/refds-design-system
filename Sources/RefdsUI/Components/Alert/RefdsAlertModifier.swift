@@ -34,9 +34,9 @@ public struct RefdsAlertModifier: ViewModifier {
     
     @ViewBuilder func mainView() -> some View {
         if let alert = alert {
-            HStack(alignment: .center) {
+            VStack {
                 Spacer()
-                VStack {
+                HStack(alignment: .center) {
                     Spacer()
                     RefdsAlert(
                         style: alert.style,
@@ -44,13 +44,13 @@ public struct RefdsAlertModifier: ViewModifier {
                         primaryAction: .init(title: alert.primaryAction?.title ?? "", action: { alert.primaryAction?.action?(); self.dismissAlert() }),
                         secondaryAction: .init(title: alert.secondaryAction?.title ?? "", action: { alert.secondaryAction?.action?(); self.dismissAlert() })
                     )
-                    .padding(.horizontal)
-                    .padding(.horizontal)
-                    if isBasicAlert {
-                        Spacer()
-                    }
+                    .padding(.horizontal, isBasicAlert ? 40 : 20)
+                    .padding(.bottom, isBasicAlert ? nil : 20)
+                    Spacer()
                 }
-                Spacer()
+                if isBasicAlert {
+                    Spacer()
+                }
             }
             .transition(.move(edge: .bottom))
             .background(Color.black.opacity(isAppear && isBasicAlert ? 0.2 : 0))
