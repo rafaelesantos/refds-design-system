@@ -65,7 +65,11 @@ public struct RefdsAlertModifier: ViewModifier {
         #else
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
         #endif
-        let optionalDuration = alert.style.duration ?? (alert.primaryAction == nil && alert.secondaryAction == nil ? 5 : nil)
+        var optionalDuration = alert.style.duration ?? (alert.primaryAction == nil && alert.secondaryAction == nil ? 5 : nil)
+        switch alert.style {
+        case .inline(_, _): optionalDuration = 5
+        default: break
+        }
         guard let duration = optionalDuration else { return }
         if duration > 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + duration) { dismissAlert() }
