@@ -103,18 +103,22 @@ public enum RefdsPresentationStyle {
 
 public extension View {
     @ViewBuilder
-    func refdsNavigation<Destination: View>(_ style: RefdsPresentationStyle = .sheet, isPresented: Binding<Bool>, destination: @escaping () -> Destination) -> some View {
+    func refdsNavigation<Destination: View>(_ style: RefdsPresentationStyle = .sheet, isPresented: Binding<Bool>, onDismiss: (() -> Void)? = nil, destination: @escaping () -> Destination) -> some View {
         switch style {
         case .push:
             self.background(
                 NavigationLink(
                     destination: destination(),
-                    isActive: isPresented
+                    isActive: Binding(get: { isPresented.wrappedValue }, set: {
+                        isPresented.wrappedValue = $0
+                        if !isPresented.wrappedValue { onDismiss?() }
+                    })
                 ) { EmptyView() }.hidden()
             )
         case .sheet:
             self.sheet(
                 isPresented: isPresented,
+                onDismiss: onDismiss,
                 content: {
                     NavigationView {
                         destination()
