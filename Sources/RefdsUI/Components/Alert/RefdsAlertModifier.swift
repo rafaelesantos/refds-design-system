@@ -34,7 +34,7 @@ public struct RefdsAlertModifier: ViewModifier {
     
     @ViewBuilder func mainView() -> some View {
         if let alert = alert {
-            HStack {
+            HStack(alignment: .center) {
                 Spacer()
                 VStack {
                     Spacer()

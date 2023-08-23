@@ -50,19 +50,19 @@ public struct RefdsButton: View {
         Button(.medium) { action?() } label: {
             RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding()
+                .padding(10)
         }
         .background(color)
-        .cornerRadius(10)
+        .cornerRadius(6)
         
         #else
         HStack {
             RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding()
+                .padding(10)
         }
         .background(color)
-        .cornerRadius(10)
+        .cornerRadius(6)
         .onTapGesture { action?() }
         #endif
     }
@@ -72,24 +72,24 @@ public struct RefdsButton: View {
         Button(.medium) { action?() } label: {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding()
+                .padding(10)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .stroke(color, lineWidth: 2)
                 }
         }
-        .cornerRadius(10)
+        .cornerRadius(6)
         #else
         HStack {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding()
+                .padding(10)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .stroke(color, lineWidth: 2)
                 }
         }
-        .cornerRadius(10)
+        .cornerRadius(6)
         .onTapGesture { action?() }
         #endif
     }
@@ -99,14 +99,14 @@ public struct RefdsButton: View {
         Button(.medium) { action?() } label: {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding()
+                .padding(10)
         }
         
         #else
         HStack {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding()
+                .padding(10)
         }
         .onTapGesture { action?() }
         #endif
@@ -145,6 +145,6 @@ struct RefdsButton_Previews: PreviewProvider {
             RefdsButton("Presentation Button", style: .secondary)
             RefdsButton("Presentation Button", style: .tertiary)
         }
-        .padding()
+        .padding(10)
     }
 }

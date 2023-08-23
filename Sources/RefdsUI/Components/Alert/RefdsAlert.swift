@@ -39,6 +39,7 @@ public struct RefdsAlert: View {
     private func basic(_ style: Style.BasicType, title: String, message: String?) -> some View {
         VStack(alignment: .leading, spacing: 15) {
             HStack(spacing: 15) {
+                Spacer()
                 if let icon = style.icon {
                     RefdsIcon(symbol: icon, color: style.color, renderingMode: .hierarchical)
                 }
@@ -47,16 +48,20 @@ public struct RefdsAlert: View {
             }
             
             if let message = message {
-                RefdsText(message, style: .subheadline)
+                HStack {
+                    Spacer()
+                    RefdsText(message, style: .subheadline, alignment: .center)
+                    Spacer()
+                }
             }
             
-            HStack(spacing: 15) {
+            HStack(spacing: 5) {
                 if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
-                    RefdsButton(primaryAction.title, color: style.color, style: .primary, action: primaryAction.action)
+                    RefdsButton(primaryAction.title, color: style.color, style: .primary, font: .footnote, action: primaryAction.action)
                 }
                 
                 if let secondaryAction = secondaryAction, !secondaryAction.title.isEmpty {
-                    RefdsButton(secondaryAction.title, color: style.color, style: .secondary, action: secondaryAction.action)
+                    RefdsButton(secondaryAction.title, color: style.color, style: .secondary, font: .footnote, action: secondaryAction.action)
                 }
             }
         }
@@ -70,7 +75,7 @@ public struct RefdsAlert: View {
             RefdsText(title, style: .body)
             Spacer()
             if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
-                RefdsButton(primaryAction.title, color: style.color, style: .primary, maxSize: false, action: primaryAction.action)
+                RefdsButton(primaryAction.title, color: style.color, style: .primary, font: .footnote, maxSize: false, action: primaryAction.action)
             }
         }
     }
