@@ -11,16 +11,18 @@ public struct RefdsButton: View {
     private let title: String
     private let color: RefdsColor
     private let style: Style
+    private let font: RefdsText.Style
     private let content: (() -> any View)?
     private let action: (() -> Void)?
     private let maxSize: Bool
     
-    public init(_ title: String, color: RefdsColor = .accentColor, style: Style = .primary, maxSize: Bool = true, action: (() -> Void)? = nil) {
+    public init(_ title: String, color: RefdsColor = .accentColor, style: Style = .primary, font: RefdsText.Style = .body, maxSize: Bool = true, action: (() -> Void)? = nil) {
         self.title = title
         self.color = color
         self.style = style
         self.action = action
         self.maxSize = maxSize
+        self.font = font
         self.content = nil
     }
     
@@ -30,6 +32,7 @@ public struct RefdsButton: View {
         self.style = .custom
         self.content = label
         self.action = action
+        self.font = .body
         self.maxSize = false
     }
     
@@ -45,7 +48,7 @@ public struct RefdsButton: View {
     private var primary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
+            RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
@@ -54,7 +57,7 @@ public struct RefdsButton: View {
         
         #else
         HStack {
-            RefdsText(title, style: .body, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
+            RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
@@ -67,7 +70,7 @@ public struct RefdsButton: View {
     private var secondary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
+            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
                 .overlay {
@@ -78,7 +81,7 @@ public struct RefdsButton: View {
         .cornerRadius(10)
         #else
         HStack {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
+            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
                 .overlay {
@@ -94,14 +97,14 @@ public struct RefdsButton: View {
     private var tertiary: some View {
         #if os(iOS)
         Button(.medium) { action?() } label: {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
+            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
         
         #else
         HStack {
-            RefdsText(title, style: .body, color: color, weight: .bold, alignment: .center, lineLimit: 1)
+            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding()
         }
