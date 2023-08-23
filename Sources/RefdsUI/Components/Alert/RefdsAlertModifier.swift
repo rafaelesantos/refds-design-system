@@ -53,7 +53,7 @@ public struct RefdsAlertModifier: ViewModifier {
                 }
             }
             .transition(.move(edge: .bottom))
-            .background(.ultraThinMaterial)
+            .background(isBasicAlert ? RefdsColor.secondary.opacity(0.1) : .clear)
         }
     }
     
