@@ -50,7 +50,7 @@ public struct RefdsButton: View {
         Button(.medium) { action?() } label: {
             RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(13)
+                .padding(14)
         }
         .background(color)
         .cornerRadius(6)
@@ -60,7 +60,7 @@ public struct RefdsButton: View {
         HStack {
             RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(13)
+                .padding(14)
         }
         .background(color)
         .cornerRadius(6)
@@ -74,26 +74,24 @@ public struct RefdsButton: View {
         Button(.medium) { action?() } label: {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(13)
+                .padding(14)
                 .overlay {
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .stroke(color, lineWidth: 2)
                 }
         }
         .cornerRadius(6)
-        .refdsShadow(radius: 4, y: 4)
         #else
         HStack {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(13)
+                .padding(14)
                 .overlay {
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .stroke(color, lineWidth: 2)
                 }
         }
         .cornerRadius(6)
-        .refdsShadow(radius: 4, y: 4)
         .onTapGesture { action?() }
         #endif
     }
@@ -103,14 +101,14 @@ public struct RefdsButton: View {
         Button(.medium) { action?() } label: {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(13)
+                .padding(14)
         }
         
         #else
         HStack {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(13)
+                .padding(14)
         }
         .onTapGesture { action?() }
         #endif
@@ -149,6 +147,6 @@ struct RefdsButton_Previews: PreviewProvider {
             RefdsButton("Presentation Button", style: .secondary)
             RefdsButton("Presentation Button", style: .tertiary)
         }
-        .padding(13)
+        .padding(14)
     }
 }
