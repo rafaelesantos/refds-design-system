@@ -44,7 +44,7 @@ public struct RefdsAlertModifier: ViewModifier {
                         primaryAction: .init(title: alert.primaryAction?.title ?? "", action: { alert.primaryAction?.action?(); self.dismissAlert() }),
                         secondaryAction: .init(title: alert.secondaryAction?.title ?? "", action: { alert.secondaryAction?.action?(); self.dismissAlert() })
                     )
-                    .padding(.horizontal, isBasicAlert ? 30 : 15)
+                    .padding(.horizontal, isBasicAlert ? 20 : 15)
                     .padding(.bottom, isBasicAlert ? nil : 15)
                     Spacer()
                 }
@@ -53,7 +53,6 @@ public struct RefdsAlertModifier: ViewModifier {
                 }
             }
             .transition(.move(edge: .bottom))
-            .background(Color.black.opacity(isAppear && isBasicAlert ? 0.2 : 0))
         }
     }
     
