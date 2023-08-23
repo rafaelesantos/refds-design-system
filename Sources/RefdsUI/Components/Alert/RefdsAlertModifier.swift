@@ -53,6 +53,7 @@ public struct RefdsAlertModifier: ViewModifier {
                 }
             }
             .transition(.move(edge: .bottom))
+            .background(.ultraThinMaterial)
         }
     }
     
