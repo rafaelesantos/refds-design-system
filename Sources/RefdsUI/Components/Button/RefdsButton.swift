@@ -54,7 +54,6 @@ public struct RefdsButton: View {
         }
         .background(color)
         .cornerRadius(8)
-        .refdsShadow(radius: 4, y: 4)
         
         #else
         HStack {
@@ -64,7 +63,6 @@ public struct RefdsButton: View {
         }
         .background(color)
         .cornerRadius(8)
-        .refdsShadow(radius: 4, y: 4)
         .onTapGesture { action?() }
         #endif
     }
