@@ -58,21 +58,21 @@ public struct RefdsTime: View {
                 }
             }
         } label: {
-            VStack {
+            HStack(alignment: .center) {
                 switch format {
                 case .hour:
-                    RefdsText("hor.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
                     RefdsText("\(hour)", style: font, weight: .bold)
+                    RefdsText("hor.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
                 case .minute:
-                    RefdsText("min.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
                     RefdsText("\(minute)", style: font, weight: .bold)
+                    RefdsText("min.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
                 case .secont:
-                    RefdsText("seg.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
                     RefdsText("\(second)", style: font, weight: .bold)
+                    RefdsText("seg.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
                 default: EmptyView()
                 }
             }
-            .frame(width: 25)
+            .frame(minWidth: 50)
             .padding(8)
             .background(RefdsColor.secondary.opacity(0.1))
             .cornerRadius(6)
@@ -123,7 +123,7 @@ public extension RefdsTime {
 }
 
 struct RefdsTimeView: View {
-    @State private var time: Int = 4200
+    @State private var time: Int = 55
     var body: some View {
         RefdsTime(time: $time, format: .minuteSecond, font: .body, color: .accentColor)
     }
