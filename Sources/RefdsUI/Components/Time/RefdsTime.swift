@@ -74,7 +74,7 @@ public struct RefdsTime: View {
             }
             .frame(width: 25)
             .padding(8)
-            .background(color.opacity(0.1))
+            .background(RefdsColor.secondary.opacity(0.1))
             .cornerRadius(6)
         }
         
