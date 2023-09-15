@@ -157,7 +157,7 @@ public extension RefdsButton {
 
 public extension View {
     @ViewBuilder
-    func refdsDisable(_ disable: Bool = true, insideList: Bool = true) -> some View {
+    func refdsDisable(_ disable: Bool = true) -> some View {
         if disable {
             ZStack {
                 self.accentColor(.secondary.opacity(0.2))
@@ -174,15 +174,12 @@ public extension View {
 
 struct RefdsButton_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            VStack {
-                RefdsButton("Presentation Button", style: .primary)
-                RefdsButton("Presentation Button", style: .secondary)
-                RefdsButton("Presentation Button", style: .tertiary)
-                RefdsButton("Presentation Button", style: .primary).refdsDisable()
-            }
-            .padding()
-            .navigationTitle("Presentation Button")
+        VStack {
+            RefdsButton("Presentation Button", style: .primary)
+            RefdsButton("Presentation Button", style: .secondary)
+            RefdsButton("Presentation Button", style: .tertiary)
+            RefdsButton("Presentation Button", style: .primary).refdsDisable()
         }
+        .padding()
     }
 }

@@ -115,11 +115,9 @@ public struct RefdsMonthCalendar: View {
 struct RefdsMonthCalendar_Previews: PreviewProvider {
     static var date: Date = .current
     static var previews: some View {
-        NavigationView {
-            RefdsMonthCalendar(selection: Binding(
-                get: { date },
-                set: { date = $0 }
-            ))
-        }
+        RefdsMonthCalendar(selection: Binding(
+            get: { date },
+            set: { date = $0 }
+        ))
     }
 }
