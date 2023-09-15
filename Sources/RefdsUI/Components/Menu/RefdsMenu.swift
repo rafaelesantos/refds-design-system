@@ -24,22 +24,33 @@ public struct RefdsMenu<Content: View>: View {
     }
     
     public var body: some View {
-        Menu { content() } label: {
-            switch style {
-            case .card:
-                label
-                    .padding()
-                    .background(RefdsColor.secondaryBackground(scheme: colorScheme))
-                    .cornerRadius(8)
-                    .frame(maxWidth: .infinity)
-            case .inline: label
-            }
+        switch style {
+        case .card: card
+        case .inline: inline
+        }
+    }
+    
+    private var card: some View {
+        HStack(spacing: 0) {
+            iconView
+            Menu { content() } label: { label }
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 10)
+        .background(RefdsColor.secondaryBackground(scheme: colorScheme))
+        .cornerRadius(8)
+        .frame(maxWidth: .infinity)
+    }
+    
+    private var inline: some View {
+        HStack(spacing: 0) {
+            iconView
+            Menu { content() } label: { label }
         }
     }
     
     private var label: some View {
         HStack(spacing: 0) {
-            iconView
             infoView
             Spacer(minLength: 0)
             detailView
@@ -50,19 +61,24 @@ public struct RefdsMenu<Content: View>: View {
     @ViewBuilder
     private var iconView: some View {
         if let icon = icon {
+            let size = style.iconSize(font: font)
             VStack {
                 RefdsIcon(
                     symbol: icon,
                     color: color,
-                    size: font.value * 1.2,
+                    size: size,
                     weight: .bold,
                     renderingMode: .hierarchical
                 )
                 .frame(
-                    width: font.value * 1.3,
-                    height: font.value * 1.3
+                    width: size * 1.2,
+                    height: size * 1.2
                 )
-            }.padding(.trailing, 10)
+                .padding(6)
+                .background(color.opacity(0.1))
+                .cornerRadius(6)
+            }
+            .padding(.trailing, 15)
         }
     }
     
@@ -85,7 +101,8 @@ public struct RefdsMenu<Content: View>: View {
                     lineLimit: 1
                 )
             }
-        }.padding(.trailing, 10)
+        }
+        .padding(.trailing, 15)
     }
     
     @ViewBuilder
@@ -115,6 +132,13 @@ public extension RefdsMenu {
     enum Style {
         case inline
         case card
+        
+        func iconSize(font: RefdsText.Style) -> CGFloat {
+            switch self {
+            case .inline: return 16
+            case .card: return font.value
+            }
+        }
     }
 }
 
@@ -144,6 +168,23 @@ struct RefdsMenu_Previews: PreviewProvider {
                 }
                 .padding(.horizontal, -30)
             })
+            Section {
+                RefdsMenu(style: .inline, icon: .random, text: .randomWord, detail: "\(Int.random(in: 2 ... 12))", font: .footnote) {
+                    ForEach(Array(0 ... 5), id: \.self) { _ in
+                        RefdsToggle(isOn: .constant(.random())) {
+                            RefdsText(.randomWord)
+                        }
+                    }
+                }
+                
+                RefdsMenu(style: .inline, icon: .random, text: .randomWord, detail: "\(Int.random(in: 12 ... 16))", font: .footnote) {
+                    ForEach(Array(0 ... 5), id: \.self) { _ in
+                        RefdsToggle(isOn: .constant(.random())) {
+                            RefdsText(.randomWord)
+                        }
+                    }
+                }
+            }
         }
     }
 }
