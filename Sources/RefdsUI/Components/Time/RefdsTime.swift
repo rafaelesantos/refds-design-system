@@ -125,7 +125,7 @@ public extension RefdsTime {
 struct RefdsTimeView: View {
     @State private var time: Int = 55
     var body: some View {
-        RefdsTime(time: $time, format: .minuteSecond, font: .body, color: .accentColor)
+        RefdsTime(time: $time, format: .hourMinuteSecond, font: .body, color: .accentColor)
     }
 }
 
