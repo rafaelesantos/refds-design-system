@@ -8,6 +8,8 @@
 import SwiftUI
 
 public struct RefdsButton: View {
+    @State private var isPressed: Bool = false
+    
     private let title: String
     private let color: RefdsColor
     private let style: Style
@@ -37,23 +39,27 @@ public struct RefdsButton: View {
     }
     
     public var body: some View {
-        switch style {
-        case .primary: primary
-        case .secondary: secondary
-        case .tertiary: tertiary
-        case .custom: custom
+        Group {
+            switch style {
+            case .primary: primary
+            case .secondary: secondary
+            case .tertiary: tertiary
+            case .custom: custom
+            }
         }
+        .scaleEffect(isPressed ? 1.05 : 1)
+        .animation(.easeOut, value: isPressed)
     }
     
     private var primary: some View {
         #if os(iOS)
-        Button(.medium) { action?() } label: {
+        Button(.medium) { pressButton() } label: {
             RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding(14)
         }
         .background(color)
-        .cornerRadius(8)
+        .clipShape(Capsule())
         
         #else
         HStack {
@@ -62,41 +68,41 @@ public struct RefdsButton: View {
                 .padding(14)
         }
         .background(color)
-        .cornerRadius(8)
-        .onTapGesture { action?() }
+        .clipShape(Capsule())
+        .onTapGesture { pressButton() }
         #endif
     }
     
     private var secondary: some View {
         #if os(iOS)
-        Button(.medium) { action?() } label: {
+        Button(.medium) { pressButton() } label: {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding(14)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    Capsule(style: .circular)
                         .stroke(color, lineWidth: 2)
                 }
         }
-        .cornerRadius(8)
+        .clipShape(Capsule())
         #else
         HStack {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding(14)
                 .overlay {
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    Capsule(style: .circular)
                         .stroke(color, lineWidth: 2)
                 }
         }
-        .cornerRadius(8)
-        .onTapGesture { action?() }
+        .clipShape(Capsule())
+        .onTapGesture { pressButton() }
         #endif
     }
     
     private var tertiary: some View {
         #if os(iOS)
-        Button(.medium) { action?() } label: {
+        Button(.medium) { pressButton() } label: {
             RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding(14)
@@ -108,7 +114,7 @@ public struct RefdsButton: View {
                 .frame(maxWidth: maxSize ? .infinity : nil)
                 .padding(14)
         }
-        .onTapGesture { action?() }
+        .onTapGesture { pressButton() }
         #endif
     }
     
@@ -116,15 +122,29 @@ public struct RefdsButton: View {
     private var custom: some View {
         if let content = content {
             #if os(iOS)
-            Button(.medium) { action?() } label: {
+            Button(.medium) {
+                isPressed.toggle()
+                action?()
+            } label: {
                 AnyView(content())
             }
             #else
             HStack {
                 AnyView(content())
             }
-            .onTapGesture { action?() }
+            .onTapGesture {
+                isPressed.toggle()
+                action?()
+            }
             #endif
+        }
+    }
+    
+    private func pressButton() {
+        isPressed.toggle()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            isPressed.toggle()
+            action?()
         }
     }
 }
