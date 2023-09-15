@@ -47,7 +47,7 @@ public struct RefdsButton: View {
             case .custom: custom
             }
         }
-        .scaleEffect(isPressed ? 1.05 : 1)
+        .scaleEffect(isPressed ? 0.95 : 1)
     }
     
     private var primary: some View {
@@ -121,20 +121,14 @@ public struct RefdsButton: View {
     private var custom: some View {
         if let content = content {
             #if os(iOS)
-            Button(.medium) {
-                isPressed.toggle()
-                action?()
-            } label: {
+            Button(.medium) { pressButton() } label: {
                 AnyView(content())
             }
             #else
             HStack {
                 AnyView(content())
             }
-            .onTapGesture {
-                isPressed.toggle()
-                action?()
-            }
+            .onTapGesture { pressButton() }
             #endif
         }
     }
