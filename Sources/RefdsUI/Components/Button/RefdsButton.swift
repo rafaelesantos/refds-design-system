@@ -48,7 +48,6 @@ public struct RefdsButton: View {
             }
         }
         .scaleEffect(isPressed ? 1.05 : 1)
-        .animation(.easeOut, value: isPressed)
     }
     
     private var primary: some View {
@@ -141,10 +140,14 @@ public struct RefdsButton: View {
     }
     
     private func pressButton() {
-        isPressed.toggle()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        withAnimation {
             isPressed.toggle()
-            action?()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            withAnimation {
+                self.isPressed.toggle()
+            }
+            self.action?()
         }
     }
 }
