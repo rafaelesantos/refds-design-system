@@ -134,13 +134,9 @@ public struct RefdsButton: View {
     }
     
     private func pressButton() {
-        withAnimation {
-            isPressed.toggle()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            withAnimation {
-                self.isPressed.toggle()
-            }
+        withAnimation { isPressed.toggle() }
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            withAnimation { self.isPressed.toggle() }
             self.action?()
         }
     }
