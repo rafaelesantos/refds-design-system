@@ -49,7 +49,7 @@ public struct RefdsWeekdaysCalendar: View {
             VStack {
                 let textColor = selectedDateTextColor(with: date)
                 RefdsText(date.asString(withDateFormat: .custom("EEEE")).uppercased(), style: .custom(10), color: textColor, weight: .bold)
-                RefdsText(date.asString(withDateFormat: .custom("dd")), style: .custom(10), color: textColor, weight: .light)
+                RefdsText(date.asString(withDateFormat: .custom("dd")), style: .custom(12), color: textColor, weight: .light)
             }
             .frame(width: 65)
             .padding(8)
