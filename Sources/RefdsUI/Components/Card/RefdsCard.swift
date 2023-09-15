@@ -8,11 +8,13 @@
 import SwiftUI
 
 public struct RefdsCard: ViewModifier {
+    @Environment(\.colorScheme) private var scheme
+    
     public func body(content: Content) -> some View {
         Group {
             content.padding()
         }
-        .background(RefdsColor.secondaryBackground)
+        .background(Color.secondaryBackground(scheme: scheme))
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.10), radius: 20, y: 5)
         .padding(.all, 2)
