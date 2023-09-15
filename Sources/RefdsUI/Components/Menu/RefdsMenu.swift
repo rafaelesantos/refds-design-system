@@ -2,7 +2,6 @@ import SwiftUI
 import RefdsCore
 
 public struct RefdsMenu<Content: View>: View {
-    @Environment(\.colorScheme) private var colorScheme
     private let content: () -> Content
     private let icon: RefdsIconSymbol?
     private let text: String?
@@ -37,7 +36,7 @@ public struct RefdsMenu<Content: View>: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 10)
-        .background(RefdsColor.secondaryBackground(scheme: colorScheme))
+        .background(RefdsColor.secondaryBackground)
         .cornerRadius(8)
     }
     

@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct RefdsStepper<Value: Numeric>: View {
-    @Environment(\.colorScheme) private var colorScheme
     private let byValue: Value
     private let min: Value
     private let max: Value
@@ -25,7 +24,7 @@ public struct RefdsStepper<Value: Numeric>: View {
         case .card:
             inline
                 .padding()
-                .background(RefdsColor.secondaryBackground(scheme: colorScheme))
+                .background(RefdsColor.secondaryBackground)
                 .cornerRadius(10)
         }
     }

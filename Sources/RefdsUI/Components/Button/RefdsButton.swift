@@ -155,13 +155,34 @@ public extension RefdsButton {
     }
 }
 
+public extension View {
+    @ViewBuilder
+    func refdsDisable(_ disable: Bool = true, insideList: Bool = true) -> some View {
+        if disable {
+            ZStack {
+                self.accentColor(.secondary.opacity(0.2))
+                Rectangle()
+                    .fill(.clear)
+                    .allowsHitTesting(false)
+            }
+            .fixedSize(horizontal: false, vertical: true)
+        } else {
+            self
+        }
+    }
+}
+
 struct RefdsButton_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            RefdsButton("Presentation Button", style: .primary)
-            RefdsButton("Presentation Button", style: .secondary)
-            RefdsButton("Presentation Button", style: .tertiary)
+        NavigationView {
+            VStack {
+                RefdsButton("Presentation Button", style: .primary)
+                RefdsButton("Presentation Button", style: .secondary)
+                RefdsButton("Presentation Button", style: .tertiary)
+                RefdsButton("Presentation Button", style: .primary).refdsDisable()
+            }
+            .padding()
+            .navigationTitle("Presentation Button")
         }
-        .padding(14)
     }
 }

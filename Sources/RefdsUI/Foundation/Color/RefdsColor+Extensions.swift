@@ -94,11 +94,12 @@ public extension RefdsColor {
         #endif
     }
     
-    static func secondaryBackground(scheme: ColorScheme) -> Self {
+    static var secondaryBackground: Self {
+        @Environment(\.colorScheme) var colorScheme
         #if os(iOS)
-        scheme == .light ? .white : Color(uiColor: .secondarySystemBackground)
+        return colorScheme == .light ? .white : Color(uiColor: .secondarySystemBackground)
         #else
-        scheme == .light ? .white : Color(nsColor: .controlBackgroundColor)
+        return colorScheme == .light ? .white : Color(nsColor: .controlBackgroundColor)
         #endif
     }
     
