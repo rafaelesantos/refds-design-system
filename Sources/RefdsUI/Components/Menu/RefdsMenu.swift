@@ -39,7 +39,6 @@ public struct RefdsMenu<Content: View>: View {
         .padding(.vertical, 10)
         .background(RefdsColor.secondaryBackground(scheme: colorScheme))
         .cornerRadius(8)
-        .frame(maxWidth: .infinity)
     }
     
     private var inline: some View {
