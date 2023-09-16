@@ -15,10 +15,10 @@ public struct RefdsEmptyView: View {
     
     public var body: some View {
         VStack(alignment: .center, spacing: 25) {
-            RefdsIcon(symbol: icon, color: color, size: 80, weight: .medium, renderingMode: .hierarchical)
+            RefdsIcon(symbol: icon, color: color, size: 60, weight: .medium, renderingMode: .hierarchical)
             VStack(alignment: .center, spacing: 5) {
-                RefdsText(title, style: .body, weight: .bold, alignment: .center)
-                RefdsText(description, style: .subheadline, color: .secondary, alignment: .center)
+                RefdsText(title, style: .title3, weight: .bold, alignment: .center)
+                RefdsText(description, style: .body, color: .secondary, alignment: .center)
             }
         }
         .frame(maxWidth: 250)
