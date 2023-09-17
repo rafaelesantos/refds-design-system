@@ -87,8 +87,7 @@ public struct RefdsMenu<Content: View>: View {
             if let text = text {
                 RefdsText(
                     text,
-                    style: font,
-                    lineLimit: 1
+                    style: font
                 )
             }
             
@@ -96,8 +95,7 @@ public struct RefdsMenu<Content: View>: View {
                 RefdsText(
                     description,
                     style: font,
-                    color: .secondary,
-                    lineLimit: 1
+                    color: .secondary
                 )
             }
         }
@@ -111,8 +109,7 @@ public struct RefdsMenu<Content: View>: View {
                 detail,
                 style: font,
                 color: .accentColor,
-                weight: .medium,
-                lineLimit: 1
+                weight: .medium
             ).padding(.trailing, 5)
         }
     }
