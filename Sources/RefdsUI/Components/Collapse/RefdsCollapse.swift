@@ -50,7 +50,7 @@ public struct RefdsCollapse: View {
                 Spacer()
             }
             
-            RefdsIcon(symbol: .chevronUp, color: .secondary.opacity(0.3), size: 15)
+            RefdsIcon(symbol: .chevronUp, color: .secondary.opacity(0.5), size: 15)
                 .rotationEffect(.degrees(isCollapsed ? 0 : 180))
         }
     }
