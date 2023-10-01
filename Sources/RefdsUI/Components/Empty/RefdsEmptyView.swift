@@ -25,34 +25,41 @@ public struct RefdsEmptyView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .center, spacing: 25) {
-            if let icon = icon {
-                RefdsIcon(
-                    symbol: icon,
-                    color: color,
-                    size: 50,
-                    weight: .medium,
-                    renderingMode: .hierarchical
-                )
-            }
-            VStack(alignment: .center, spacing: 5) {
+        VStack(alignment: .leading, spacing: 15) {
+            HStack(spacing: 15) {
+                if let icon = icon {
+                    RefdsIcon(
+                        symbol: icon,
+                        color: color,
+                        size: 30,
+                        weight: .medium,
+                        renderingMode: .hierarchical
+                    )
+                    .frame(width: 40, height: 40)
+                    .padding(10)
+                    .background(color.opacity(0.2))
+                    .cornerRadius(8)
+                }
+                
                 if let title = title {
                     RefdsText(
                         title,
                         style: .title3,
                         weight: .bold,
-                        alignment: .center
+                        alignment: .leading
                     )
                 }
                 
-                if let description = description {
-                    RefdsText(
-                        description,
-                        style: .body,
-                        color: .secondary,
-                        alignment: .center
-                    )
-                }
+                Spacer()
+            }
+            
+            if let description = description {
+                RefdsText(
+                    description,
+                    style: .body,
+                    color: .secondary,
+                    alignment: .leading
+                )
             }
             
             if let action = action, let titleAction = titleAction {
@@ -64,9 +71,10 @@ public struct RefdsEmptyView: View {
                     maxSize: true,
                     action: action
                 )
+                .padding(.top, 10)
             }
         }
-        .frame(maxWidth: 250)
+        .padding()
     }
 }
 
@@ -76,7 +84,11 @@ struct RefdsEmptyView_Previews: PreviewProvider {
             icon: .random,
             color: .random,
             title: .randomWord,
-            description: .randomParagraph
+            description: .randomParagraph,
+            titleAction: .randomWord,
+            action: { }
         )
+        .refdsCard()
+        .padding()
     }
 }
