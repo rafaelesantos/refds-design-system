@@ -75,9 +75,7 @@ public struct RefdsWeekdaysCalendar: View {
     }
     
     private func updateDays(_ proxy: ScrollViewProxy, date: Date, needReloadDays: Bool) {
-        let calendar = Calendar.current
-        if let correctDate = date.asString(withDateFormat: .dayMonthYear).asDate(withFormat: .dayMonthYear),
-           let interval = calendar.dateInterval(of: .month, for: correctDate) {
+        if let correctDate = date.asString(withDateFormat: .dayMonthYear).asDate(withFormat: .dayMonthYear) {
             selection = correctDate
             
             if needReloadDays {
