@@ -10,13 +10,13 @@ public struct RefdsPagination: View {
     public init(currentPage: Int = 1, color: RefdsColor = .accentColor, canChangeToNextPage: @escaping () -> Bool, selectedPage: @escaping (Int) -> Void) {
         self.selectedPage = selectedPage
         self.color = color
-        var pages: [Int] = [1, 2, 3, 4, 5, 6]
+        var pages: [Int] = [1, 2, 3, 4]
         if pages.max() == currentPage {
             pages = pages.map({ $0 + 1 })
         } else if pages.min() == currentPage && (pages.min() ?? 0) > 1 {
             pages = pages.map({ $0 - 1 })
         } else if pages.max() ?? 0 < currentPage {
-            pages = Array(((currentPage - 4) ... (currentPage + 1)))
+            pages = Array(((currentPage - 2) ... (currentPage + 1)))
         }
         self.pages = pages
         self.currentPage = currentPage
@@ -48,6 +48,7 @@ public struct RefdsPagination: View {
                 renderingMode: .hierarchical
             )
         }
+        .disabled(currentPage == 1)
     }
     
     private var rightButton: some View {
