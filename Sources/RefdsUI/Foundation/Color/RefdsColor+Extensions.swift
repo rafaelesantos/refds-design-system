@@ -150,3 +150,18 @@ public extension RefdsColor {
 public extension Color {
     var refdsColor: RefdsColor { RefdsColor(hex: asHex(alpha: true)) }
 }
+
+struct RefdsSecondaryBackgroundModifier: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
+    
+    func body(content: Content) -> some View {
+        content
+            .background(RefdsColor.secondaryBackground(scheme: colorScheme))
+    }
+}
+
+public extension View {
+    func refdsSecondaryBackground() -> some View {
+        self.modifier(RefdsSecondaryBackgroundModifier())
+    }
+}
