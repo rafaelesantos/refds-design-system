@@ -81,17 +81,6 @@ public struct RefdsPagination: View {
                 family: .moderat
             )
             .frame(width: 30, height: 50)
-            .overlay(alignment: .top) {
-                if currentPage == page {
-                    RefdsIcon(
-                        symbol: .triangleFill,
-                        color: color.opacity(0.2),
-                        size: 10,
-                        weight: .bold
-                    )
-                    .rotationEffect(.degrees(180))
-                }
-            }
         }
         .disabled((page > currentPage && !canChangeToNextPage()))
     }
