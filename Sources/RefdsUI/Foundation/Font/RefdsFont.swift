@@ -35,14 +35,14 @@ public final class RefdsFont {
     }
     
     private func registerRefdsFont() {
-        for family in FontFamily.allCases {
-            var fontNames: [Font.Weight: String] = [:]
-            for case let (weight, url?) in family.fonts {
-                guard let font = registerFont(at: url) else { continue }
-                fontNames[weight] = font.postScriptName as String?
-            }
-            self.fontNames[family] = fontNames
-        }
+//        for family in FontFamily.allCases {
+//            var fontNames: [Font.Weight: String] = [:]
+//            for case let (weight, url?) in family.fonts {
+//                guard let font = registerFont(at: url) else { continue }
+//                fontNames[weight] = font.postScriptName as String?
+//            }
+//            self.fontNames[family] = fontNames
+//        }
     }
     
     private func registerFont(at url: URL) -> CGFont? {
