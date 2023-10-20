@@ -53,7 +53,7 @@ public struct RefdsAlert: View {
             }
             HStack(spacing: 15) {
                 Spacer()
-                RefdsText(title, style: .title3, weight: .bold)
+                RefdsText(title, style: .title3, weight: .bold, alignment: .center)
                 Spacer()
             }
             
