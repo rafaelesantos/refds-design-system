@@ -38,8 +38,7 @@ public struct RefdsTag: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
-        .background(color.opacity(0.2))
-        .cornerRadius(6)
+        .background(Capsule().fill(color.opacity(0.2)))
     }
 }
 
@@ -71,5 +70,6 @@ struct RefdsTag_Previews: PreviewProvider {
             RefdsTag("tag here", style: .footnote, color: .green)
             RefdsTag("timer", icon: .clock, style: .footnote, color: .pink)
         }
+        .padding()
     }
 }

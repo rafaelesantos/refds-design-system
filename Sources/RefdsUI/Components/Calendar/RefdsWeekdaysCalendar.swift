@@ -98,5 +98,6 @@ struct RefdsWeekdaysCalendar_Previews: PreviewProvider {
     static var previews: some View {
         RefdsWeekdaysCalendar()
             .padding(.horizontal)
+            .padding(.vertical)
     }
 }

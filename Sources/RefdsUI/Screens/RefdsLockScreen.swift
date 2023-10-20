@@ -44,7 +44,7 @@ public struct RefdsLockScreen: View {
     }
     
     private var alertError: RefdsAlert.ViewData {
-        .init(style: .inline(.critical, .refdsString(.lockScreen(.alertAuthError))))
+        .init(style: .inline(.critical, .refdsString(.lockScreen(.alertAuthError)), .xmark))
     }
     
     private var authIcon: some View {

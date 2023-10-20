@@ -28,21 +28,36 @@ public struct RefdsAlert: View {
         } else { styles }
     }
     
-    @ViewBuilder
     private var styles: some View {
-        switch style {
-        case let .basic(style, title, message): basic(style, title: title, message: message)
-        case let .inline(style, title): inline(style, title: title)
+        Group {
+            switch style {
+            case let .basic(style, title, message, imageURL): basic(style, title: title, message: message, imageURL: imageURL)
+            case let .inline(style, title, icon): inline(style, title: title, icon: icon)
+            }
         }
+        .buttonStyle(.borderless)
     }
     
-    private func basic(_ style: Style.BasicType, title: String, message: String?) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+    private func basic(_ style: Style.BasicType, title: String, message: String?, imageURL: String?) -> some View {
+        VStack(alignment: .leading, spacing: 15) {
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                HStack(spacing: 15) {
+                    Spacer()
+                    AsyncImage(url: url) { image in
+                        image.resizable().scaledToFit().frame(height: 180)
+                    } placeholder: {
+                        RefdsLoadingView().padding()
+                    }
+                    Spacer()
+                }
+            }
             HStack(spacing: 15) {
                 Spacer()
                 RefdsText(title, style: .title3, weight: .bold)
                 Spacer()
             }
+            
+            Divider().padding(10).padding(.horizontal)
             
             if let message = message {
                 HStack {
@@ -63,9 +78,10 @@ public struct RefdsAlert: View {
                 }
             }
         }
+        .padding()
     }
     
-    private func inline(_ style: Style.BasicType, title: String) -> some View {
+    private func inline(_ style: Style.BasicType, title: String, icon: RefdsIconSymbol) -> some View {
         HStack(spacing: 15) {
             if let icon = style.icon {
                 RefdsIcon(symbol: icon, color: style.color, renderingMode: .hierarchical)
@@ -73,7 +89,13 @@ public struct RefdsAlert: View {
             RefdsText(title, style: .body)
             Spacer()
             if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
-                RefdsButton(primaryAction.title, color: style.color, style: .primary, font: .footnote, maxSize: false, action: primaryAction.action)
+                RefdsButton(action: primaryAction.action) {
+                    RefdsIcon(symbol: icon, color: .white, size: 14)
+                        .padding(5)
+                        .frame(width: 26, height: 26)
+                        .background(style.color)
+                        .cornerRadius(13)
+                }
             }
         }
     }
@@ -109,41 +131,41 @@ public extension RefdsAlert {
     }
     
     enum Style: Identifiable, Equatable {
-        case basic(BasicType, String, String?)
-        case inline(BasicType, String)
+        case basic(BasicType, String, String?, String?)
+        case inline(BasicType, String, RefdsIconSymbol)
         
         public var id: String {
             switch self {
-            case let .basic(type, title, message): return "\(type.rawValue).\(title).\(message ?? "")"
-            case let .inline(type, title): return "\(type.rawValue).\(title)"
+            case let .basic(type, title, message, _): return "\(type.rawValue).\(title).\(message ?? "")"
+            case let .inline(type, title, _): return "\(type.rawValue).\(title)"
             }
         }
         
         public var duration: Double? {
             switch self {
-            case let .basic(type, _, _): return type.duration
-            case let .inline(type, _): return type.duration
+            case let .basic(type, _, _, _): return type.duration
+            case let .inline(type, _, _): return type.duration
             }
         }
         
         public var basicType: BasicType {
             switch self {
-            case let .basic(type, _, _): return type
-            case let .inline(type, _): return type
+            case let .basic(type, _, _, _): return type
+            case let .inline(type, _, _): return type
             }
         }
         
         public var title: String {
             switch self {
-            case let .basic(_, title, _): return title
-            case let .inline(_, title): return title
+            case let .basic(_, title, _, _): return title
+            case let .inline(_, title, _): return title
             }
         }
         
         public var message: String? {
             switch self {
-            case let .basic(_, _, message): return message
-            case .inline(_, _): return nil
+            case let .basic(_, _, message, _): return message
+            case .inline(_, _, _): return nil
             }
         }
         
@@ -193,38 +215,38 @@ struct RefdsAlert_Previews: PreviewProvider {
         Group {
             List {
                 Section {
-                    RefdsAlert(style: .basic(.info, title, message))
-                    RefdsAlert(style: .basic(.info, title, message), primaryAction: primaryAction)
-                    RefdsAlert(style: .basic(.info, title, message), secondaryAction: secondaryAction)
-                    RefdsAlert(style: .basic(.info, title, message), primaryAction: primaryAction, secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.info, title, message, nil))
+                    RefdsAlert(style: .basic(.info, title, message, nil), primaryAction: primaryAction)
+                    RefdsAlert(style: .basic(.info, title, message, nil), secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.info, title, message, "https://firelinks.io/assets/images/resource/illustration-4-ai.png"), primaryAction: primaryAction, secondaryAction: secondaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .basic(.success, title, message))
-                    RefdsAlert(style: .basic(.success, title, message), primaryAction: primaryAction)
-                    RefdsAlert(style: .basic(.success, title, message), secondaryAction: secondaryAction)
-                    RefdsAlert(style: .basic(.success, title, message), primaryAction: primaryAction, secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.success, title, message, nil))
+                    RefdsAlert(style: .basic(.success, title, message, nil), primaryAction: primaryAction)
+                    RefdsAlert(style: .basic(.success, title, message, nil), secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.success, title, message, nil), primaryAction: primaryAction, secondaryAction: secondaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .basic(.warning, title, message))
-                    RefdsAlert(style: .basic(.warning, title, message), primaryAction: primaryAction)
-                    RefdsAlert(style: .basic(.warning, title, message), secondaryAction: secondaryAction)
-                    RefdsAlert(style: .basic(.warning, title, message), primaryAction: primaryAction, secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.warning, title, message, nil))
+                    RefdsAlert(style: .basic(.warning, title, message, nil), primaryAction: primaryAction)
+                    RefdsAlert(style: .basic(.warning, title, message, nil), secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.warning, title, message, nil), primaryAction: primaryAction, secondaryAction: secondaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .basic(.critical, title, message))
-                    RefdsAlert(style: .basic(.critical, title, message), primaryAction: primaryAction)
-                    RefdsAlert(style: .basic(.critical, title, message), secondaryAction: secondaryAction)
-                    RefdsAlert(style: .basic(.critical, title, message), primaryAction: primaryAction, secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.critical, title, message, nil))
+                    RefdsAlert(style: .basic(.critical, title, message, nil), primaryAction: primaryAction)
+                    RefdsAlert(style: .basic(.critical, title, message, nil), secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.critical, title, message, nil), primaryAction: primaryAction, secondaryAction: secondaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .basic(.none, title, message))
-                    RefdsAlert(style: .basic(.none, title, message), primaryAction: primaryAction)
-                    RefdsAlert(style: .basic(.none, title, message), secondaryAction: secondaryAction)
-                    RefdsAlert(style: .basic(.none, title, message), primaryAction: primaryAction, secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.none, title, message, nil))
+                    RefdsAlert(style: .basic(.none, title, message, nil), primaryAction: primaryAction)
+                    RefdsAlert(style: .basic(.none, title, message, nil), secondaryAction: secondaryAction)
+                    RefdsAlert(style: .basic(.none, title, message, nil), primaryAction: primaryAction, secondaryAction: secondaryAction)
                 }
             }
         }
@@ -232,28 +254,28 @@ struct RefdsAlert_Previews: PreviewProvider {
         Group {
             List {
                 Section {
-                    RefdsAlert(style: .inline(.info, title))
-                    RefdsAlert(style: .inline(.info, title), primaryAction: primaryAction)
+                    RefdsAlert(style: .inline(.info, title, .checkmark))
+                    RefdsAlert(style: .inline(.info, title, .checkmark), primaryAction: primaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .inline(.success, title))
-                    RefdsAlert(style: .inline(.success, title), primaryAction: primaryAction)
+                    RefdsAlert(style: .inline(.success, title, .checkmark))
+                    RefdsAlert(style: .inline(.success, title, .checkmark), primaryAction: primaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .inline(.warning, title))
-                    RefdsAlert(style: .inline(.warning, title), primaryAction: primaryAction)
+                    RefdsAlert(style: .inline(.warning, title, .checkmark))
+                    RefdsAlert(style: .inline(.warning, title, .checkmark), primaryAction: primaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .inline(.critical, title))
-                    RefdsAlert(style: .inline(.critical, title), primaryAction: primaryAction)
+                    RefdsAlert(style: .inline(.critical, title, .checkmark))
+                    RefdsAlert(style: .inline(.critical, title, .checkmark), primaryAction: primaryAction)
                 }
                 
                 Section {
-                    RefdsAlert(style: .inline(.none, title))
-                    RefdsAlert(style: .inline(.none, title), primaryAction: primaryAction)
+                    RefdsAlert(style: .inline(.none, title, .checkmark))
+                    RefdsAlert(style: .inline(.none, title, .checkmark), primaryAction: primaryAction)
                 }
             }
         }
@@ -261,9 +283,9 @@ struct RefdsAlert_Previews: PreviewProvider {
         Group {
             VStack(spacing: 30) {
                 Spacer()
-                RefdsAlert(style: .inline(.none, title), withBackground: true)
-                RefdsAlert(style: .inline(.info, title), withBackground: true, primaryAction: primaryAction)
-                RefdsAlert(style: .basic(.info, title, message), withBackground: true, primaryAction: primaryAction, secondaryAction: secondaryAction)
+                RefdsAlert(style: .inline(.none, title, .checkmark), withBackground: true)
+                RefdsAlert(style: .inline(.info, title, .checkmark), withBackground: true, primaryAction: primaryAction)
+                RefdsAlert(style: .basic(.info, title, message, "https://firelinks.io/assets/images/resource/illustration-4-ai.png"), withBackground: true, primaryAction: primaryAction, secondaryAction: secondaryAction)
                 Spacer()
             }
             .padding()

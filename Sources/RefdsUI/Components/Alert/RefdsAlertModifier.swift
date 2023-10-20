@@ -15,7 +15,7 @@ public struct RefdsAlertModifier: ViewModifier {
     public init(alert: Binding<RefdsAlert.ViewData?>) {
         self._alert = alert
         if let wrappedValue = alert.wrappedValue {
-            isBasicAlert = wrappedValue.style == .basic(wrappedValue.style.basicType, wrappedValue.style.title, wrappedValue.style.message)
+            isBasicAlert = wrappedValue.style == .basic(wrappedValue.style.basicType, wrappedValue.style.title, wrappedValue.style.message, nil)
         } else {
             isBasicAlert = false
         }
@@ -68,7 +68,7 @@ public struct RefdsAlertModifier: ViewModifier {
         #endif
         var optionalDuration = alert.style.duration ?? (alert.primaryAction == nil && alert.secondaryAction == nil ? 5 : nil)
         switch alert.style {
-        case .inline(_, _): optionalDuration = 5
+        case .inline(_, _, _): optionalDuration = 5
         default: break
         }
         guard let duration = optionalDuration else { return }

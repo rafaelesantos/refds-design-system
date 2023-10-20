@@ -134,8 +134,8 @@ struct RefdsToggleView: View {
     @State var isOn: Bool = false
     
     var body: some View {
-        RefdsToggle(isOn: $isOn, style: .none, alignment: .trailing, color: .orange) {
-            RefdsAlert(style: .inline(.critical, "Ops ocorreu um erro"))
+        RefdsToggle(isOn: $isOn, style: .toggle, alignment: .trailing, color: .orange) {
+            RefdsAlert(style: .inline(.critical, "Ops ocorreu um erro", .xmark))
                 .padding()
         }
     }

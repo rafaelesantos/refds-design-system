@@ -24,24 +24,19 @@ public struct RefdsLoadingView: View {
         ZStack(alignment: .center) {
             Circle()
                 .trim(from: 0, to: 0.25)
-                .stroke(style: StrokeStyle(lineWidth: 5,
-                                           lineCap: .round,
-                                           lineJoin: .round))
+                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
                 .foregroundColor(color.opacity(0.3))
                 .rotationEffect(Angle(degrees: isRotating ? 0 : 360))
-                .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isRotating)
+                .animation(.linear(duration: 0.5).repeatForever(autoreverses: false), value: isRotating)
             Circle()
                 .trim(from: 0, to: 0.25)
-                .stroke(style: StrokeStyle(lineWidth: 5,
-                                           lineCap: .round,
-                                           lineJoin: .round))
+                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
                 .foregroundColor(color)
                 .rotationEffect(Angle(degrees: isRotating ? 360 : 0))
-                .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isRotating)
+                .animation(.linear(duration: 0.5).repeatForever(autoreverses: false), value: isRotating)
+                .onAppear { isRotating = true }
         }
         .frame(width: 20, height: 20)
-        .onAppear { isRotating = true }
-        .onDisappear { isRotating = false }
     }
 }
 

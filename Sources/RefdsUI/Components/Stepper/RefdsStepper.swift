@@ -88,14 +88,10 @@ public extension RefdsStepper {
 struct RefdsStepper_Previews: PreviewProvider {
     @State static var value: Int = 5
     static var previews: some View {
-        List {
-            Section(content: {}, footer: {
-                RefdsStepper(current: .init(get: {
-                    value
-                }, set: {
-                    value = $0
-                }), min: 1, max: 10)
-            })
-        }
+        RefdsStepper(current: .init(get: {
+            value
+        }, set: {
+            value = $0
+        }), min: 1, max: 10)
     }
 }

@@ -119,5 +119,6 @@ struct RefdsMonthCalendar_Previews: PreviewProvider {
             get: { date },
             set: { date = $0 }
         ))
+        .padding()
     }
 }
