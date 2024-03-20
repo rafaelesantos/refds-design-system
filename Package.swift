@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,10 +6,13 @@ import PackageDescription
 let package = Package(
     name: "RefdsUI",
     platforms: [
-        .iOS(.v15),
-        .macCatalyst(.v15),
-        .tvOS(.v15),
-        .macOS(.v12)
+        .iOS(.v17),
+        .macCatalyst(.v17),
+        .macOS(.v14),
+        .tvOS(.v17),
+        .watchOS(.v10),
+        .visionOS(.v1),
+        .driverKit(.v23)
     ],
     products: [
         .library(
@@ -17,29 +20,13 @@ let package = Package(
             targets: ["RefdsUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/refdsenterprise/refds-resource.git", branch: "main"),
-        .package(url: "https://github.com/refdsenterprise/refds-core.git", branch: "main")
+        .package(url: "https://github.com/rafaelesantos/refds-shared.git", branch: "main")
     ],
     targets: [
         .target(
             name: "RefdsUI",
             dependencies: [
-                .product(name: "RefdsResource", package: "refds-resource"),
-                .product(name: "RefdsCore", package: "refds-core")
-            ],
-            resources: [
-                .copy("Resource/Fonts/Moderat-Thin.ttf"),
-                .copy("Resource/Fonts/Moderat-Light.ttf"),
-                .copy("Resource/Fonts/Moderat-Regular.ttf"),
-                .copy("Resource/Fonts/Moderat-Medium.ttf"),
-                .copy("Resource/Fonts/Moderat-Bold.ttf"),
-                .copy("Resource/Fonts/Moderat-Black.ttf"),
-                .copy("Resource/Fonts/Moderat-Mono-Thin.ttf"),
-                .copy("Resource/Fonts/Moderat-Mono-Light.ttf"),
-                .copy("Resource/Fonts/Moderat-Mono-Regular.ttf"),
-                .copy("Resource/Fonts/Moderat-Mono-Medium.ttf"),
-                .copy("Resource/Fonts/Moderat-Mono-Bold.ttf"),
-                .copy("Resource/Fonts/Moderat-Mono-Black.ttf")
-            ]),
+                .product(name: "RefdsShared", package: "refds-shared")
+            ])
     ]
 )

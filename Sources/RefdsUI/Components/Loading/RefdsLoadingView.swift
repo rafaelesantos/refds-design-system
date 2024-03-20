@@ -1,20 +1,14 @@
-//
-//  RefdsLoadingView.swift
-//  
-//
-//  Created by Rafael Santos on 05/07/23.
-//
-
 import SwiftUI
 
 public struct RefdsLoadingView: View {
+    @State private var isRotating = false
+    
     private let color: RefdsColor
     private let minLineWidth: CGFloat = 2
+    
     private func lineWidth(size: CGFloat) -> CGFloat {
         max(minLineWidth, size / 4)
     }
-
-    @State private var isRotating = false
     
     public init(color: RefdsColor = .accentColor) {
         self.color = color
@@ -25,7 +19,7 @@ public struct RefdsLoadingView: View {
             Circle()
                 .trim(from: 0, to: 0.25)
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round))
-                .foregroundColor(color.opacity(0.3))
+                .foregroundColor(color.opacity(0.5))
                 .rotationEffect(Angle(degrees: isRotating ? 0 : 360))
                 .animation(.linear(duration: 0.5).repeatForever(autoreverses: false), value: isRotating)
             Circle()
@@ -52,15 +46,9 @@ struct RefdsLoadingViewModifier: ViewModifier {
     }
 }
 
-public extension View {
-    @ViewBuilder
-    func refdsLoading(show: Binding<Bool>) -> some View {
-        modifier(RefdsLoadingViewModifier(show: show))
+#Preview {
+    VStack {
+        Spacer()
     }
-}
-
-struct RefdsLoadingView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack { Spacer() }.refdsLoading(show: .constant(true))
-    }
+    .refdsLoading(show: .constant(true))
 }

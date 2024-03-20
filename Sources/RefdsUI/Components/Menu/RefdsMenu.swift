@@ -1,18 +1,26 @@
 import SwiftUI
-import RefdsCore
+import RefdsShared
 
 public struct RefdsMenu<Content: View>: View {
-    @Environment(\.colorScheme) private var colorScheme
     private let content: () -> Content
     private let icon: RefdsIconSymbol?
     private let text: String?
     private let description: String?
     private let detail: String?
-    private let font: RefdsText.Style
+    private let font: Font.TextStyle
     private let color: RefdsColor
     private let style: Style
     
-    public init(style: Style = .card, color: RefdsColor = .accentColor, icon: RefdsIconSymbol?, text: String?, description: String? = nil, detail: String?, font: RefdsText.Style = .body, @ViewBuilder content:  @escaping () -> Content) {
+    public init(
+        style: Style = .card,
+        color: RefdsColor = RefdsUI.shared.accentColor,
+        icon: RefdsIconSymbol?,
+        text: String?,
+        description: String? = nil,
+        detail: String?,
+        font: Font.TextStyle = .body,
+        @ViewBuilder content:  @escaping () -> Content
+    ) {
         self.color = color
         self.content = content
         self.icon = icon
@@ -36,9 +44,9 @@ public struct RefdsMenu<Content: View>: View {
             Menu { content() } label: { label }
         }
         .padding(.horizontal)
-        .padding(.vertical, 10)
-        .background(RefdsColor.secondaryBackground(scheme: colorScheme))
-        .cornerRadius(8)
+        .padding(.vertical, .padding(.small))
+        .refdsSecondaryBackground()
+        .cornerRadius(.cornerRadius)
     }
     
     private var inline: some View {
@@ -59,47 +67,38 @@ public struct RefdsMenu<Content: View>: View {
     
     @ViewBuilder
     private var iconView: some View {
+        #if os(macOS)
+        #else
         if let icon = icon {
-            let size = style.iconSize(font: font)
             VStack {
                 RefdsIcon(
-                    symbol: icon,
+                    icon,
                     color: color,
-                    size: size,
+                    style: font,
                     weight: .bold,
                     renderingMode: .hierarchical
                 )
-                .frame(
-                    width: size * 1.2,
-                    height: size * 1.2
-                )
-                .padding(6)
+                .padding(.padding(.extraSmall))
                 .background(color.opacity(0.1))
-                .cornerRadius(6)
+                .cornerRadius(.cornerRadius)
             }
-            .padding(.trailing, 15)
+            .padding(.trailing, .padding(.small))
         }
+        #endif
     }
     
     @ViewBuilder
     private var infoView: some View {
         VStack(alignment: .leading) {
             if let text = text {
-                RefdsText(
-                    text,
-                    style: font
-                )
+                RefdsText(text, style: font)
             }
             
             if let description = description, !description.isEmpty {
-                RefdsText(
-                    description,
-                    style: font,
-                    color: .secondary
-                )
+                RefdsText(description, style: font, color: .secondary)
             }
         }
-        .padding(.trailing, 15)
+        .padding(.trailing, .padding(.small))
     }
     
     @ViewBuilder
@@ -108,19 +107,24 @@ public struct RefdsMenu<Content: View>: View {
             RefdsText(
                 detail,
                 style: font,
-                color: .accentColor,
+                color: .secondary,
                 weight: .medium
-            ).padding(.trailing, 5)
+            )
+            .padding(.trailing, .padding(.small))
         }
     }
     
+    @ViewBuilder
     private var optionIconView: some View {
+        #if os(macOS)
+        #else
         RefdsIcon(
-            symbol: .chevronUpChevronDown,
+            .chevronUpChevronDown,
             color: .secondary.opacity(0.5),
-            size: 15,
+            style: font,
             renderingMode: .monochrome
         )
+        #endif
     }
 }
 
@@ -128,13 +132,6 @@ public extension RefdsMenu {
     enum Style {
         case inline
         case card
-        
-        func iconSize(font: RefdsText.Style) -> CGFloat {
-            switch self {
-            case .inline: return 16
-            case .card: return font.value
-            }
-        }
     }
 }
 
@@ -144,18 +141,18 @@ struct RefdsMenu_Previews: PreviewProvider {
             Section(content: {}, footer: {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
-                        RefdsMenu(icon: .random, text: .randomWord, detail: "\(Int.random(in: 2 ... 12))", font: .footnote) {
+                        RefdsMenu(icon: .random, text: .someWord(), detail: "\(Int.random(in: 2 ... 12))", font: .footnote) {
                             ForEach(Array(0 ... 5), id: \.self) { _ in
                                 RefdsToggle(isOn: .constant(.random())) {
-                                    RefdsText(.randomWord)
+                                    RefdsText(.someWord())
                                 }
                             }
                         }
                         
-                        RefdsMenu(icon: .random, text: .randomWord, detail: "\(Int.random(in: 12 ... 16))", font: .footnote) {
+                        RefdsMenu(icon: .random, text: .someWord(), detail: "\(Int.random(in: 12 ... 16))", font: .footnote) {
                             ForEach(Array(0 ... 5), id: \.self) { _ in
                                 RefdsToggle(isOn: .constant(.random())) {
-                                    RefdsText(.randomWord)
+                                    RefdsText(.someWord())
                                 }
                             }
                         }
@@ -165,18 +162,18 @@ struct RefdsMenu_Previews: PreviewProvider {
                 .padding(.horizontal, -30)
             })
             Section {
-                RefdsMenu(style: .inline, icon: .random, text: .randomWord, detail: "\(Int.random(in: 2 ... 12))", font: .footnote) {
+                RefdsMenu(style: .inline, icon: .random, text: .someWord(), detail: "\(Int.random(in: 2 ... 12))", font: .footnote) {
                     ForEach(Array(0 ... 5), id: \.self) { _ in
                         RefdsToggle(isOn: .constant(.random())) {
-                            RefdsText(.randomWord)
+                            RefdsText(.someWord())
                         }
                     }
                 }
                 
-                RefdsMenu(style: .inline, icon: .random, text: .randomWord, detail: "\(Int.random(in: 12 ... 16))", font: .footnote) {
+                RefdsMenu(style: .inline, icon: .random, text: .someWord(), detail: "\(Int.random(in: 12 ... 16))", font: .footnote) {
                     ForEach(Array(0 ... 5), id: \.self) { _ in
                         RefdsToggle(isOn: .constant(.random())) {
-                            RefdsText(.randomWord)
+                            RefdsText(.someWord())
                         }
                     }
                 }

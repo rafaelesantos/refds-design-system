@@ -1,21 +1,17 @@
-//
-//  RefdsAlert.swift
-//  
-//
-//  Created by Rafael Santos on 30/05/23.
-//
-
 import SwiftUI
 
 public struct RefdsAlert: View {
-    @Environment(\.colorScheme) private var colorScheme
-    
     private let style: Style
     private let withBackground: Bool
     private let primaryAction: Action?
     private let secondaryAction: Action?
     
-    public init(style: Style, withBackground: Bool = false, primaryAction: Action? = nil, secondaryAction: Action? = nil) {
+    public init(
+        style: Style,
+        withBackground: Bool = false,
+        primaryAction: Action? = nil,
+        secondaryAction: Action? = nil
+    ) {
         self.style = style
         self.withBackground = withBackground
         self.primaryAction = primaryAction
@@ -31,8 +27,19 @@ public struct RefdsAlert: View {
     private var styles: some View {
         Group {
             switch style {
-            case let .basic(style, title, message, imageURL): basic(style, title: title, message: message, imageURL: imageURL)
-            case let .inline(style, title, icon): inline(style, title: title, icon: icon)
+            case let .basic(style, title, message, imageURL): 
+                basic(
+                    style,
+                    title: title,
+                    message: message,
+                    imageURL: imageURL
+                )
+            case let .inline(style, title, icon): 
+                inline(
+                    style,
+                    title: title,
+                    icon: icon
+                )
             }
         }
         .buttonStyle(.borderless)
@@ -57,8 +64,6 @@ public struct RefdsAlert: View {
                 Spacer()
             }
             
-            Divider().padding(10).padding(.horizontal)
-            
             if let message = message {
                 HStack {
                     Spacer()
@@ -70,11 +75,11 @@ public struct RefdsAlert: View {
             
             HStack(spacing: 5) {
                 if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
-                    RefdsButton(primaryAction.title, color: style.color, style: .primary, font: .subheadline, action: primaryAction.action)
+                    RefdsButton(primaryAction.title, color: style.color, style: .primary, action: primaryAction.action)
                 }
                 
                 if let secondaryAction = secondaryAction, !secondaryAction.title.isEmpty {
-                    RefdsButton(secondaryAction.title, color: style.color, style: .secondary, font: .subheadline, action: secondaryAction.action)
+                    RefdsButton(secondaryAction.title, color: style.color, style: .secondary, action: secondaryAction.action)
                 }
             }
         }
@@ -82,19 +87,16 @@ public struct RefdsAlert: View {
     }
     
     private func inline(_ style: Style.BasicType, title: String, icon: RefdsIconSymbol) -> some View {
-        HStack(spacing: 15) {
+        HStack(spacing: .padding(.small)) {
             if let icon = style.icon {
-                RefdsIcon(symbol: icon, color: style.color, renderingMode: .hierarchical)
+                RefdsIcon(icon, color: style.color, renderingMode: .hierarchical)
             }
             RefdsText(title, style: .body)
             Spacer()
             if let primaryAction = primaryAction, !primaryAction.title.isEmpty {
                 RefdsButton(action: primaryAction.action) {
-                    RefdsIcon(symbol: icon, color: .white, size: 14)
-                        .padding(5)
-                        .frame(width: 26, height: 26)
-                        .background(style.color)
-                        .cornerRadius(13)
+                    RefdsIcon(icon, color: .secondary.opacity(0.6), style: .footnote, weight: .bold)
+                        .padding(.padding(.extraSmall))
                 }
             }
         }
@@ -182,7 +184,7 @@ public extension RefdsAlert {
                 case .success: return .green
                 case .warning: return .orange
                 case .critical: return .red
-                case .none: return .accentColor
+                case .none: return RefdsUI.shared.accentColor
                 }
             }
             
@@ -254,8 +256,8 @@ struct RefdsAlert_Previews: PreviewProvider {
         Group {
             List {
                 Section {
-                    RefdsAlert(style: .inline(.info, title, .checkmark))
-                    RefdsAlert(style: .inline(.info, title, .checkmark), primaryAction: primaryAction)
+                    RefdsAlert(style: .inline(.info, title, .xmark))
+                    RefdsAlert(style: .inline(.info, title, .xmark), primaryAction: primaryAction)
                 }
                 
                 Section {

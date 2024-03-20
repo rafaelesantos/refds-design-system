@@ -12,10 +12,10 @@ public struct RefdsTextField: View {
     @Binding private var text: String
     private let placeholder: String
     private let axis: Axis
-    private let style: RefdsText.Style
+    private let style: Font.TextStyle
     private let color: Color
     private let weight: Font.Weight
-    private let family: RefdsFontFamily
+    private let design: Font.Design
     private let alignment: TextAlignment
     private let minimumScaleFactor: CGFloat
     private let lineLimit: Int?
@@ -29,10 +29,10 @@ public struct RefdsTextField: View {
         _ placeholder: String,
         text: Binding<String>,
         axis: Axis = .horizontal,
-        style: RefdsText.Style = .body,
+        style: Font.TextStyle = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
-        family: RefdsFontFamily = .defaultConfiguration,
+        design: Font.Design = .default,
         alignment: TextAlignment = .leading,
         minimumScaleFactor: CGFloat = 1,
         lineLimit: Int? = nil,
@@ -45,7 +45,7 @@ public struct RefdsTextField: View {
         self.style = style
         self.color = color
         self.weight = weight
-        self.family = family
+        self.design = design
         self.alignment = alignment
         self.minimumScaleFactor = minimumScaleFactor
         self.lineLimit = lineLimit
@@ -58,10 +58,10 @@ public struct RefdsTextField: View {
         _ placeholder: String,
         text: Binding<String>,
         axis: Axis = .horizontal,
-        style: RefdsText.Style = .body,
+        style: Font.TextStyle = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
-        family: RefdsFontFamily = .defaultConfiguration,
+        design: Font.Design = .default,
         alignment: TextAlignment = .leading,
         minimumScaleFactor: CGFloat = 1,
         lineLimit: Int? = nil
@@ -72,7 +72,7 @@ public struct RefdsTextField: View {
         self.style = style
         self.color = color
         self.weight = weight
-        self.family = family
+        self.design = design
         self.alignment = alignment
         self.minimumScaleFactor = minimumScaleFactor
         self.lineLimit = lineLimit
@@ -84,12 +84,7 @@ public struct RefdsTextField: View {
     
     public var body: some View {
         TextField(placeholder, text: $text)
-            .refdsFont(
-                style: style,
-                weight: weight,
-                family: Double(text) == nil ? family : .moderatMono,
-                sizeCategory: sizeCategory
-            )
+            .font(.system(style, design: design, weight: weight))
             .multilineTextAlignment(alignment)
             .foregroundColor(color)
             .minimumScaleFactor(minimumScaleFactor)
@@ -111,5 +106,6 @@ struct RefdsTextField_Previews: PreviewProvider {
         .padding()
         .previewDisplayName("Default")
         .previewLayout(.sizeThatFits)
+        .padding()
     }
 }

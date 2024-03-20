@@ -1,10 +1,3 @@
-//
-//  Color+Extensions.swift
-//  
-//
-//  Created by Rafael Santos on 30/05/23.
-//
-
 import SwiftUI
 #if os(iOS)
 import UIKit
@@ -20,6 +13,10 @@ public extension RefdsColor {
     #else
     typealias SystemColor = UIColor
     #endif
+    
+    static var accentColor: RefdsColor {
+        RefdsUI.shared.accentColor
+    }
     
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

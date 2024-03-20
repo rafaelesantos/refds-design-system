@@ -41,7 +41,7 @@ public struct RefdsPagination: View {
             if currentPage > 1 { actionButtonPage(onPage: currentPage - 1) }
         } label: {
             RefdsIcon(
-                symbol: .chevronLeftCircleFill,
+                .chevronLeftCircleFill,
                 color: color,
                 size: 20,
                 weight: .bold,
@@ -56,7 +56,7 @@ public struct RefdsPagination: View {
             actionButtonPage(onPage: currentPage + 1)
         } label: {
             RefdsIcon(
-                symbol: .chevronRightCircleFill,
+                .chevronRightCircleFill,
                 color: color,
                 size: 20,
                 weight: .bold,
@@ -77,8 +77,7 @@ public struct RefdsPagination: View {
             RefdsText(
                 "\(page)",
                 style: .body,
-                color: currentPage == page ? color : (page > currentPage && !canChangeToNextPage()) ? .secondary : .primary,
-                family: .moderat
+                color: currentPage == page ? color : (page > currentPage && !canChangeToNextPage()) ? .secondary : .primary
             )
             .frame(width: 30, height: 50)
         }

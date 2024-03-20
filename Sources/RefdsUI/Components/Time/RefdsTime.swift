@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct RefdsTime: View {
     private let format: Format
-    private let font: RefdsText.Style
+    private let font: Font.TextStyle
     private let color: RefdsColor
     @State private var minute: Int
     @State private var second: Int
@@ -10,7 +10,12 @@ public struct RefdsTime: View {
     
     @Binding private var time: Int
     
-    public init(time: Binding<Int>, format: Format = .hourMinute, font: RefdsText.Style = .body, color: RefdsColor = .accentColor) {
+    public init(
+        time: Binding<Int>,
+        format: Format = .hourMinute,
+        font: Font.TextStyle = .body,
+        color: RefdsColor = RefdsUI.shared.accentColor
+    ) {
         self._time = time
         self.format = format
         self.font = font
@@ -62,20 +67,20 @@ public struct RefdsTime: View {
                 switch format {
                 case .hour:
                     RefdsText("\(hour)", style: font, weight: .bold)
-                    RefdsText("hor.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
+                    RefdsText("hor.".uppercased(), style: .footnote, weight: .light)
                 case .minute:
                     RefdsText("\(minute)", style: font, weight: .bold)
-                    RefdsText("min.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
+                    RefdsText("min.".uppercased(), style: .footnote, weight: .light)
                 case .secont:
                     RefdsText("\(second)", style: font, weight: .bold)
-                    RefdsText("seg.".uppercased(), style: .custom(font.value * 0.47), weight: .light)
+                    RefdsText("seg.".uppercased(), style: .footnote, weight: .light)
                 default: EmptyView()
                 }
             }
-            .frame(minWidth: 50)
-            .padding(8)
+            .frame(minWidth: 60)
+            .padding(.padding(.small))
             .background(RefdsColor.secondary.opacity(0.1))
-            .cornerRadius(6)
+            .cornerRadius(.cornerRadius)
         }
         
     }
@@ -125,12 +130,14 @@ public extension RefdsTime {
 struct RefdsTimeView: View {
     @State private var time: Int = 55
     var body: some View {
-        RefdsTime(time: $time, format: .hourMinuteSecond, font: .body, color: .accentColor)
+        RefdsTime(time: $time, format: .hourMinuteSecond, font: .body)
     }
 }
 
 struct RefdsTime_Previews: PreviewProvider {
     static var previews: some View {
         RefdsTimeView()
+            .padding()
+            .padding()
     }
 }

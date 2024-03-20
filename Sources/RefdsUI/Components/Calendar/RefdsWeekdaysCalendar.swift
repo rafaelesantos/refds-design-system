@@ -1,5 +1,5 @@
 import SwiftUI
-import RefdsCore
+import RefdsShared
 
 public struct RefdsWeekdaysCalendar: View {
     @State private var selection: Date
@@ -48,8 +48,8 @@ public struct RefdsWeekdaysCalendar: View {
         } label: {
             VStack {
                 let textColor = selectedDateTextColor(with: date)
-                RefdsText(date.asString(withDateFormat: .custom("EEEE")).uppercased(), style: .custom(10), color: textColor, weight: .bold)
-                RefdsText(date.asString(withDateFormat: .custom("dd")), style: .custom(12), color: textColor, weight: .light)
+                RefdsText(date.asString(withDateFormat: .custom("EEEE")).uppercased(), style: .caption2, color: textColor, weight: .bold, lineLimit: 1)
+                RefdsText(date.asString(withDateFormat: .custom("dd")), style: .callout, color: textColor, weight: .light)
             }
             .frame(width: 65)
             .padding(8)
@@ -94,10 +94,8 @@ public struct RefdsWeekdaysCalendar: View {
     }
 }
 
-struct RefdsWeekdaysCalendar_Previews: PreviewProvider {
-    static var previews: some View {
-        RefdsWeekdaysCalendar()
-            .padding(.horizontal)
-            .padding(.vertical)
-    }
+#Preview {
+    RefdsWeekdaysCalendar()
+        .padding(.horizontal)
+        .padding(.vertical)
 }

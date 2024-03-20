@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 public struct RefdsImage<Content>: View where Content: View {
     @State private var phase: AsyncImagePhase
     
@@ -149,18 +148,12 @@ public struct RefdsImage<Content>: View where Content: View {
     }
 }
 
-// MARK: - LoadingError
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 private extension AsyncImage {
     
     struct LoadingError: Error {
     }
 }
 
-// MARK: - Helpers
-
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 private extension RefdsImage {
     private func remoteImage(from request: URLRequest, session: URLSession) async throws -> (Image, URLSessionTaskMetrics) {
         let (data, _, metrics) = try await session.data(for: request)
@@ -195,8 +188,6 @@ private extension RefdsImage {
     }
 }
 
-// MARK: - AsyncImageURLSession
-
 private class URLSessionTaskController: NSObject, URLSessionTaskDelegate {
     var metrics: URLSessionTaskMetrics?
     
@@ -209,7 +200,6 @@ private class URLSessionTaskController: NSObject, URLSessionTaskDelegate {
     }
 }
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
 private extension URLSession {
     func data(for request: URLRequest) async throws -> (Data, URLResponse, URLSessionTaskMetrics) {
         let controller = URLSessionTaskController()

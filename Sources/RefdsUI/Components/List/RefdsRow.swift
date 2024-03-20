@@ -46,7 +46,7 @@ public struct RefdsRow<Content: View>: View {
             AnyView(destination())
         }
         #else
-        Button(.medium) {
+        Button {
             withAnimation { isPresented.toggle() }
         } label: { label }.refdsNavigation(presentationStyle, isPresented: $isPresented) {
             AnyView(destination())
@@ -60,7 +60,7 @@ public struct RefdsRow<Content: View>: View {
             withAnimation { action() }
         }
         #else
-        Button(.medium) {
+        Button {
             withAnimation { action() }
         } label: { label }
         #endif
@@ -75,7 +75,7 @@ public struct RefdsRow<Content: View>: View {
             AnyView(destination())
         }
         #else
-        Button(.medium) {
+        Button {
             action()
             withAnimation { isPresented.toggle() }
         } label: { label }.refdsNavigation(presentationStyle, isPresented: $isPresented) {
@@ -89,7 +89,7 @@ public struct RefdsRow<Content: View>: View {
             content()
             Spacer()
             if showArrowDestination {
-                RefdsIcon(symbol: .chevronRight, color: .secondary.opacity(0.4), size: 17)
+                RefdsIcon(.chevronRight, color: .secondary.opacity(0.4), size: 17)
             }
         }
         .frame(maxWidth: .infinity)
@@ -126,7 +126,7 @@ public extension View {
                                 ToolbarItem(placement: .automatic) {
                                     RefdsButton { isPresented.wrappedValue.toggle() } label: {
                                         RefdsIcon(
-                                            symbol: .xmarkCircleFill,
+                                            .xmarkCircleFill,
                                             color: .secondary.opacity(0.5),
                                             size: 20
                                         )

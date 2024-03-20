@@ -3,12 +3,20 @@ import SwiftUI
 public class RefdsUI {
     public static let shared = RefdsUI()
     
-    public var defaultFontFamily: FontFamily = .moderat
+    public var accentColor: RefdsColor
+    public var cornerRadius: CGFloat
+    public var colorScheme: ColorScheme?
+    public var padding: RefdsPadding
     
-    #if os(iOS)
-    public func setNavigationBarAppearance() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont.refds(size: .largeTitle, weight: .bold, family: .defaultConfiguration).withSize(32)]
-        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.refds(size: .body, weight: .bold, family: .defaultConfiguration).withSize(17)]
+    public init(
+        accentColor: RefdsColor = .green,
+        cornerRadius: CGFloat = 8,
+        colorScheme: ColorScheme? = nil,
+        padding: RefdsPadding = .default
+    ) {
+        self.accentColor = accentColor
+        self.cornerRadius = cornerRadius
+        self.colorScheme = colorScheme
+        self.padding = padding
     }
-    #endif
 }

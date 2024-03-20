@@ -1,40 +1,37 @@
-//
-//  RefdsButton.swift
-//  
-//
-//  Created by Rafael Santos on 30/05/23.
-//
-
 import SwiftUI
 
 public struct RefdsButton: View {
-    @State private var isPressed: Bool = false
-    
     private let title: String
     private let color: RefdsColor
     private let style: Style
-    private let font: RefdsText.Style
     private let content: (() -> any View)?
     private let action: (() -> Void)?
     private let maxSize: Bool
     
-    public init(_ title: String, color: RefdsColor = .accentColor, style: Style = .primary, font: RefdsText.Style = .body, maxSize: Bool = true, action: (() -> Void)? = nil) {
-        self.title = title
+    public init(
+        _ title: String,
+        color: RefdsColor = .accentColor,
+        style: Style = .primary,
+        maxSize: Bool = true,
+        action: (() -> Void)? = nil
+    ) {
+        self.title = title.uppercased()
         self.color = color
         self.style = style
         self.action = action
         self.maxSize = maxSize
-        self.font = font
         self.content = nil
     }
     
-    public init(action: (() -> Void)? = nil, label: (() -> any View)? = nil) {
+    public init(
+        action: (() -> Void)? = nil,
+        label: (() -> any View)? = nil
+    ) {
         self.title = ""
         self.color = .accentColor
         self.style = .custom
         self.content = label
         self.action = action
-        self.font = .body
         self.maxSize = false
     }
     
@@ -47,98 +44,68 @@ public struct RefdsButton: View {
             case .custom: custom
             }
         }
-        .scaleEffect(isPressed ? 0.95 : 1)
     }
     
     private var primary: some View {
-        #if os(iOS)
-        Button(.medium) { pressButton() } label: {
-            RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
-                .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(14)
+        Button { pressButton() } label: {
+            titleView(background: color)
         }
-        .background(color)
-        .clipShape(Capsule())
-        
-        #else
-        HStack {
-            RefdsText(title, style: font, color: .white, weight: .bold, alignment: .center, lineLimit: 1)
-                .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(14)
-        }
-        .background(color)
-        .clipShape(Capsule())
-        .onTapGesture { pressButton() }
-        #endif
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
     }
     
     private var secondary: some View {
-        #if os(iOS)
-        Button(.medium) { pressButton() } label: {
-            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
-                .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(14)
-                .overlay {
-                    Capsule(style: .circular)
-                        .stroke(color, lineWidth: 2)
-                }
+        Button { pressButton() } label: {
+            titleView(color: color)
         }
-        .clipShape(Capsule())
-        #else
-        HStack {
-            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
-                .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(14)
-                .overlay {
-                    Capsule(style: .circular)
-                        .stroke(color, lineWidth: 2)
-                }
+        .overlay {
+            RoundedRectangle(cornerRadius: .cornerRadius)
+                .stroke(color, lineWidth: 2)
         }
-        .clipShape(Capsule())
-        .onTapGesture { pressButton() }
-        #endif
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
     }
     
     private var tertiary: some View {
-        #if os(iOS)
-        Button(.medium) { pressButton() } label: {
-            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
-                .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(14)
+        Button { pressButton() } label: {
+            titleView(color: color)
         }
-        
-        #else
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
+    }
+    
+    private func titleView(color: RefdsColor = .white, background: RefdsColor? = nil) -> some View {
         HStack {
-            RefdsText(title, style: font, color: color, weight: .bold, alignment: .center, lineLimit: 1)
+            RefdsText(title, style: .footnote, color: color, weight: .bold, alignment: .center, lineLimit: 1)
                 .frame(maxWidth: maxSize ? .infinity : nil)
-                .padding(14)
+                .frame(height: 48)
+                .padding(.padding(.small))
+                .if(background == nil) { view in
+                    view.background()
+                }
+                .if(background != nil) { view in
+                    view.background(background)
+                }
         }
-        .onTapGesture { pressButton() }
-        #endif
+        .padding(.padding(.small) * -1)
     }
     
     @ViewBuilder
     private var custom: some View {
         if let content = content {
-            #if os(iOS)
-            Button(.medium) { pressButton() } label: {
-                AnyView(content())
+            Button { pressButton() } label: {
+                HStack {
+                    AnyView(content())
+                        .padding(.padding(.small))
+                        #if os(macOS)
+                        .background()
+                        #endif
+                }
+                .padding(.padding(.small) * -1)
             }
-            #else
-            HStack {
-                AnyView(content())
-            }
-            .onTapGesture { pressButton() }
-            #endif
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         }
     }
     
     private func pressButton() {
-        withAnimation { isPressed.toggle() }
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
-            withAnimation { self.isPressed.toggle() }
-            self.action?()
-        }
+        self.action?()
     }
 }
 
@@ -154,27 +121,27 @@ public extension RefdsButton {
 public extension View {
     @ViewBuilder
     func refdsDisable(_ disable: Bool = true) -> some View {
-        if disable {
-            ZStack {
-                self.accentColor(.secondary.opacity(0.2))
-                Rectangle()
-                    .fill(.clear)
-                    .allowsHitTesting(false)
+        self.disabled(disable)
+            .overlay {
+                RoundedRectangle(cornerRadius: .cornerRadius)
+                    .fill(.black.opacity(0.3))
             }
-            .fixedSize(horizontal: false, vertical: true)
-        } else {
-            self
-        }
     }
 }
 
 struct RefdsButton_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
+        VStack(spacing: .padding(.medium)) {
             RefdsButton("Presentation Button", style: .primary)
             RefdsButton("Presentation Button", style: .secondary)
             RefdsButton("Presentation Button", style: .tertiary)
             RefdsButton("Presentation Button", style: .primary).refdsDisable()
+            RefdsButton {
+                HStack {
+                    RefdsIcon(.infinity)
+                    RefdsText("Infinity")
+                }
+            }
         }
         .padding()
     }

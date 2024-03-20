@@ -1,10 +1,3 @@
-//
-//  RefdsAlertModifier.swift
-//  
-//
-//  Created by Rafael Santos on 30/05/23.
-//
-
 import SwiftUI
 
 public struct RefdsAlertModifier: ViewModifier {
@@ -59,19 +52,20 @@ public struct RefdsAlertModifier: ViewModifier {
     
     private func showAlert() {
         guard let alert = alert else { return }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             withAnimation { isAppear = true }
         }
-        #if os(macOS)
-        #else
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        #endif
+        
         var optionalDuration = alert.style.duration ?? (alert.primaryAction == nil && alert.secondaryAction == nil ? 5 : nil)
+        
         switch alert.style {
         case .inline(_, _, _): optionalDuration = 5
         default: break
         }
+        
         guard let duration = optionalDuration else { return }
+        
         if duration > 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + duration) { dismissAlert() }
         }
@@ -82,11 +76,5 @@ public struct RefdsAlertModifier: ViewModifier {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             withAnimation { alert = nil }
         }
-    }
-}
-
-public extension View {
-    func refdsAlert(viewData: Binding<RefdsAlert.ViewData?>) -> some View {
-        self.modifier(RefdsAlertModifier(alert: viewData))
     }
 }

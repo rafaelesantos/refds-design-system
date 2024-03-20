@@ -2,38 +2,34 @@ import SwiftUI
 
 public struct RefdsStepper<Value: Numeric>: View {
     @Environment(\.colorScheme) private var colorScheme
+    @Binding private var current: Value
+    
     private let byValue: Value
     private let min: Value
     private let max: Value
     private let color: RefdsColor
-    private let style: Style
-    @Binding private var current: Value
+    private let style: Font.TextStyle
     
-    public init(_ style: Style = .card, current: Binding<Value>, byValue: Value = 1, min: Value, max: Value, color: RefdsColor = .accentColor) {
+    public init(
+        _ current: Binding<Value>,
+        byValue: Value = 1,
+        min: Value,
+        max: Value,
+        color: RefdsColor = .accentColor,
+        style: Font.TextStyle = .body
+    ) {
+        self._current = current
         self.byValue = byValue
         self.min = min
         self.max = max
         self.color = color
         self.style = style
-        self._current = current
     }
     
     public var body: some View {
-        switch style {
-        case .inline:
-            inline
-        case .card:
-            inline
-                .padding()
-                .background(RefdsColor.secondaryBackground(scheme: colorScheme))
-                .cornerRadius(10)
-        }
-    }
-    
-    private var inline: some View {
-        HStack(spacing: 20) {
+        HStack(spacing: .padding(.medium)) {
             minusButton
-            RefdsText("\(current)")
+            RefdsText("\(current)", style: style)
                 .frame(width: width)
             plusButton
         }
@@ -46,12 +42,13 @@ public struct RefdsStepper<Value: Numeric>: View {
             }
         } label: {
             RefdsIcon(
-                symbol: .minusCircleFill,
+                .minusCircleFill,
                 color: color,
-                size: 20,
+                style: style,
                 weight: .bold,
                 renderingMode: .hierarchical
             )
+            .scaleEffect(1.3)
         }
         .disabled(current.magnitude == min.magnitude)
     }
@@ -63,12 +60,13 @@ public struct RefdsStepper<Value: Numeric>: View {
             }
         } label: {
             RefdsIcon(
-                symbol: .plusCircleFill,
+                .plusCircleFill,
                 color: color,
-                size: 20,
+                style: style,
                 weight: .bold,
                 renderingMode: .hierarchical
             )
+            .scaleEffect(1.3)
         }
         .disabled(current.magnitude == max.magnitude)
     }
@@ -78,20 +76,7 @@ public struct RefdsStepper<Value: Numeric>: View {
     }
 }
 
-public extension RefdsStepper {
-    enum Style {
-        case card
-        case inline
-    }
-}
-
-struct RefdsStepper_Previews: PreviewProvider {
-    @State static var value: Int = 5
-    static var previews: some View {
-        RefdsStepper(current: .init(get: {
-            value
-        }, set: {
-            value = $0
-        }), min: 1, max: 10)
-    }
+#Preview {
+    RefdsStepper(.constant(5), min: 1, max: 10)
+        .padding()
 }

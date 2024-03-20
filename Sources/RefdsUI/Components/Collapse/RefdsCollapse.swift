@@ -31,7 +31,7 @@ public struct RefdsCollapse: View {
             .background(.clear)
             .onTapGesture { withAnimation { isCollapsed.toggle() } }
         #else
-        Button(.medium) {
+        Button {
             withAnimation { isCollapsed.toggle() }
         } label: { toggle }
         #endif
@@ -50,7 +50,7 @@ public struct RefdsCollapse: View {
                 Spacer()
             }
             
-            RefdsIcon(symbol: .chevronUp, color: .secondary.opacity(0.5), size: 15)
+            RefdsIcon(.chevronUp, color: .secondary.opacity(0.5), size: 15)
                 .rotationEffect(.degrees(isCollapsed ? 0 : 180))
         }
     }

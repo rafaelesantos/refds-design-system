@@ -94,7 +94,7 @@ public struct RefdsSection<Content: View>: View {
     private var macOSHeader: some View {
         if let headerDescription = headerDescription {
             HStack {
-                RefdsText(headerDescription.uppercased(), style: .caption1, color: .secondary)
+                RefdsText(headerDescription.uppercased(), style: .caption, color: .secondary)
                 Spacer()
             }
         } else if let header = header {
@@ -125,7 +125,7 @@ public struct RefdsSection<Content: View>: View {
             content()
         } header: {
             if let headerDescription = headerDescription {
-                RefdsText(headerDescription.uppercased(), style: .caption1, color: .secondary)
+                RefdsText(headerDescription.uppercased(), style: .caption, color: .secondary)
             } else if let header = header { AnyView(header()) }
         } footer: {
             if let footerDescription = footerDescription {

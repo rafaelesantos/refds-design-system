@@ -24,7 +24,7 @@ public struct RefdsMonthCalendar: View {
         HStack(spacing: 30) {
             RefdsButton { updateMonth(proxy, value: -1) } label: {
                 RefdsIcon(
-                    symbol: .chevronLeftCircleFill,
+                    .chevronLeftCircleFill,
                     color: color,
                     size: 20,
                     weight: .bold,
@@ -36,7 +36,7 @@ public struct RefdsMonthCalendar: View {
             
             RefdsButton { updateMonth(proxy, value: 1) } label: {
                 RefdsIcon(
-                    symbol: .chevronRightCircleFill,
+                    .chevronRightCircleFill,
                     color: color,
                     size: 20,
                     weight: .bold,
@@ -62,10 +62,10 @@ public struct RefdsMonthCalendar: View {
         RefdsButton { updateDays(proxy, date: date, needReloadDays: false) } label: {
             VStack {
                 let textColor = selectedDateTextColor(with: date)
-                RefdsText(date.asString(withDateFormat: .custom("EEE")).uppercased(), style: .custom(8), color: textColor, weight: .light)
+                RefdsText(date.asString(withDateFormat: .custom("EEE")).uppercased(), style: .caption2, color: textColor, weight: .light)
                 RefdsText(date.asString(withDateFormat: .custom("dd")), style: .body, color: textColor, weight: .bold)
             }
-            .frame(width: 25)
+            .frame(width: 28)
             .padding(8)
             .background(selectedDateBackgroundColor(with: date))
             .cornerRadius(6)
@@ -119,6 +119,5 @@ struct RefdsMonthCalendar_Previews: PreviewProvider {
             get: { date },
             set: { date = $0 }
         ))
-        .padding()
     }
 }

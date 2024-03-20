@@ -1,55 +1,21 @@
-//
-//  RefdsTag.swift
-//  
-//
-//  Created by Rafael Santos on 18/12/22.
-//
-
 import SwiftUI
 
 public struct RefdsTag: View {
     private let content: String
     private let icon: RefdsIconSymbol?
-    private let style: RefdsText.Style
+    private let style: Font.TextStyle
     private let color: Color
     private let weight: Font.Weight
-    private let family: RefdsFontFamily
+    private let design: Font.Design
     private let lineLimit: Int?
-
-    public var body: some View {
-        HStack {
-            if let symbol = icon {
-                RefdsIcon(
-                    symbol: symbol,
-                    color: color,
-                    size: style.value,
-                    weight: weight,
-                    renderingMode: .hierarchical
-                )
-            }
-            RefdsText(
-                content,
-                style: style,
-                color: color,
-                weight: weight,
-                family: family,
-                lineLimit: lineLimit
-            )
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
-        .background(Capsule().fill(color.opacity(0.2)))
-    }
-}
-
-extension RefdsTag {
+    
     public init(
         _ content: String,
         icon: RefdsIconSymbol? = nil,
-        style: RefdsText.Style = .caption2,
+        style: Font.TextStyle = .caption2,
         weight: Font.Weight = .bold,
         color: Color,
-        family: RefdsFontFamily = .defaultConfiguration,
+        design: Font.Design = .default,
         lineLimit: Int? = nil
     ) {
         self.content = content
@@ -57,19 +23,41 @@ extension RefdsTag {
         self.style = style
         self.weight = weight
         self.color = color
-        self.family = family
+        self.design = design
         self.lineLimit = lineLimit
+    }
+
+    public var body: some View {
+        HStack {
+            if let symbol = icon {
+                RefdsIcon(
+                    symbol,
+                    color: color,
+                    weight: weight,
+                    renderingMode: .monochrome
+                )
+            }
+            RefdsText(
+                content,
+                style: style,
+                color: color,
+                weight: weight,
+                design: design,
+                lineLimit: lineLimit
+            )
+        }
+        .padding(.padding(.extraSmall))
+        .background(color.opacity(0.2))
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
     }
 }
 
-struct RefdsTag_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack(spacing: 15) {
-            RefdsTag("tag here", color: .blue)
-            RefdsTag("tag here tag here tag here tag here tag here", color: .orange)
-            RefdsTag("tag here", style: .footnote, color: .green)
-            RefdsTag("timer", icon: .clock, style: .footnote, color: .pink)
-        }
-        .padding()
+#Preview {
+    VStack {
+        RefdsTag("tag here", color: .blue)
+        RefdsTag("tag here tag here tag here tag here tag here", color: .orange)
+        RefdsTag("tag here", style: .footnote, color: .green)
+        RefdsTag("timer", icon: .clock, style: .footnote, color: .pink)
     }
+    .padding()
 }

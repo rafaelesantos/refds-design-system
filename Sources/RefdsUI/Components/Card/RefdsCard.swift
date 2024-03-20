@@ -1,10 +1,3 @@
-//
-//  RefdsCard.swift
-//  
-//
-//  Created by Rafael Santos on 31/05/23.
-//
-
 import SwiftUI
 
 public struct RefdsCard: ViewModifier {
@@ -21,30 +14,23 @@ public struct RefdsCard: ViewModifier {
                 content.padding()
             }
             .background(Color.secondaryBackground(scheme: scheme))
-            .cornerRadius(10)
-            .shadow(color: .black.opacity(0.10), radius: 20, y: 5)
+            .cornerRadius(.cornerRadius)
+            .shadow(color: .black.opacity(0.15), radius: 15)
             .padding(.all, 2)
         } else {
             Group {
                 content.padding()
             }
             .background(Color.secondaryBackground(scheme: scheme))
-            .cornerRadius(10)
+            .cornerRadius(.cornerRadius)
         }
     }
 }
 
-
-
-public extension View {
-    func refdsCard(withShadow: Bool = true) -> some View {
-        self.modifier(RefdsCard(withShadow: withShadow))
+#Preview {
+    HStack {
+        RefdsIcon(.infinity)
+        RefdsText("Infinity")
     }
-}
-
-struct RefdsCard_Previews: PreviewProvider {
-    static var previews: some View {
-        RefdsTag("Teste", color: .random)
-            .refdsCard()
-    }
+    .refdsCard()
 }
