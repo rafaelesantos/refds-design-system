@@ -1,7 +1,5 @@
 # RefdsUI
 
-[![CI](https://github.com/rafaelesantos/refds-design-system/actions/workflows/swift.yml/badge.svg)](https://github.com/rafaelesantos/refds-design-system/actions/workflows/swift.yml)
-
 RefdsUI is a Swift Package designed to streamline the implementation of a design system in SwiftUI. It offers a collection of reusable components and view extensions to enhance your SwiftUI development experience.
 
 ## Features
