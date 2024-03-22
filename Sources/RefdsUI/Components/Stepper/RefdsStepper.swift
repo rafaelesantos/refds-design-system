@@ -70,7 +70,7 @@ public struct RefdsStepper<Value: Numeric>: View {
                 height: .padding(.extraLarge)
             )
             .background(color.opacity(0.2))
-            .clipShape(.rect(cornerRadius: .cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         }
         .disabled(current.magnitude == min.magnitude)
     }
@@ -90,7 +90,7 @@ public struct RefdsStepper<Value: Numeric>: View {
                 height: .padding(.extraLarge)
             )
             .background(color.opacity(0.2))
-            .clipShape(.rect(cornerRadius: .cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         }
         .disabled(current.magnitude == max.magnitude)
     }

@@ -50,7 +50,7 @@ public struct RefdsTag: View {
         }
         .if(!isPrimary) { $0.padding(.padding(.small)) }
         .background(isPrimary ? nil : color.opacity(0.2))
-        .clipShape(.rect(cornerRadius: .cornerRadius))
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         .if(isPrimary) { $0.refdsBorder(padding: .small) }
     }
 }

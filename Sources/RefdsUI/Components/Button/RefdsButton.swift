@@ -50,14 +50,14 @@ public struct RefdsButton: View {
         Button { pressButton() } label: {
             titleView(background: color)
         }
-        .clipShape(.rect(cornerRadius: .cornerRadius))
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
     }
     
     private var secondary: some View {
         Button { pressButton() } label: {
             titleView(color: color)
         }
-        .clipShape(.rect(cornerRadius: .cornerRadius))
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         .refdsBorder(color: color, padding: .zero)
     }
     

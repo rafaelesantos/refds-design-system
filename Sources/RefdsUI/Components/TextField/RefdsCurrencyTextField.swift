@@ -1,3 +1,6 @@
+#if os(iOS)
+import UIKit
+#endif
 import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
@@ -58,8 +61,10 @@ public struct RefdsCurrencyTextField: View {
                 .keyboardType(.numberPad)
     #endif
         }
+#if os(iOS)
         .onAppear { UITextField.appearance().clearButtonMode = .never }
         .onDisappear { UITextField.appearance().clearButtonMode = .whileEditing }
+#endif
     }
 }
 

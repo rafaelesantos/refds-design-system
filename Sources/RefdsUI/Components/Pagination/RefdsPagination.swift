@@ -54,7 +54,7 @@ public struct RefdsPagination: View {
                 height: .padding(.extraLarge)
             )
             .background((isDisableLeftButton ? .placeholder : color).opacity(0.2))
-            .clipShape(.rect(cornerRadius: .cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         }
         .disabled(isDisableLeftButton)
     }
@@ -75,7 +75,7 @@ public struct RefdsPagination: View {
                 height: .padding(.extraLarge)
             )
             .background((isDisableRightButton ? .placeholder : color).opacity(0.2))
-            .clipShape(.rect(cornerRadius: .cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         }
         .disabled(isDisableRightButton)
     }
