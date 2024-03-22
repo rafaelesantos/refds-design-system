@@ -26,7 +26,10 @@ let package = Package(
         .target(
             name: "RefdsUI",
             dependencies: [
-                .product(name: "RefdsShared", package: "refds-shared")
+                .product(
+                    name: "RefdsShared",
+                    package: "refds-shared"
+                )
             ])
     ]
 )

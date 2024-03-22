@@ -14,10 +14,6 @@ public extension RefdsColor {
     typealias SystemColor = UIColor
     #endif
     
-    static var accentColor: RefdsColor {
-        RefdsUI.shared.accentColor
-    }
-    
     static var placeholder: RefdsColor {
         RefdsColor.primary.opacity(0.3)
     }
