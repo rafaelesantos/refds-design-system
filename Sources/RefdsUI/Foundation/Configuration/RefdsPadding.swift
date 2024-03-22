@@ -31,6 +31,7 @@ public extension CGFloat {
         case medium
         case large
         case extraLarge
+        case zero
         
         var rawValue: CGFloat {
             switch self {
@@ -39,12 +40,17 @@ public extension CGFloat {
             case .medium: return RefdsUI.shared.padding.medium
             case .large: return RefdsUI.shared.padding.large
             case .extraLarge: return RefdsUI.shared.padding.extraLarge
+            case .zero: return .zero
             }
         }
     }
     
     static var cornerRadius: CGFloat {
         RefdsUI.shared.cornerRadius
+    }
+    
+    static var lineWidth: CGFloat {
+        RefdsUI.shared.lineWidth
     }
     
     static func padding(_ padding: Padding) -> CGFloat {

@@ -1,6 +1,8 @@
 import SwiftUI
 
 public struct RefdsIcon: View {
+    @State private var animationsRunning = false
+    
     private let symbol: RefdsIconSymbol
     private let color: RefdsColor
     private let size: CGFloat?
@@ -35,17 +37,14 @@ public struct RefdsIcon: View {
             }
             .symbolRenderingMode(renderingMode)
             .foregroundColor(color)
+            .onAppear { animationsRunning.toggle() }
+            .contentTransition(.symbolEffect(.replace))
     }
 }
 
 #Preview {
     HStack {
-        RefdsIcon(.infinity)
-        RefdsIcon(.infinity, color: .green)
-        RefdsIcon(.infinity, color: .red, size: 20)
-        RefdsIcon(.infinity, color: .orange, style: .largeTitle)
-        RefdsIcon(.infinity, color: .mint, weight: .black)
-        RefdsIcon(.paintpalette, renderingMode: .multicolor)
+        RefdsIcon(.squareStack3dUp, style: .largeTitle, weight: .bold)
     }
-    .padding()
+    .padding(.padding(.extraLarge))
 }

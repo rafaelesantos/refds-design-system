@@ -1,22 +1,64 @@
 import SwiftUI
 
 public extension View {
+    func refdsBorder(
+        color: RefdsColor = .placeholder,
+        padding: CGFloat.Padding = .medium,
+        radius: CGFloat = .cornerRadius,
+        lineWidth: CGFloat = .lineWidth
+    ) -> some View {
+        self
+            .padding(padding.rawValue)
+            .overlay {
+                RoundedRectangle(cornerRadius: radius)
+                    .stroke(color, lineWidth: lineWidth)
+            }
+    }
+    
     @ViewBuilder
+    func refdsTextField(state: RefdsTextFieldState?) -> some View {
+        if let state = state {
+            VStack(spacing: .padding(.extraSmall)) {
+                self
+                HStack {
+                    RefdsText(
+                        state.description,
+                        style: .footnote,
+                        color: state.color,
+                        design: .default,
+                        alignment: .leading
+                    )
+                    
+                    Spacer(minLength: .zero)
+                }
+            }
+        }
+    }
+    
+    func refdsCard(padding: CGFloat.Padding = .medium) -> some View {
+        self
+            .padding(.padding(padding))
+            .refdsSecondaryBackground()
+            .cornerRadius(.cornerRadius)
+            .shadow(color: .black.opacity(0.15), radius: .cornerRadius)
+    }
+    
+    func refdsLoading(_ isLoading: Bool) -> some View {
+        ZStack(alignment: .center) {
+            self
+            if isLoading {
+                RefdsLoadingView()
+            }
+        }
+    }
+    
+    
     func refdsSkeleton(if condition: @autoclosure () -> Bool) -> some View {
         redacted(reason: condition() ? .placeholder : [])
     }
     
     func refdsAlert(viewData: Binding<RefdsAlert.ViewData?>) -> some View {
         self.modifier(RefdsAlertModifier(alert: viewData))
-    }
-    
-    func refdsCard(withShadow: Bool = true) -> some View {
-        self.modifier(RefdsCard(withShadow: withShadow))
-    }
-    
-    @ViewBuilder
-    func refdsLoading(show: Binding<Bool>) -> some View {
-        modifier(RefdsLoadingViewModifier(show: show))
     }
     
     @ViewBuilder

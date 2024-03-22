@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct RefdsStepper<Value: Numeric>: View {
-    @Environment(\.colorScheme) private var colorScheme
     @Binding private var current: Value
     
     private let byValue: Value
@@ -9,6 +8,7 @@ public struct RefdsStepper<Value: Numeric>: View {
     private let max: Value
     private let color: RefdsColor
     private let style: Font.TextStyle
+    private let content: (() -> any View)?
     
     public init(
         _ current: Binding<Value>,
@@ -16,7 +16,8 @@ public struct RefdsStepper<Value: Numeric>: View {
         min: Value,
         max: Value,
         color: RefdsColor = .accentColor,
-        style: Font.TextStyle = .body
+        style: Font.TextStyle = .body,
+        content: (() -> any View)? = nil
     ) {
         self._current = current
         self.byValue = byValue
@@ -24,59 +25,88 @@ public struct RefdsStepper<Value: Numeric>: View {
         self.max = max
         self.color = color
         self.style = style
+        self.content = content
     }
     
     public var body: some View {
         HStack(spacing: .padding(.medium)) {
-            minusButton
-            RefdsText("\(current)", style: style)
-                .frame(width: width)
-            plusButton
+            if let content = content {
+                AnyView(
+                    content()
+                        .animation(.default, value: current)
+                        .contentTransition(.numericText())
+                )
+                Spacer()
+            }
+            
+            HStack {
+                minusButton
+                Divider().frame(height: 30)
+                plusButton
+            }
         }
+    }
+    
+    private var canMinus: Bool {
+        current.magnitude - byValue.magnitude >= min.magnitude
+    }
+    
+    private var canSum: Bool {
+        current.magnitude + byValue.magnitude <= max.magnitude
     }
     
     private var minusButton: some View {
         RefdsButton {
-            if current.magnitude - byValue.magnitude >= min.magnitude {
-                current -= byValue
-            }
+            if canMinus { current -= byValue }
         } label: {
             RefdsIcon(
-                .minusCircleFill,
-                color: color,
+                .minus,
+                color: canMinus ? color : .placeholder,
                 style: style,
-                weight: .bold,
                 renderingMode: .hierarchical
             )
-            .scaleEffect(1.3)
+            .frame(
+                width: .padding(.extraLarge),
+                height: .padding(.extraLarge)
+            )
+            .background(color.opacity(0.2))
+            .clipShape(.rect(cornerRadius: .cornerRadius))
         }
         .disabled(current.magnitude == min.magnitude)
     }
     
     private var plusButton: some View {
         RefdsButton {
-            if current.magnitude + byValue.magnitude <= max.magnitude {
-                current += byValue
-            }
+            if canSum { current += byValue }
         } label: {
             RefdsIcon(
-                .plusCircleFill,
-                color: color,
+                .plus,
+                color: canSum ? color : .placeholder,
                 style: style,
-                weight: .bold,
                 renderingMode: .hierarchical
             )
-            .scaleEffect(1.3)
+            .frame(
+                width: .padding(.extraLarge),
+                height: .padding(.extraLarge)
+            )
+            .background(color.opacity(0.2))
+            .clipShape(.rect(cornerRadius: .cornerRadius))
         }
         .disabled(current.magnitude == max.magnitude)
-    }
-    
-    private var width: CGFloat? {
-        current.magnitude < 1000 ? 30 : nil
     }
 }
 
 #Preview {
-    RefdsStepper(.constant(5), min: 1, max: 10)
-        .padding()
+    struct ContainerView: View {
+        @State private var value: Double = 50
+        var body: some View {
+            VStack(alignment: .leading, spacing: .padding(.medium)) {
+                RefdsStepper($value, byValue: 5, min: 1, max: 1000) {
+                    RefdsText(value.currency(), style: .title, weight: .bold, design: .monospaced)
+                }
+            }
+            .padding(.padding(.large))
+        }
+    }
+    return ContainerView()
 }

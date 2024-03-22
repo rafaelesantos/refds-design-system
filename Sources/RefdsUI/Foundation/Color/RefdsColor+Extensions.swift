@@ -18,6 +18,10 @@ public extension RefdsColor {
         RefdsUI.shared.accentColor
     }
     
+    static var placeholder: RefdsColor {
+        RefdsColor.primary.opacity(0.3)
+    }
+    
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
@@ -40,18 +44,34 @@ public extension RefdsColor {
         )
     }
     
-    var colorComponents: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)? {
+    var colorComponents: (
+        red: CGFloat,
+        green: CGFloat,
+        blue: CGFloat,
+        alpha: CGFloat
+    )? {
         var r: CGFloat = 0
         var g: CGFloat = 0
         var b: CGFloat = 0
         var a: CGFloat = 0
         
         #if os(macOS)
-        SystemColor(self).usingColorSpace(.genericRGB)?.getRed(&r, green: &g, blue: &b, alpha: &a)
+        SystemColor(self)
+            .usingColorSpace(.genericRGB)?
+            .getRed(
+                &r,
+                green: &g,
+                blue: &b,
+                alpha: &a
+            )
         #else
-        guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
-            return nil
-        }
+        guard SystemColor(self)
+            .getRed(
+                &r,
+                green: &g,
+                blue: &b,
+                alpha: &a
+            ) else { return nil }
         #endif
         
         return (r, g, b, a)

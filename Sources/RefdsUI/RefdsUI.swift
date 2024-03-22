@@ -7,16 +7,20 @@ public class RefdsUI {
     public var cornerRadius: CGFloat
     public var colorScheme: ColorScheme?
     public var padding: RefdsPadding
+    public var lineWidth: CGFloat
     
     public init(
         accentColor: RefdsColor = .green,
-        cornerRadius: CGFloat = 8,
+        cornerRadius: CGFloat = 10,
         colorScheme: ColorScheme? = nil,
-        padding: RefdsPadding = .default
+        padding: RefdsPadding = .default,
+        lineWidth: CGFloat = 1
     ) {
         self.accentColor = accentColor
         self.cornerRadius = cornerRadius
         self.colorScheme = colorScheme
         self.padding = padding
+        self.lineWidth = lineWidth
+        UITextField.appearance().clearButtonMode = .whileEditing
     }
 }

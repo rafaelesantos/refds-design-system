@@ -1,10 +1,3 @@
-//
-//  RefdsToggle.swift
-//  
-//
-//  Created by Rafael Santos on 02/06/23.
-//
-
 import SwiftUI
 
 public struct RefdsToggle: View {
@@ -30,20 +23,20 @@ public struct RefdsToggle: View {
     }
 }
 
-struct RefdsToggleView: View {
-    @State var isOn: Bool = false
-    
-    var body: some View {
-        RefdsToggle(isOn: $isOn) {
-            RefdsAlert(style: .inline(.critical, "Ops ocorreu um erro", .xmark))
+#Preview {
+    struct ContainerView: View {
+        @State private var isOn = false
+        var body: some View {
+            VStack(alignment: .leading, spacing: .padding(.medium)) {
+                RefdsToggle(isOn: $isOn) {
+                    VStack(alignment: .leading) {
+                        RefdsText(.someWord(), style: .title3, weight: .bold)
+                        RefdsText(.someParagraph(), color: .secondary)
+                    }
+                }
+            }
+            .padding(.padding(.large))
         }
     }
-}
-
-struct RefdsToggle_Previews: PreviewProvider {
-    static var previews: some View {
-        RefdsToggleView()
-            .padding()
-            .padding()
-    }
+    return ContainerView()
 }

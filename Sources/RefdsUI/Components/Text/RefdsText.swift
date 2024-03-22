@@ -37,6 +37,10 @@ public struct RefdsText: View {
 }
 
 #Preview {
-    RefdsText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dictum ac leo non rhoncus.")
-        .padding()
+    VStack(alignment: .leading, spacing: .padding(.medium)) {
+        RefdsText(.someWord(), style: .title, color: .orange, weight: .heavy, design: .serif)
+        
+        RefdsText(.someParagraph(), design: .serif)
+    }
+    .padding(.padding(.large))
 }

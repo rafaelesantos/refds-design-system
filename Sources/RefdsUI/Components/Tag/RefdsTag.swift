@@ -4,7 +4,7 @@ public struct RefdsTag: View {
     private let content: String
     private let icon: RefdsIconSymbol?
     private let style: Font.TextStyle
-    private let color: Color
+    private let color: RefdsColor
     private let weight: Font.Weight
     private let design: Font.Design
     private let lineLimit: Int?
@@ -12,9 +12,9 @@ public struct RefdsTag: View {
     public init(
         _ content: String,
         icon: RefdsIconSymbol? = nil,
-        style: Font.TextStyle = .caption2,
+        style: Font.TextStyle = .footnote,
         weight: Font.Weight = .bold,
-        color: Color,
+        color: RefdsColor = .primary,
         design: Font.Design = .default,
         lineLimit: Int? = nil
     ) {
@@ -26,15 +26,17 @@ public struct RefdsTag: View {
         self.design = design
         self.lineLimit = lineLimit
     }
+    
+    private var isPrimary: Bool { color == .primary }
 
     public var body: some View {
-        HStack {
+        HStack(spacing: .padding(.extraSmall)) {
             if let symbol = icon {
                 RefdsIcon(
                     symbol,
-                    color: color,
+                    color: color ,
                     weight: weight,
-                    renderingMode: .monochrome
+                    renderingMode: isPrimary ? .multicolor : .monochrome
                 )
             }
             RefdsText(
@@ -46,18 +48,19 @@ public struct RefdsTag: View {
                 lineLimit: lineLimit
             )
         }
-        .padding(.padding(.extraSmall))
-        .background(color.opacity(0.2))
-        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
+        .if(!isPrimary) { $0.padding(.padding(.small)) }
+        .background(isPrimary ? nil : color.opacity(0.2))
+        .clipShape(.rect(cornerRadius: .cornerRadius))
+        .if(isPrimary) { $0.refdsBorder(padding: .small) }
     }
 }
 
 #Preview {
-    VStack {
-        RefdsTag("tag here", color: .blue)
-        RefdsTag("tag here tag here tag here tag here tag here", color: .orange)
-        RefdsTag("tag here", style: .footnote, color: .green)
-        RefdsTag("timer", icon: .clock, style: .footnote, color: .pink)
+    VStack(alignment: .leading, spacing: .padding(.medium)) {
+        RefdsTag(.someWord(), color: .blue)
+        RefdsTag(.someParagraph(), color: .orange)
+        RefdsTag(.someWord(), style: .title, color: .green)
+        RefdsTag(.someWord(), icon: .clock)
     }
-    .padding()
+    .padding(.padding(.large))
 }

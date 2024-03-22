@@ -1,51 +1,11 @@
-//
-//  RefdsCurrencyTextField.swift
-//
-//
-//  Created by Rafael Santos on 27/04/23.
-//
-
 import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
-    class NumbersOnly: ObservableObject {
-        @Binding var double: Double { didSet {  } }
-        @Published var value: String = "" {
-            didSet {
-                let filtered = value.replacingOccurrences(of: ",", with: ".").filter { $0.isNumber }
-                if value != filtered, let valueDouble = Double(filtered) {
-                    Task { @MainActor in
-                        value = filtered
-                        double = (valueDouble / 100)
-                        appearText = (valueDouble / 100).currency()
-                    }
-                } else if let valueDouble = Double(value.replacingOccurrences(of: ",", with: ".")) {
-                    Task { @MainActor in
-                        double = (valueDouble / 100)
-                        appearText = (valueDouble / 100).currency()
-                    }
-                }
-                
-                if value.isEmpty {
-                    Task { @MainActor in
-                        double = 0
-                        appearText = 0.currency()
-                    }
-                }
-            }
-        }
-        @Published var appearText: String
-        init(double: Binding<Double>) {
-            let doubleValue = double.wrappedValue * 10
-            self._double = double
-            appearText = doubleValue.currency()
-            value = "\(doubleValue)"
-        }
-    }
+    @State private var appearText: String = ""
+    @StateObject private var input: RefdsTextFieldOnlyNumbers
     
     @Binding private var value: Double
-    @State private var appearText: String = ""
-    @StateObject private var input: NumbersOnly
+    
     private let style: Font.TextStyle
     private let color: Color
     private let weight: Font.Weight
@@ -66,20 +26,27 @@ public struct RefdsCurrencyTextField: View {
         self.weight = weight
         self.design = design
         self.alignment = alignment
-        _input = StateObject(wrappedValue: NumbersOnly(double: value))
+        _input = StateObject(wrappedValue: RefdsTextFieldOnlyNumbers(double: value))
+    }
+    
+    private var textColor: RefdsColor {
+        value == .zero ? .secondary : color
     }
     
     public var body: some View {
-        ZStack {
+        ZStack(alignment: .center) {
             RefdsText(
-                input.appearText,
+                value.currency(),
                 style: style,
-                color: value == 0 ? .secondary : color,
+                color: textColor,
                 weight: weight,
                 design: design,
                 alignment: alignment,
                 lineLimit: 1
             )
+            .contentTransition(.numericText(value: value))
+            .animation(.default, value: value)
+            
             TextField("", text: $input.value)
                 .font(.system(style, design: design, weight: weight))
                 .multilineTextAlignment(alignment)
@@ -91,17 +58,25 @@ public struct RefdsCurrencyTextField: View {
                 .keyboardType(.numberPad)
     #endif
         }
+        .onAppear { UITextField.appearance().clearButtonMode = .never }
+        .onDisappear { UITextField.appearance().clearButtonMode = .whileEditing }
     }
 }
 
-struct RefdsCurrencyTextField_Previews: PreviewProvider {
-    @State static var value = 50.2
-    static var previews: some View {
-        Group {
-            RefdsCurrencyTextField(value: $value)
+#Preview {
+    struct ContainerView: View {
+        @State private var value: Double = 0
+        var body: some View {
+            VStack(alignment: .leading, spacing: .padding(.medium)) {
+                RefdsCurrencyTextField(
+                    value: $value,
+                    style: .largeTitle,
+                    weight: .heavy,
+                    design: .rounded
+                )
+            }
+            .padding(.padding(.large))
         }
-        .padding()
-        .previewDisplayName("Default")
-        .previewLayout(.sizeThatFits)
     }
+    return ContainerView()
 }

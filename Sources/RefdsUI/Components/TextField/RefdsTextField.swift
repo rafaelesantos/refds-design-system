@@ -1,15 +1,8 @@
-//
-//  RefdsTextField.swift
-//  
-//
-//  Created by Rafael Santos on 31/12/22.
-//
-
 import SwiftUI
 
 public struct RefdsTextField: View {
-    @Environment(\.sizeCategory) var sizeCategory
     @Binding private var text: String
+    
     private let placeholder: String
     private let axis: Axis
     private let style: Font.TextStyle
@@ -19,12 +12,12 @@ public struct RefdsTextField: View {
     private let alignment: TextAlignment
     private let minimumScaleFactor: CGFloat
     private let lineLimit: Int?
-    #if os(iOS)
+#if os(iOS)
     private let keyboardType: UIKeyboardType
     private let textInputAutocapitalization: TextInputAutocapitalization
-    #endif
+#endif
     
-    #if os(iOS)
+#if os(iOS)
     public init(
         _ placeholder: String,
         text: Binding<String>,
@@ -52,7 +45,7 @@ public struct RefdsTextField: View {
         self.keyboardType = keyboardType
         self.textInputAutocapitalization = textInputAutocapitalization
     }
-    #endif
+#endif
     
     public init(
         _ placeholder: String,
@@ -76,36 +69,57 @@ public struct RefdsTextField: View {
         self.alignment = alignment
         self.minimumScaleFactor = minimumScaleFactor
         self.lineLimit = lineLimit
-        #if os(iOS)
+#if os(iOS)
         self.keyboardType = .default
         self.textInputAutocapitalization = .never
-        #endif
+#endif
     }
     
     public var body: some View {
-        TextField(placeholder, text: $text)
-            .font(.system(style, design: design, weight: weight))
-            .multilineTextAlignment(alignment)
-            .foregroundColor(color)
-            .minimumScaleFactor(minimumScaleFactor)
-            .lineLimit(lineLimit)
-            .textFieldStyle(.plain)
-        #if os(iOS)
-            .keyboardType(keyboardType)
-            .textInputAutocapitalization(textInputAutocapitalization)
-        #endif
+        VStack {
+            TextField(placeholder, text: $text)
+                .font(.system(style, design: design, weight: weight))
+                .multilineTextAlignment(alignment)
+                .foregroundColor(color)
+                .minimumScaleFactor(minimumScaleFactor)
+                .lineLimit(lineLimit)
+                .textFieldStyle(.plain)
+#if os(iOS)
+                .keyboardType(keyboardType)
+                .textInputAutocapitalization(textInputAutocapitalization)
+#endif
+        }
     }
 }
 
-struct RefdsTextField_Previews: PreviewProvider {
-    @State static var value = ""
-    static var previews: some View {
-        Group {
-            RefdsTextField("Informe o texto", text: $value)
+#Preview {
+    struct ContainerView: View {
+        @State private var text: String = ""
+        var body: some View {
+            VStack(alignment: .leading, spacing: .padding(.medium)) {
+                RefdsTextField(.someWord(), text: $text)
+                
+                RefdsTextField(.someWord(), text: $text)
+                    .refdsBorder()
+                
+                RefdsTextField(.someWord(), text: $text)
+                    .refdsBorder()
+                    .refdsTextField(state: .error(.someParagraph()))
+                
+                RefdsTextField(.someWord(), text: $text)
+                    .refdsBorder()
+                    .refdsTextField(state: .warning(.someParagraph()))
+                
+                RefdsTextField(.someWord(), text: $text)
+                    .refdsBorder()
+                    .refdsTextField(state: .success(.someParagraph()))
+                
+                RefdsTextField(.someWord(), text: $text)
+                    .refdsBorder()
+                    .refdsTextField(state: .detail(.someParagraph()))
+            }
+            .padding(.padding(.large))
         }
-        .padding()
-        .previewDisplayName("Default")
-        .previewLayout(.sizeThatFits)
-        .padding()
     }
+    return ContainerView()
 }
