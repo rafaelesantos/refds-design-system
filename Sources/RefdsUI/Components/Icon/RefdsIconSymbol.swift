@@ -4712,7 +4712,7 @@ public enum RefdsIconSymbol: String, CaseIterable {
     case xboxLogo = "xbox.logo"
     case yensign = "yensign"
     
-    static var random: RefdsIconSymbol {
+    public static var random: RefdsIconSymbol {
         RefdsIconSymbol.allCases.randomElement()!
     }
 }
