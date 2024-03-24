@@ -21,6 +21,8 @@ public class RefdsUI {
         self.colorScheme = colorScheme
         self.padding = padding
         self.lineWidth = lineWidth
+        #if os(iOS)
         UITextField.appearance().clearButtonMode = .whileEditing
+        #endif
     }
 }
