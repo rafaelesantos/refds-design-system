@@ -52,15 +52,6 @@ public extension View {
         }
     }
     
-    
-    func refdsSkeleton(if condition: @autoclosure () -> Bool) -> some View {
-        redacted(reason: condition() ? .placeholder : [])
-    }
-    
-    func refdsAlert(viewData: Binding<RefdsAlert.ViewData?>) -> some View {
-        self.modifier(RefdsAlertModifier(alert: viewData))
-    }
-    
     @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,
