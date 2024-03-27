@@ -5,13 +5,13 @@ public struct RefdsAsyncImage: View {
     
     private let url: String
     private let placeholder: ((String) -> any View)?
-    private let image: (RefdsImageCrossPlatform) -> any View
+    private let image: (Image) -> any View
     private let error: ((String, @escaping () -> Void) -> any View)?
     
     public init(
         url: String,
         placeholder: ((String) -> any View)? = nil,
-        image: @escaping (RefdsImageCrossPlatform) -> any View,
+        image: @escaping (Image) -> any View,
         error: ((String, @escaping () -> Void) -> any View)? = nil
     ) {
         _imageLoader = StateObject(
@@ -47,7 +47,7 @@ public struct RefdsAsyncImage: View {
                     AnyView(error(errorMessage, { fetchImage(from: url) }))
                 }
             case .loaded(let image):
-                AnyView(self.image(image))
+                AnyView(self.image(Image(cpImage: image)))
             }
         }
         .onChange(of: url, { fetchImage(from: url) })
