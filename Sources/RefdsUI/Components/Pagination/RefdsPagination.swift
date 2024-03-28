@@ -18,16 +18,16 @@ public struct RefdsPagination: View {
     
     public var body: some View {
         VStack {
-            HStack(alignment: .center, spacing: 10) {
+            HStack(alignment: .center, spacing: .padding(.extraSmall)) {
                 leftButton
-                Spacer(minLength: 6)
+                Spacer(minLength: .zero)
                 pageNumbers
-                Spacer(minLength: 6)
+                Spacer(minLength: .zero)
                 rightButton
             }
         }
         .padding(.horizontal, 30)
-        .onAppear { updatedPages([1, 2, 3, 4, 5], page: currentPage) }
+        .onAppear { updatedPages([1, 2, 3, 4], page: currentPage) }
     }
     
     private var isDisableLeftButton: Bool {
