@@ -45,16 +45,16 @@ public struct RefdsPagination: View {
             RefdsIcon(
                 .chevronLeft,
                 color: isDisableLeftButton ? .placeholder : color,
-                style: .body,
+                style: .footnote,
                 weight: .bold,
                 renderingMode: .hierarchical
             )
             .frame(
-                width: .padding(.extraLarge),
-                height: .padding(.extraLarge)
+                width: .padding(.large),
+                height: .padding(.large)
             )
             .background((isDisableLeftButton ? .placeholder : color).opacity(0.2))
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
+            .clipShape(.circle)
         }
         .disabled(isDisableLeftButton)
     }
@@ -66,22 +66,22 @@ public struct RefdsPagination: View {
             RefdsIcon(
                 .chevronRight,
                 color: isDisableRightButton ? .placeholder : color,
-                style: .body,
+                style: .footnote,
                 weight: .bold,
                 renderingMode: .hierarchical
             )
             .frame(
-                width: .padding(.extraLarge),
-                height: .padding(.extraLarge)
+                width: .padding(.large),
+                height: .padding(.large)
             )
             .background((isDisableRightButton ? .placeholder : color).opacity(0.2))
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
+            .clipShape(.circle)
         }
         .disabled(isDisableRightButton)
     }
     
     private var pageNumbers: some View {
-        HStack(spacing: .padding(.large)) {
+        HStack(spacing: .padding(.extraLarge)) {
             ForEach(pages, id: \.self) {
                 makeButtonPage(with: $0)
             }
@@ -92,8 +92,8 @@ public struct RefdsPagination: View {
         RefdsButton { actionButtonPage(onPage: page) } label: {
             RefdsText(
                 page.asString,
-                style: .body,
-                color: currentPage == page ? color : (page > currentPage && !canChangeToNextPage()) ? .placeholder : .secondary,
+                style: .footnote,
+                color: currentPage == page ? color : (page > currentPage && !canChangeToNextPage()) ? .placeholder : .primary,
                 weight: currentPage == page ? .bold : .regular
             )
         }
