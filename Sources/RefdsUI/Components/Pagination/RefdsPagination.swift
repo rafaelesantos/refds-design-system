@@ -45,7 +45,7 @@ public struct RefdsPagination: View {
             RefdsIcon(
                 .chevronLeft,
                 color: isDisableLeftButton ? .placeholder : color,
-                style: .footnote,
+                style: .caption2,
                 weight: .bold,
                 renderingMode: .hierarchical
             )
@@ -66,7 +66,7 @@ public struct RefdsPagination: View {
             RefdsIcon(
                 .chevronRight,
                 color: isDisableRightButton ? .placeholder : color,
-                style: .footnote,
+                style: .caption2,
                 weight: .bold,
                 renderingMode: .hierarchical
             )
