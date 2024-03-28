@@ -4,14 +4,17 @@ public struct RefdsPagination: View {
     @State private var pages: [Int] = []
     @Binding private var currentPage: Int
     private let color: RefdsColor
+    private let design: Font.Design
     private var canChangeToNextPage: () -> Bool
     
     public init(
         currentPage: Binding<Int>,
         color: RefdsColor = .accentColor,
+        design: Font.Design = .default,
         canChangeToNextPage: @escaping () -> Bool
     ) {
         self.color = color
+        self.design = design
         self._currentPage = currentPage
         self.canChangeToNextPage = canChangeToNextPage
     }
@@ -94,7 +97,8 @@ public struct RefdsPagination: View {
                 page.asString,
                 style: .footnote,
                 color: currentPage == page ? color : (page > currentPage && !canChangeToNextPage()) ? .placeholder : .primary,
-                weight: currentPage == page ? .bold : .regular
+                weight: currentPage == page ? .bold : .regular,
+                design: design
             )
         }
         .disabled((page > currentPage && !canChangeToNextPage()))
