@@ -81,7 +81,7 @@ public struct RefdsPagination: View {
     }
     
     private var pageNumbers: some View {
-        HStack(spacing: .padding(.extraLarge)) {
+        HStack(spacing: .padding(.large)) {
             ForEach(pages, id: \.self) {
                 makeButtonPage(with: $0)
             }
