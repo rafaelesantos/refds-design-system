@@ -1,13 +1,14 @@
 import SwiftUI
 
 public struct RefdsStarShower: View {
+    
     @State private var starsViewData: [RefdsStarViewData] = []
     
     private let timer = Timer.publish(every: 0.05, on: .current, in: .common).autoconnect()
     let galaxyWidth: CGFloat = UIScreen.main.bounds.width
     let galaxyHeight: CGFloat
     
-    public init( galaxyHeight: CGFloat = UIScreen.main.bounds.height) {
+    public init(galaxyHeight: CGFloat = UIScreen.main.bounds.height) {
         self.galaxyHeight = galaxyHeight
     }
     
