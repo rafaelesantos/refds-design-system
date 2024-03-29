@@ -5,26 +5,22 @@ struct ParallaxMotionModifier: ViewModifier {
     @StateObject private var manager: MotionManager = MotionManager()
     private var magnitude: Double
     
-    init(magnitude: Double) {
+    init(magnitude: Double = 15) {
         self.magnitude = magnitude
     }
     
     func body(content: Content) -> some View {
         content
-            .rotation3DEffect(.degrees(10), axis: (
-                x: CGFloat(manager.roll * magnitude),
-                y: CGFloat(manager.pitch * magnitude),
+            .rotation3DEffect(.degrees(magnitude), axis: (
+                x: CGFloat(manager.roll),
+                y: CGFloat(manager.pitch),
                 z: 0.0
             ))
     }
 }
 
 public extension View {
-    func refdsShadow(radius: CGFloat = 20, y: CGFloat = 5) -> some View {
-        self.shadow(color: .black.opacity(0.15), radius: radius, y: y)
-    }
-    
-    func refdsParallax(magnitude: Double) -> some View {
+    func refdsParallax(magnitude: Double = 15) -> some View {
         self.modifier(ParallaxMotionModifier(magnitude: magnitude))
     }
 }
