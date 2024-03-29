@@ -11,7 +11,7 @@ struct ParallaxMotionModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .rotation3DEffect(.zero, axis: (
+            .rotation3DEffect(.degrees(10), axis: (
                 x: CGFloat(manager.roll * magnitude),
                 y: CGFloat(manager.pitch * magnitude),
                 z: 0.0
@@ -39,7 +39,7 @@ class MotionManager: ObservableObject {
     init() {
         #if os(iOS)
         self.manager = CMMotionManager()
-        self.manager.deviceMotionUpdateInterval = 1/60
+        self.manager.deviceMotionUpdateInterval = 1 / 60
         self.manager.startDeviceMotionUpdates(to: .main) { (motionData, error) in
             guard error == nil else {
                 print(error!)
