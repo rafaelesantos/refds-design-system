@@ -4,10 +4,12 @@ public struct RefdsStarShower: View {
     @State private var starsViewData: [RefdsStarViewData] = []
     
     private let timer = Timer.publish(every: 0.05, on: .current, in: .common).autoconnect()
-    let screenWidth = UIScreen.main.bounds.width
-    let screenHeight = UIScreen.main.bounds.height
+    let galaxyWidth: CGFloat = UIScreen.main.bounds.width
+    let galaxyHeight: CGFloat
     
-    public init() {}
+    public init( galaxyHeight: CGFloat = UIScreen.main.bounds.height) {
+        self.galaxyHeight = galaxyHeight
+    }
     
     public var body: some View {
         Canvas { context, size in
@@ -20,12 +22,12 @@ public struct RefdsStarShower: View {
         .background(RefdsColor.black)
         .onAppear { makeStars() }
         .onReceive(timer) { _ in moveStars() }
-        .ignoresSafeArea()
+        .frame(height: galaxyHeight)
     }
     
     private func makeStars() {
         for _ in 1 ... 200 {
-            let position = CGPoint(x: .random(in: 0 ... screenWidth), y: .random(in: 0 ... screenHeight))
+            let position = CGPoint(x: .random(in: 0 ... galaxyWidth), y: .random(in: 0 ... galaxyHeight))
             let star = RefdsStarViewData(
                 size: .random(in: 2 ... 5),
                 position: position,
@@ -40,8 +42,8 @@ public struct RefdsStarShower: View {
         for index in starsViewData.indices {
             let star = starsViewData[index]
             starsViewData[index].position.x += star.velocity
-            if star.position.x > screenWidth {
-                starsViewData[index].position = .init(x: .random(in: 0 ... screenWidth / 100), y: .random(in: 0 ... screenHeight))
+            if star.position.x > galaxyWidth {
+                starsViewData[index].position = .init(x: .random(in: 0 ... galaxyWidth / 100), y: .random(in: 0 ... galaxyHeight))
             }
         }
     }
@@ -57,10 +59,14 @@ public struct RefdsStarShower: View {
             .white,
             .blue,
         ]
-        return colors.randomElement()!.opacity(.random(in: 0.5 ... 1))
+        return colors.randomElement()!.opacity(.random(in: 0.8 ... 1))
     }
 }
 
 #Preview {
-    RefdsStarShower()
+    VStack {
+        RefdsStarShower(galaxyHeight: 200)
+            .clipShape(.rect(cornerRadius: .cornerRadius))
+            .padding(.padding(.extraLarge))
+    }
 }
