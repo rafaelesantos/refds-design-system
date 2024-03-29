@@ -1,15 +1,22 @@
 import SwiftUI
 
 public struct RefdsStarShower: View {
-    
     @State private var starsViewData: [RefdsStarViewData] = []
     
     private let timer = Timer.publish(every: 0.05, on: .current, in: .common).autoconnect()
-    let galaxyWidth: CGFloat = UIScreen.main.bounds.width
-    let galaxyHeight: CGFloat
+    private let edge: RefdsStarShowerEdge
+    private let galaxyWidth: CGFloat = UIScreen.main.bounds.width
+    private let galaxyHeight: CGFloat
+    private let backgroundColor: RefdsColor?
     
-    public init(galaxyHeight: CGFloat = UIScreen.main.bounds.height) {
+    public init(
+        from edge: RefdsStarShowerEdge = .leading,
+        galaxyHeight: CGFloat = UIScreen.main.bounds.height,
+        backgroundColor: RefdsColor? = nil
+    ) {
+        self.edge = edge
         self.galaxyHeight = galaxyHeight
+        self.backgroundColor = backgroundColor
     }
     
     public var body: some View {
@@ -20,7 +27,12 @@ public struct RefdsStarShower: View {
                 newContext.fill(Path(ellipseIn: rect), with: .color(star.color))
             }
         }
-        .refdsSecondaryBackground()
+        .if(backgroundColor, transform: { view, color in
+            view.background(color.opacity(0.2))
+        })
+        .if(backgroundColor == nil, transform: { view in
+            view.refdsSecondaryBackground()
+        })
         .onAppear { makeStars() }
         .onReceive(timer) { _ in moveStars() }
         .frame(height: galaxyHeight)
@@ -42,9 +54,42 @@ public struct RefdsStarShower: View {
     private func moveStars() {
         for index in starsViewData.indices {
             let star = starsViewData[index]
-            starsViewData[index].position.x += star.velocity
-            if star.position.x > galaxyWidth {
-                starsViewData[index].position = .init(x: .random(in: 0 ... galaxyWidth / 100), y: .random(in: 0 ... galaxyHeight))
+            switch edge {
+            case .top:
+                starsViewData[index].position.y += star.velocity
+                if star.position.y > galaxyHeight {
+                    starsViewData[index].position = .init(
+                        x: .random(in: 0 ... galaxyWidth),
+                        y: .random(in: 0 ... galaxyHeight / 100)
+                    )
+                }
+                
+            case .bottom:
+                starsViewData[index].position.y -= star.velocity
+                if star.position.y < 0 {
+                    starsViewData[index].position = .init(
+                        x: .random(in: 0 ... galaxyWidth),
+                        y: .random(in: galaxyHeight / 1.1 ... galaxyHeight)
+                    )
+                }
+                
+            case .leading:
+                starsViewData[index].position.x += star.velocity
+                if star.position.x > galaxyWidth {
+                    starsViewData[index].position = .init(
+                        x: .random(in: 0 ... galaxyWidth / 100),
+                        y: .random(in: 0 ... galaxyHeight)
+                    )
+                }
+                
+            case .trailing:
+                starsViewData[index].position.x -= star.velocity
+                if star.position.x < 0 {
+                    starsViewData[index].position = .init(
+                        x: .random(in: galaxyWidth / 1.1 ... galaxyWidth),
+                        y: .random(in: 0 ... galaxyHeight)
+                    )
+                }
             }
         }
     }
@@ -63,8 +108,7 @@ public struct RefdsStarShower: View {
 
 #Preview {
     VStack {
-        RefdsStarShower(galaxyHeight: 200)
-            .refdsBorder(padding: .zero)
+        RefdsStarShower(from: .bottom, galaxyHeight: 200, backgroundColor: .accentColor)
             .refdsParallax()
             .padding(.padding(.extraLarge))
     }
