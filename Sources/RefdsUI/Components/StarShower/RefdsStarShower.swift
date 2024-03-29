@@ -7,6 +7,8 @@ public struct RefdsStarShower: View {
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
+    public init() {}
+    
     public var body: some View {
         Canvas { context, size in
             for star in starsViewData {
