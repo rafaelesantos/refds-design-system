@@ -11,7 +11,11 @@ struct ParallaxMotionModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .offset(x: CGFloat(manager.roll * magnitude), y: CGFloat(manager.pitch * magnitude))
+            .rotation3DEffect(.zero, axis: (
+                x: CGFloat(manager.roll * magnitude),
+                y: CGFloat(manager.pitch * magnitude),
+                z: 0.0
+            ))
     }
 }
 
@@ -45,6 +49,7 @@ class MotionManager: ObservableObject {
             if let motionData = motionData {
                 self.pitch = motionData.attitude.pitch
                 self.roll = motionData.attitude.roll
+
             }
         }
         #endif

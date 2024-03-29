@@ -104,19 +104,19 @@ public struct RefdsTextField: View {
                 
                 RefdsTextField(.someWord(), text: $text)
                     .refdsBorder()
-                    .refdsTextField(state: .error(.someParagraph()))
+                    .refdsTextState(for: .error(.someParagraph()))
                 
                 RefdsTextField(.someWord(), text: $text)
                     .refdsBorder()
-                    .refdsTextField(state: .warning(.someParagraph()))
+                    .refdsTextState(for: .warning(.someParagraph()))
                 
                 RefdsTextField(.someWord(), text: $text)
                     .refdsBorder()
-                    .refdsTextField(state: .success(.someParagraph()))
+                    .refdsTextState(for: .success(.someParagraph()))
                 
                 RefdsTextField(.someWord(), text: $text)
                     .refdsBorder()
-                    .refdsTextField(state: .detail(.someParagraph()))
+                    .refdsTextState(for: .detail(.someParagraph()))
             }
             .padding(.padding(.large))
         }

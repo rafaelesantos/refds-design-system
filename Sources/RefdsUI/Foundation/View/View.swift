@@ -16,7 +16,7 @@ public extension View {
     }
     
     @ViewBuilder
-    func refdsTextField(state: RefdsTextFieldState?) -> some View {
+    func refdsTextState(for state: RefdsTextFieldState?) -> some View {
         if let state = state {
             VStack(spacing: .padding(.extraSmall)) {
                 self
@@ -28,28 +28,58 @@ public extension View {
                         design: .default,
                         alignment: .leading
                     )
-                    
                     Spacer(minLength: .zero)
                 }
             }
         }
     }
     
-    func refdsCard(padding: CGFloat.Padding = .medium) -> some View {
+    func refdsCard(
+        padding: CGFloat.Padding = .medium,
+        hasShadow: Bool = true
+    ) -> some View {
         self
             .padding(.padding(padding))
             .refdsSecondaryBackground()
             .cornerRadius(.cornerRadius)
-            .shadow(color: .black.opacity(0.15), radius: .cornerRadius)
+            .if(hasShadow) {
+                $0.shadow(
+                    color: .black.opacity(0.07),
+                    radius: .cornerRadius / 1.2
+                )
+            }
     }
     
     func refdsLoading(_ isLoading: Bool) -> some View {
         ZStack(alignment: .center) {
             self
-            if isLoading {
-                RefdsLoadingView()
+            if isLoading { RefdsLoadingView() }
+        }
+    }
+    
+    func refdsScaleEffect() -> some View {
+        modifier(RefdsScaleEffect())
+    }
+    
+    func refdsToast(item: Binding<RefdsToastViewData?>) -> some View {
+        ZStack {
+            self
+            if let viewData = item.wrappedValue {
+                VStack {
+                    Spacer()
+                    RefdsToast(
+                        icon: viewData.icon,
+                        title: viewData.title,
+                        message: viewData.message,
+                        action: { item.wrappedValue = nil }
+                    )
+                    .refdsScaleEffect()
+                }
+                .ignoresSafeArea()
+                .padding(.padding(.medium))
             }
         }
+        .animation(.easeOut, value: item.wrappedValue)
     }
     
     @ViewBuilder
