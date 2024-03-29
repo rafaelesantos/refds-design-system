@@ -20,7 +20,7 @@ public struct RefdsStarShower: View {
                 newContext.fill(Path(ellipseIn: rect), with: .color(star.color))
             }
         }
-        .background(RefdsColor.black)
+        .refdsSecondaryBackground()
         .onAppear { makeStars() }
         .onReceive(timer) { _ in moveStars() }
         .frame(height: galaxyHeight)
@@ -51,14 +51,11 @@ public struct RefdsStarShower: View {
     
     func randomColorStar() -> RefdsColor {
         let colors: [RefdsColor] = [
-            .white,
-            .white,
-            .white,
-            .white,
-            .white,
-            .white,
-            .white,
-            .blue,
+            .primary,
+            .primary,
+            .primary,
+            .primary,
+            .accentColor,
         ]
         return colors.randomElement()!.opacity(.random(in: 0.8 ... 1))
     }
@@ -67,7 +64,8 @@ public struct RefdsStarShower: View {
 #Preview {
     VStack {
         RefdsStarShower(galaxyHeight: 200)
-            .clipShape(.rect(cornerRadius: .cornerRadius))
+            .refdsBorder(padding: .zero)
+            .refdsParallax()
             .padding(.padding(.extraLarge))
     }
 }
