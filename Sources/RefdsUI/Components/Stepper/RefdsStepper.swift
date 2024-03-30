@@ -39,9 +39,9 @@ public struct RefdsStepper<Value: Numeric>: View {
                 Spacer()
             }
             
-            HStack {
+            HStack(spacing: .padding(.medium)) {
                 minusButton
-                Divider().frame(height: 30)
+                Divider().frame(height: 20)
                 plusButton
             }
         }
@@ -62,15 +62,16 @@ public struct RefdsStepper<Value: Numeric>: View {
             RefdsIcon(
                 .minus,
                 color: canMinus ? color : .placeholder,
-                style: style,
+                style: .caption2,
+                weight: .bold,
                 renderingMode: .hierarchical
             )
             .frame(
                 width: .padding(.extraLarge),
                 height: .padding(.extraLarge)
             )
-            .background(color.opacity(0.2))
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
+            .background((canMinus ? color : .placeholder).opacity(0.2))
+            .clipShape(.circle)
         }
         .disabled(current.magnitude == min.magnitude)
     }
@@ -82,15 +83,16 @@ public struct RefdsStepper<Value: Numeric>: View {
             RefdsIcon(
                 .plus,
                 color: canSum ? color : .placeholder,
-                style: style,
+                style: .caption2,
+                weight: .bold,
                 renderingMode: .hierarchical
             )
             .frame(
                 width: .padding(.extraLarge),
                 height: .padding(.extraLarge)
             )
-            .background(color.opacity(0.2))
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
+            .background((canSum ? color : .placeholder).opacity(0.2))
+            .clipShape(.circle)
         }
         .disabled(current.magnitude == max.magnitude)
     }
@@ -101,7 +103,7 @@ public struct RefdsStepper<Value: Numeric>: View {
         @State private var value: Double = 50
         var body: some View {
             VStack(alignment: .leading, spacing: .padding(.medium)) {
-                RefdsStepper($value, byValue: 5, min: 1, max: 1000) {
+                RefdsStepper($value, byValue: 5, min: 1, max: 100) {
                     RefdsText(value.currency(), style: .title, weight: .bold, design: .monospaced)
                 }
             }

@@ -6,14 +6,17 @@ public struct RefdsMonthCalendar: View {
     @State private var days: [Date] = []
     private let color: RefdsColor
     
-    public init(selection: Binding<Date>, color: RefdsColor = .accentColor) {
+    public init(
+        selection: Binding<Date>,
+        color: RefdsColor = .accentColor
+    ) {
         self._selection = selection
         self.color = color
     }
     
     public var body: some View {
         ScrollViewReader { proxy in
-            VStack(spacing: 35) {
+            VStack(spacing: .padding(.large)) {
                 header(proxy)
                 weekDays(proxy)
             }
@@ -21,27 +24,31 @@ public struct RefdsMonthCalendar: View {
     }
     
     private func header(_ proxy: ScrollViewProxy) -> some View {
-        HStack(spacing: 30) {
+        HStack(spacing: .padding(.extraLarge)) {
             RefdsButton { updateMonth(proxy, value: -1) } label: {
                 RefdsIcon(
-                    .chevronLeftCircleFill,
+                    .chevronLeft,
                     color: color,
-                    size: 20,
-                    weight: .bold,
-                    renderingMode: .hierarchical
+                    style: .caption,
+                    weight: .bold
                 )
+                .frame(width: .padding(.large), height: .padding(.large))
+                .background(color.opacity(0.2))
+                .clipShape(.circle)
             }
             
             RefdsText(selection.asString(withDateFormat: .custom("MMMM yyyy")))
             
             RefdsButton { updateMonth(proxy, value: 1) } label: {
                 RefdsIcon(
-                    .chevronRightCircleFill,
+                    .chevronRight,
                     color: color,
-                    size: 20,
-                    weight: .bold,
-                    renderingMode: .hierarchical
+                    style: .caption,
+                    weight: .bold
                 )
+                .frame(width: .padding(.large), height: .padding(.large))
+                .background(color.opacity(0.2))
+                .clipShape(.circle)
             }
         }
     }
@@ -112,12 +119,12 @@ public struct RefdsMonthCalendar: View {
     }
 }
 
-struct RefdsMonthCalendar_Previews: PreviewProvider {
-    static var date: Date = .current
-    static var previews: some View {
-        RefdsMonthCalendar(selection: Binding(
-            get: { date },
-            set: { date = $0 }
-        ))
+#Preview {
+    struct ContainerView: View {
+        @State var date: Date = .current
+        var body: some View {
+            RefdsMonthCalendar(selection: $date)
+        }
     }
+    return ContainerView()
 }

@@ -1,11 +1,4 @@
-//
-//  File.swift
-//  
-//
-//  Created by Rafael Santos on 29/03/24.
-//
-
-import SwiftUI
+import Foundation
 
 public enum RefdsStarShowerEdge {
     case top
