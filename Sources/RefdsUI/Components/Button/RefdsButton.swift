@@ -2,7 +2,8 @@ import SwiftUI
 
 public struct RefdsButton: View {
     private let title: String
-    private let color: RefdsColor
+    private let backGroundColor: RefdsColor
+    private let textColor: RefdsColor
     private let style: Style
     private let content: (() -> any View)?
     private let action: (() -> Void)?
@@ -16,7 +17,25 @@ public struct RefdsButton: View {
         action: (() -> Void)? = nil
     ) {
         self.title = title.uppercased()
-        self.color = color
+        self.backGroundColor = color
+        self.textColor = .white
+        self.style = style
+        self.action = action
+        self.hasLargeSize = hasLargeSize
+        self.content = nil
+    }
+    
+    public init(
+        _ title: String,
+        backGroundColor: RefdsColor = .clear,
+        textColor: RefdsColor = .accentColor,
+        style: Style = .primary,
+        hasLargeSize: Bool = true,
+        action: (() -> Void)? = nil
+    ) {
+        self.title = title.uppercased()
+        self.backGroundColor = backGroundColor
+        self.textColor = textColor
         self.style = style
         self.action = action
         self.hasLargeSize = hasLargeSize
@@ -28,7 +47,8 @@ public struct RefdsButton: View {
         label: (() -> any View)? = nil
     ) {
         self.title = ""
-        self.color = .accentColor
+        self.backGroundColor = .accentColor
+        self.textColor = .white
         self.style = .custom
         self.content = label
         self.action = action
@@ -48,22 +68,25 @@ public struct RefdsButton: View {
     
     private var primary: some View {
         Button { pressButton() } label: {
-            titleView(background: color)
+            titleView(
+                color: textColor,
+                background: backGroundColor
+            )
         }
         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
     }
     
     private var secondary: some View {
         Button { pressButton() } label: {
-            titleView(color: color)
+            titleView(color: backGroundColor)
         }
         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
-        .refdsBorder(color: color, padding: .zero)
+        .refdsBorder(color: backGroundColor, padding: .zero)
     }
     
     private var tertiary: some View {
         Button { pressButton() } label: {
-            titleView(color: color)
+            titleView(color: textColor)
         }
     }
     

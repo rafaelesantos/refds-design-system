@@ -61,6 +61,31 @@ public extension View {
         modifier(RefdsScaleEffect())
     }
     
+    func refdsAlert(item: Binding<RefdsAlertViewData?>) -> some View {
+        ZStack {
+            self
+            if let viewData = item.wrappedValue {
+                VStack {
+                    Spacer()
+                    RefdsAlertView(
+                        image: viewData.image,
+                        title: viewData.title,
+                        message: viewData.message,
+                        content: viewData.content,
+                        actions: viewData.actions,
+                        dismiss: { item.wrappedValue = nil }
+                    )
+                    .refdsScaleEffect()
+                    Spacer()
+                }
+                .padding(.padding(.extraLarge))
+                .ignoresSafeArea()
+                .background(.black.opacity(0.02))
+            }
+        }
+        .animation(.easeOut, value: item.wrappedValue)
+    }
+    
     func refdsToast(item: Binding<RefdsToastViewData?>) -> some View {
         ZStack {
             self
