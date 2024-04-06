@@ -3,13 +3,13 @@ import SwiftUI
 public struct RefdsPagination: View {
     @State private var pages: [Int] = []
     @Binding private var currentPage: Int
-    private let color: RefdsColor
+    private let color: Color
     private let design: Font.Design
     private var canChangeToNextPage: () -> Bool
     
     public init(
         currentPage: Binding<Int>,
-        color: RefdsColor = .accentColor,
+        color: Color = .accentColor,
         design: Font.Design = .default,
         canChangeToNextPage: @escaping () -> Bool
     ) {

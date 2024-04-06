@@ -3,7 +3,7 @@ import SwiftUI
 public class RefdsUI {
     public static let shared = RefdsUI()
     
-    public var accentColor: RefdsColor
+    public var accentColor: Color
     public var cornerRadius: CGFloat
     public var colorScheme: ColorScheme?
     public var padding: RefdsPadding
@@ -11,7 +11,7 @@ public class RefdsUI {
     public var fontDesign: Font.Design
     
     public init(
-        accentColor: RefdsColor = .green,
+        accentColor: Color = .green,
         cornerRadius: CGFloat = 10,
         colorScheme: ColorScheme? = nil,
         padding: RefdsPadding = .default,

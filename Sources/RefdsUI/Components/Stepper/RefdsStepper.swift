@@ -6,7 +6,7 @@ public struct RefdsStepper<Value: Numeric>: View {
     private let byValue: Value
     private let min: Value
     private let max: Value
-    private let color: RefdsColor
+    private let color: Color
     private let style: Font.TextStyle
     private let content: (() -> any View)?
     
@@ -15,7 +15,7 @@ public struct RefdsStepper<Value: Numeric>: View {
         byValue: Value = 1,
         min: Value,
         max: Value,
-        color: RefdsColor = .accentColor,
+        color: Color = .accentColor,
         style: Font.TextStyle = .body,
         content: (() -> any View)? = nil
     ) {

@@ -6,12 +6,12 @@ public struct RefdsWeekdaysCalendar: View {
     @State private var dates: [Date] = []
     @State private var selectionIndex: Int = 0
     private let currentDate: Date
-    private let color: RefdsColor
+    private let color: Color
     private let onDate: ((Date) -> Void)?
     
     public init(
         selection: Date = .current,
-        color: RefdsColor = .accentColor,
+        color: Color = .accentColor,
         onDate: ((Date) -> Void)? = nil
     ) {
         self._selection = State(initialValue: selection)
@@ -66,11 +66,11 @@ public struct RefdsWeekdaysCalendar: View {
         return selectedDate == date
     }
     
-    private func selectedDateBackgroundColor(with date: Date) -> RefdsColor {
+    private func selectedDateBackgroundColor(with date: Date) -> Color {
         isSelectedDate(with: date) ? color : .secondary.opacity(0.1)
     }
     
-    private func selectedDateTextColor(with date: Date) -> RefdsColor {
+    private func selectedDateTextColor(with date: Date) -> Color {
         isSelectedDate(with: date) ? .white : .primary
     }
     

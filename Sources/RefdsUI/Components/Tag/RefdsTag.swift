@@ -4,7 +4,7 @@ public struct RefdsTag: View {
     private let content: String
     private let icon: RefdsIconSymbol?
     private let style: Font.TextStyle
-    private let color: RefdsColor
+    private let color: Color
     private let weight: Font.Weight
     private let design: Font.Design
     private let lineLimit: Int?
@@ -14,7 +14,7 @@ public struct RefdsTag: View {
         icon: RefdsIconSymbol? = nil,
         style: Font.TextStyle = .footnote,
         weight: Font.Weight = .bold,
-        color: RefdsColor = .primary,
+        color: Color = .primary,
         design: Font.Design = .default,
         lineLimit: Int? = nil
     ) {

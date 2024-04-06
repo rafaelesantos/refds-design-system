@@ -3,7 +3,7 @@ import SwiftUI
 public struct RefdsLoadingView: View {
     @State private var isRotating = false
     
-    private let color: RefdsColor
+    private let color: Color
     
     private var normalDegrees: Double { isRotating ? 0 : 360 }
     private var reverseDegrees: Double { isRotating ? 360 : 0 }
@@ -12,7 +12,7 @@ public struct RefdsLoadingView: View {
         .repeatForever(autoreverses: false)
     }
     
-    public init(color: RefdsColor = .accentColor) {
+    public init(color: Color = .accentColor) {
         self.color = color
     }
     
@@ -26,7 +26,7 @@ public struct RefdsLoadingView: View {
     }
     
     private func circleSectionView(
-        color: RefdsColor,
+        color: Color,
         isReverse: Bool = false
     ) -> some View {
         Circle()

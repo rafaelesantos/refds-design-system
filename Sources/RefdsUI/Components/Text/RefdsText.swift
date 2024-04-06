@@ -3,7 +3,7 @@ import SwiftUI
 public struct RefdsText: View {
     private let content: String
     private let style: Font.TextStyle
-    private let color: RefdsColor
+    private let color: Color
     private let weight: Font.Weight
     private let design: Font.Design
     private let alignment: TextAlignment
@@ -12,7 +12,7 @@ public struct RefdsText: View {
     public init (
         _ content: String,
         style: Font.TextStyle = .body,
-        color: RefdsColor = .primary,
+        color: Color = .primary,
         weight: Font.Weight = .regular,
         design: Font.Design = .default,
         alignment: TextAlignment = .leading,

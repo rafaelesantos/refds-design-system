@@ -2,8 +2,8 @@ import SwiftUI
 
 public struct RefdsButton: View {
     private let title: String
-    private let backGroundColor: RefdsColor
-    private let textColor: RefdsColor
+    private let backGroundColor: Color
+    private let textColor: Color
     private let style: Style
     private let content: (() -> any View)?
     private let action: (() -> Void)?
@@ -11,7 +11,7 @@ public struct RefdsButton: View {
     
     public init(
         _ title: String,
-        color: RefdsColor = .accentColor,
+        color: Color = .accentColor,
         style: Style = .primary,
         hasLargeSize: Bool = true,
         action: (() -> Void)? = nil
@@ -27,8 +27,8 @@ public struct RefdsButton: View {
     
     public init(
         _ title: String,
-        backGroundColor: RefdsColor = .clear,
-        textColor: RefdsColor = .accentColor,
+        backGroundColor: Color = .clear,
+        textColor: Color = .accentColor,
         style: Style = .primary,
         hasLargeSize: Bool = true,
         action: (() -> Void)? = nil
@@ -91,8 +91,8 @@ public struct RefdsButton: View {
     }
     
     private func titleView(
-        color: RefdsColor = .white,
-        background: RefdsColor? = nil
+        color: Color = .white,
+        background: Color? = nil
     ) -> some View {
         HStack {
             RefdsText(

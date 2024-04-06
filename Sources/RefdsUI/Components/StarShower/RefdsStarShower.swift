@@ -1,4 +1,5 @@
 import SwiftUI
+import RefdsShared
 
 public struct RefdsStarShower: View {
     @State private var starsViewData: [RefdsStarViewData] = []
@@ -7,12 +8,12 @@ public struct RefdsStarShower: View {
     private let edge: RefdsStarShowerEdge
     private let galaxyWidth: CGFloat = UIScreen.main.bounds.width
     private let galaxyHeight: CGFloat
-    private let backgroundColor: RefdsColor?
+    private let backgroundColor: Color?
     
     public init(
         from edge: RefdsStarShowerEdge = .leading,
         galaxyHeight: CGFloat = UIScreen.main.bounds.height,
-        backgroundColor: RefdsColor? = nil
+        backgroundColor: Color? = nil
     ) {
         self.edge = edge
         self.galaxyHeight = galaxyHeight
@@ -31,7 +32,7 @@ public struct RefdsStarShower: View {
             view.background(color.opacity(0.2))
         })
         .if(backgroundColor == nil, transform: { view in
-            view.refdsSecondaryBackground()
+            view.refdsBackground(with: .secondaryBackground)
         })
         .onAppear { makeStars() }
         .onReceive(timer) { _ in moveStars() }
@@ -94,8 +95,8 @@ public struct RefdsStarShower: View {
         }
     }
     
-    func randomColorStar() -> RefdsColor {
-        let colors: [RefdsColor] = [
+    func randomColorStar() -> Color {
+        let colors: [Color] = [
             .primary,
             .primary,
             .primary,

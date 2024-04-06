@@ -8,12 +8,12 @@ public struct RefdsMenu<Content: View>: View {
     private let description: String?
     private let detail: String?
     private let font: Font.TextStyle
-    private let color: RefdsColor
+    private let color: Color
     private let style: Style
     
     public init(
         style: Style = .card,
-        color: RefdsColor = RefdsUI.shared.accentColor,
+        color: Color = RefdsUI.shared.accentColor,
         icon: RefdsIconSymbol?,
         text: String?,
         description: String? = nil,
@@ -45,7 +45,7 @@ public struct RefdsMenu<Content: View>: View {
         }
         .padding(.horizontal)
         .padding(.vertical, .padding(.small))
-        .refdsSecondaryBackground()
+        .refdsBackground(with: .secondaryBackground)
         .cornerRadius(.cornerRadius)
     }
     

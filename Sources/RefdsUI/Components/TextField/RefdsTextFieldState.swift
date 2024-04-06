@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 public enum RefdsTextFieldState {
     case error(String)
@@ -6,7 +7,7 @@ public enum RefdsTextFieldState {
     case success(String)
     case detail(String)
     
-    public var color: RefdsColor {
+    public var color: Color {
         switch self {
         case .error: return .red
         case .warning: return .orange

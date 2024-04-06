@@ -4,7 +4,7 @@ public struct RefdsIcon: View {
     @State private var animationsRunning = false
     
     private let symbol: RefdsIconSymbol
-    private let color: RefdsColor
+    private let color: Color
     private let size: CGFloat?
     private let style: Font.TextStyle?
     private let weight: Font.Weight
@@ -12,7 +12,7 @@ public struct RefdsIcon: View {
     
     public init(
         _ symbol: RefdsIconSymbol,
-        color: RefdsColor = .accentColor,
+        color: Color = .accentColor,
         size: CGFloat? = nil,
         style: Font.TextStyle? = .body,
         weight: Font.Weight = .regular,

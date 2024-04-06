@@ -4,11 +4,11 @@ public struct RefdsMonthCalendar: View {
     @Binding private var selection: Date
     @State private var selectionIndex: Int = 0
     @State private var days: [Date] = []
-    private let color: RefdsColor
+    private let color: Color
     
     public init(
         selection: Binding<Date>,
-        color: RefdsColor = .accentColor
+        color: Color = .accentColor
     ) {
         self._selection = selection
         self.color = color
@@ -87,11 +87,11 @@ public struct RefdsMonthCalendar: View {
         return selectedDate == date
     }
     
-    private func selectedDateBackgroundColor(with date: Date) -> RefdsColor {
+    private func selectedDateBackgroundColor(with date: Date) -> Color {
         isSelectedDate(with: date) ? color : .secondary.opacity(0.1)
     }
     
-    private func selectedDateTextColor(with date: Date) -> RefdsColor {
+    private func selectedDateTextColor(with date: Date) -> Color {
         isSelectedDate(with: date) ? .white : .primary
     }
     

@@ -32,7 +32,7 @@ public struct RefdsCurrencyTextField: View {
         _input = StateObject(wrappedValue: RefdsTextFieldOnlyNumbers(double: value))
     }
     
-    private var textColor: RefdsColor {
+    private var textColor: Color {
         value == .zero ? .secondary : color
     }
     

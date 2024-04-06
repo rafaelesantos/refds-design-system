@@ -1,8 +1,13 @@
 import SwiftUI
+import RefdsShared
 
 public extension View {
+    func refdsBackground(with style: RefdsBackgroundModifier.Style = .background) -> some View {
+        modifier(RefdsBackgroundModifier(style: style))
+    }
+    
     func refdsBorder(
-        color: RefdsColor = .placeholder,
+        color: Color = .placeholder,
         padding: CGFloat.Padding = .medium,
         radius: CGFloat = .cornerRadius,
         lineWidth: CGFloat = .lineWidth
@@ -40,7 +45,7 @@ public extension View {
     ) -> some View {
         self
             .padding(.padding(padding))
-            .refdsSecondaryBackground()
+            .refdsBackground(with: .secondaryBackground)
             .cornerRadius(.cornerRadius)
             .if(hasShadow) {
                 $0.shadow(

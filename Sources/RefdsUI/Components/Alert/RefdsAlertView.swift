@@ -116,7 +116,7 @@ public struct RefdsAlertView: View {
         }
     }
     
-    private func getButtonBackground(actionStyle: RefdsAlertViewActionStyle) -> RefdsColor {
+    private func getButtonBackground(actionStyle: RefdsAlertViewActionStyle) -> Color {
         switch actionStyle {
         case .done: return .accentColor
         case .destructive: return .red
@@ -125,7 +125,7 @@ public struct RefdsAlertView: View {
         }
     }
     
-    private func getButtonTextColor(actionStyle: RefdsAlertViewActionStyle) -> RefdsColor {
+    private func getButtonTextColor(actionStyle: RefdsAlertViewActionStyle) -> Color {
         switch actionStyle {
         case .done: return .white
         case .destructive: return .white
