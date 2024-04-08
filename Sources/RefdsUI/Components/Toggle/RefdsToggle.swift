@@ -18,7 +18,11 @@ public struct RefdsToggle: View {
                 AnyView(content())
             }
         }
+        #if os(tvOS)
+        .toggleStyle(.automatic)
+        #else
         .toggleStyle(.switch)
+        #endif
         .tint(RefdsUI.shared.accentColor)
     }
 }
