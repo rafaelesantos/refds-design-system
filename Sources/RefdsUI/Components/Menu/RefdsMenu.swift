@@ -14,10 +14,10 @@ public struct RefdsMenu<Content: View>: View {
     public init(
         style: Style = .card,
         color: Color = RefdsUI.shared.accentColor,
-        icon: RefdsIconSymbol?,
+        icon: RefdsIconSymbol? = nil,
         text: String?,
         description: String? = nil,
-        detail: String?,
+        detail: String? = nil,
         font: Font.TextStyle = .body,
         @ViewBuilder content:  @escaping () -> Content
     ) {
