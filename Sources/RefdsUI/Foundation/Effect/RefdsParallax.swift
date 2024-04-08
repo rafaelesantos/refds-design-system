@@ -1,5 +1,7 @@
 import SwiftUI
+#if canImport(CoreMotion)
 import CoreMotion
+#endif
 
 struct ParallaxMotionModifier: ViewModifier {
     @StateObject private var manager: MotionManager = MotionManager()
