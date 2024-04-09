@@ -91,7 +91,7 @@ public extension View {
         .animation(.easeOut, value: item.wrappedValue)
     }
     
-    func refdsToast(item: Binding<RefdsToastViewData?>) -> some View {
+    func refdsToast<Alert>(item: Binding<Alert?>) -> some View where Alert: RefdsAlert {
         ZStack {
             self
             if let viewData = item.wrappedValue {
@@ -100,7 +100,7 @@ public extension View {
                     RefdsToast(
                         icon: viewData.icon,
                         title: viewData.title,
-                        message: viewData.message,
+                        message: viewData.message ?? "",
                         action: { item.wrappedValue = nil }
                     )
                     .refdsScaleEffect()
