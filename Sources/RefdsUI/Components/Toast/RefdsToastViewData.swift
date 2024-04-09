@@ -1,15 +1,16 @@
 import SwiftUI
+import RefdsShared
 
-public struct RefdsToastViewData: Equatable {
+public struct RefdsToastViewData: RefdsAlert {
     public let id: UUID
     public let icon: (() -> any View)?
     public let title: String?
-    public let message: String
+    public let message: String?
     
     public init(
         icon: (() -> any View)? = nil,
         title: String? = nil,
-        message: String
+        message: String? = nil
     ) {
         self.id = .init()
         self.icon = icon
