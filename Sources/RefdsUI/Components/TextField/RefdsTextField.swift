@@ -77,7 +77,7 @@ public struct RefdsTextField: View {
     
     public var body: some View {
         VStack {
-            TextField(placeholder, text: $text)
+            TextField(placeholder, text: $text, axis: axis)
                 .font(.system(style, design: design, weight: weight))
                 .multilineTextAlignment(alignment)
                 .foregroundColor(color)
