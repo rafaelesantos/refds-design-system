@@ -112,6 +112,22 @@ public extension View {
         .animation(.easeOut, value: item.wrappedValue)
     }
     
+    func refdsDismissesKeyboad() -> some View {
+        self
+            .scrollDismissesKeyboard(.immediately)
+            .onTapGesture {
+                #if os(macOS)
+                #else
+                UIApplication.shared.sendAction(
+                    #selector(UIResponder.resignFirstResponder),
+                    to: nil,
+                    from: nil,
+                    for: nil
+                )
+                #endif
+            }
+    }
+    
     @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,
