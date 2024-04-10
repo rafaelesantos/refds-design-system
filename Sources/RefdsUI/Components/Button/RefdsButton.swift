@@ -8,12 +8,14 @@ public struct RefdsButton: View {
     private let content: (() -> any View)?
     private let action: (() -> Void)?
     private let hasLargeSize: Bool
+    private let isDisable: Bool
     
     public init(
         _ title: String,
         color: Color = .accentColor,
         style: Style = .primary,
         hasLargeSize: Bool = true,
+        isDisable: Bool = false,
         action: (() -> Void)? = nil
     ) {
         self.title = title.uppercased()
@@ -22,6 +24,7 @@ public struct RefdsButton: View {
         self.style = style
         self.action = action
         self.hasLargeSize = hasLargeSize
+        self.isDisable = isDisable
         self.content = nil
     }
     
@@ -31,6 +34,7 @@ public struct RefdsButton: View {
         textColor: Color = .accentColor,
         style: Style = .primary,
         hasLargeSize: Bool = true,
+        isDisable: Bool = false,
         action: (() -> Void)? = nil
     ) {
         self.title = title.uppercased()
@@ -39,10 +43,12 @@ public struct RefdsButton: View {
         self.style = style
         self.action = action
         self.hasLargeSize = hasLargeSize
+        self.isDisable = isDisable
         self.content = nil
     }
     
     public init(
+        isDisable: Bool = false,
         action: (() -> Void)? = nil,
         label: (() -> any View)? = nil
     ) {
@@ -53,6 +59,7 @@ public struct RefdsButton: View {
         self.content = label
         self.action = action
         self.hasLargeSize = false
+        self.isDisable = isDisable
     }
     
     public var body: some View {
@@ -73,6 +80,7 @@ public struct RefdsButton: View {
                 background: backGroundColor
             )
         }
+        .disabled(isDisable)
         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
     }
     
@@ -80,6 +88,7 @@ public struct RefdsButton: View {
         Button { pressButton() } label: {
             titleView(color: backGroundColor)
         }
+        .disabled(isDisable)
         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius))
         .refdsBorder(color: backGroundColor, padding: .zero)
     }
@@ -88,6 +97,7 @@ public struct RefdsButton: View {
         Button { pressButton() } label: {
             titleView(color: textColor)
         }
+        .disabled(isDisable)
     }
     
     private func titleView(
@@ -98,7 +108,7 @@ public struct RefdsButton: View {
             RefdsText(
                 title,
                 style: .footnote,
-                color: color,
+                color: isDisable ? .secondary : color,
                 weight: .bold,
                 alignment: .center,
                 lineLimit: 1
@@ -107,7 +117,7 @@ public struct RefdsButton: View {
             .frame(height: 48)
             .padding(.padding(.small))
             .if(background == nil) { $0.background() }
-            .if(background != nil) { $0.background(background) }
+            .if(background != nil) { $0.background(isDisable ? background?.opacity(0.2) : background) }
         }
         .padding(.padding(.small) * -1)
     }
@@ -125,6 +135,7 @@ public struct RefdsButton: View {
                 }
                 .padding(.padding(.small) * -1)
             }
+            .disabled(isDisable)
         }
     }
     
@@ -143,6 +154,7 @@ public extension RefdsButton {
 #Preview {
     VStack(spacing: .padding(.medium)) {
         RefdsButton(.someWord(), style: .primary)
+        RefdsButton(.someWord(), style: .primary, isDisable: true)
         RefdsButton(.someWord(), style: .secondary)
         RefdsButton(.someWord(), style: .tertiary)
         RefdsButton {} label: {
