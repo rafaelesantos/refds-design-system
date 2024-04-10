@@ -115,16 +115,25 @@ public extension View {
     func refdsDismissesKeyboad() -> some View {
         self
             .scrollDismissesKeyboard(.immediately)
-            .onTapGesture {
-                #if os(macOS)
-                #else
-                UIApplication.shared.sendAction(
-                    #selector(UIResponder.resignFirstResponder),
-                    to: nil,
-                    from: nil,
-                    for: nil
-                )
-                #endif
+            .background {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                    }
+                }
+                .ignoresSafeArea()
+                .onTapGesture {
+                    #if os(macOS)
+                    #else
+                    UIApplication.shared.sendAction(
+                        #selector(UIResponder.resignFirstResponder),
+                        to: nil,
+                        from: nil,
+                        for: nil
+                    )
+                    #endif
+                }
             }
     }
     
