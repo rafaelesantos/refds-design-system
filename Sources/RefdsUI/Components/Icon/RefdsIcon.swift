@@ -1,4 +1,5 @@
 import SwiftUI
+import RefdsShared
 
 public struct RefdsIcon: View {
     @State private var animationsRunning = false
@@ -44,7 +45,7 @@ public struct RefdsIcon: View {
 
 #Preview {
     HStack {
-        RefdsIcon(.squareStack3dUp, style: .largeTitle, weight: .bold)
+        RefdsIcon(.airplaneArrival, style: .largeTitle, weight: .bold)
     }
     .padding(.padding(.extraLarge))
 }
