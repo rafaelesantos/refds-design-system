@@ -1,4 +1,5 @@
 import SwiftUI
+import RefdsShared
 
 public struct RefdsTag: View {
     private let content: String
