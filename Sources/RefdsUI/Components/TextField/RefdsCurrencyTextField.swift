@@ -59,6 +59,7 @@ public struct RefdsCurrencyTextField: View {
                 .keyboardType(.numberPad)
     #endif
         }
+        .onAppear { valueText = (value * 10).asString }
         .onChange(of: valueText) { handlerValue() }
 #if os(iOS)
         .onAppear { UITextField.appearance().clearButtonMode = .never }
@@ -90,7 +91,7 @@ public struct RefdsCurrencyTextField: View {
 
 #Preview {
     struct ContainerView: View {
-        @State private var value: Double = 0
+        @State private var value: Double = 15
         var body: some View {
             VStack(alignment: .leading, spacing: .padding(.medium)) {
                 RefdsCurrencyTextField(
