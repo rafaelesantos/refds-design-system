@@ -1,17 +1,18 @@
 import SwiftUI
 
+protocol RefdsTextFieldOnlyNumbersDelegate {
+    func updateValue(_ value: Double)
+}
+
 class RefdsTextFieldOnlyNumbers: ObservableObject {
-    @Binding var double: Double
     @Published var appearText: String
-    @Published var value: String = "" {
-        didSet { handlerValue() }
-    }
+    @Published var value: String = "" { didSet { handlerValue() } }
+    var delegate: RefdsTextFieldOnlyNumbersDelegate?
     
-    init(double: Binding<Double>) {
-        let doubleValue = double.wrappedValue * 10
-        self._double = double
+    init(value: Double) {
+        let doubleValue = value * 10
         appearText = doubleValue.currency()
-        value = "\(doubleValue)"
+        self.value = "\(doubleValue)"
     }
     
     private func handlerValue() {
@@ -23,20 +24,20 @@ class RefdsTextFieldOnlyNumbers: ObservableObject {
            let valueDouble = Double(filtered) {
             Task { @MainActor in
                 value = filtered
-                double = (valueDouble / 100)
+                delegate?.updateValue(valueDouble / 100)
                 appearText = (valueDouble / 100).currency()
             }
         } else if let valueDouble = Double(value.replacingOccurrences(of: ",", with: ".")) {
             Task { @MainActor in
-                double = (valueDouble / 100)
+                delegate?.updateValue(valueDouble / 100)
                 appearText = (valueDouble / 100).currency()
             }
         }
         
         if value.isEmpty {
             Task { @MainActor in
-                double = 0
-                appearText = 0.currency()
+                delegate?.updateValue(.zero)
+                appearText = Double.zero.currency()
             }
         }
     }

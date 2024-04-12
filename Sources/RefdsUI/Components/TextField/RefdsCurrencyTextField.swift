@@ -3,10 +3,9 @@ import UIKit
 #endif
 import SwiftUI
 
-public struct RefdsCurrencyTextField: View {
+public struct RefdsCurrencyTextField: View, RefdsTextFieldOnlyNumbersDelegate {
     @State private var appearText: String = ""
     @StateObject private var input: RefdsTextFieldOnlyNumbers
-    
     @Binding private var value: Double
     
     private let style: Font.TextStyle
@@ -14,6 +13,10 @@ public struct RefdsCurrencyTextField: View {
     private let weight: Font.Weight
     private let design: Font.Design
     private let alignment: TextAlignment
+    
+    private var bindingValue: Binding<Double> {
+        Binding { value } set: { value = $0 }
+    }
     
     public init(
         value: Binding<Double>,
@@ -29,7 +32,8 @@ public struct RefdsCurrencyTextField: View {
         self.weight = weight
         self.design = design
         self.alignment = alignment
-        _input = StateObject(wrappedValue: RefdsTextFieldOnlyNumbers(double: value))
+        let input = RefdsTextFieldOnlyNumbers(value: value.wrappedValue)
+        self._input = StateObject(wrappedValue: input)
     }
     
     private var textColor: Color {
@@ -61,10 +65,15 @@ public struct RefdsCurrencyTextField: View {
                 .keyboardType(.numberPad)
     #endif
         }
+        .onAppear { input.delegate = self }
 #if os(iOS)
         .onAppear { UITextField.appearance().clearButtonMode = .never }
         .onDisappear { UITextField.appearance().clearButtonMode = .whileEditing }
 #endif
+    }
+    
+    func updateValue(_ value: Double) {
+        
     }
 }
 
