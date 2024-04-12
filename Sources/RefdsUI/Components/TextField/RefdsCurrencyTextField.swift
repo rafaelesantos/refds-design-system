@@ -73,7 +73,7 @@ public struct RefdsCurrencyTextField: View, RefdsTextFieldOnlyNumbersDelegate {
     }
     
     func updateValue(_ value: Double) {
-        
+        self.value = value
     }
 }
 
