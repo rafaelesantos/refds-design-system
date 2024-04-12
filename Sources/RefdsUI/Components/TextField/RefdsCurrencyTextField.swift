@@ -3,9 +3,9 @@ import UIKit
 #endif
 import SwiftUI
 
-public struct RefdsCurrencyTextField: View, RefdsTextFieldOnlyNumbersDelegate {
+public struct RefdsCurrencyTextField: View {
     @State private var appearText: String = ""
-    @StateObject private var input: RefdsTextFieldOnlyNumbers
+    @State private var valueText: String = ""
     @Binding private var value: Double
     
     private let style: Font.TextStyle
@@ -13,10 +13,6 @@ public struct RefdsCurrencyTextField: View, RefdsTextFieldOnlyNumbersDelegate {
     private let weight: Font.Weight
     private let design: Font.Design
     private let alignment: TextAlignment
-    
-    private var bindingValue: Binding<Double> {
-        Binding { value } set: { value = $0 }
-    }
     
     public init(
         value: Binding<Double>,
@@ -32,8 +28,6 @@ public struct RefdsCurrencyTextField: View, RefdsTextFieldOnlyNumbersDelegate {
         self.weight = weight
         self.design = design
         self.alignment = alignment
-        let input = RefdsTextFieldOnlyNumbers(value: value.wrappedValue)
-        self._input = StateObject(wrappedValue: input)
     }
     
     private var textColor: Color {
@@ -54,7 +48,7 @@ public struct RefdsCurrencyTextField: View, RefdsTextFieldOnlyNumbersDelegate {
             .contentTransition(.numericText(value: value))
             .animation(.default, value: value)
             
-            TextField("", text: $input.value)
+            TextField("", text: $valueText)
                 .font(.system(style, design: design, weight: weight))
                 .multilineTextAlignment(alignment)
                 .foregroundColor(.clear)
@@ -65,15 +59,32 @@ public struct RefdsCurrencyTextField: View, RefdsTextFieldOnlyNumbersDelegate {
                 .keyboardType(.numberPad)
     #endif
         }
-        .onAppear { input.delegate = self }
+        .onChange(of: valueText) { handlerValue() }
 #if os(iOS)
         .onAppear { UITextField.appearance().clearButtonMode = .never }
         .onDisappear { UITextField.appearance().clearButtonMode = .whileEditing }
 #endif
     }
     
-    func updateValue(_ value: Double) {
-        self.value = value
+    private func handlerValue() {
+        let filtered = valueText
+            .replacingOccurrences(of: ",", with: ".")
+            .filter { $0.isNumber }
+        
+        if valueText != filtered,
+           let valueDouble = Double(filtered) {
+            valueText = filtered
+            value = valueDouble / 100
+            appearText = (valueDouble / 100).currency()
+        } else if let valueDouble = Double(valueText.replacingOccurrences(of: ",", with: ".")) {
+            value = valueDouble / 100
+            appearText = (valueDouble / 100).currency()
+        }
+        
+        if valueText.isEmpty {
+            value = .zero
+            appearText = Double.zero.currency()
+        }
     }
 }
 
