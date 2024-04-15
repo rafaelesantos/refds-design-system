@@ -12,6 +12,7 @@ public struct RefdsList<Content: View>: View {
         ScrollView {
             content()
         }
+        .scrollContentBackground(.hidden)
         #else
         List {
             content()
