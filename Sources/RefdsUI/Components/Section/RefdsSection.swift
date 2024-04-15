@@ -35,6 +35,7 @@ public struct RefdsSection: View {
                     .frame(height: 0)
                 AnyView(content())
                     .padding(.padding(.extraSmall))
+                    .padding(.top, -5)
             }
             AnyView(footer())
                 .padding(.horizontal)
