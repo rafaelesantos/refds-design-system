@@ -31,8 +31,11 @@ public struct RefdsSection: View {
                 .textCase(.uppercase)
                 .padding(.horizontal)
             GroupBox {
-                AnyView(content())
-                    .frame(maxWidth: .infinity)
+                HStack(spacing: .zero) {
+                    AnyView(content())
+                        .padding(.padding(.extraSmall))
+                    Spacer(minLength: .zero)
+                }
             }
             AnyView(footer())
                 .padding(.horizontal)
