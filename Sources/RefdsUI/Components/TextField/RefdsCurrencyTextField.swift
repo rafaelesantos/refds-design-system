@@ -20,7 +20,7 @@ public struct RefdsCurrencyTextField: View {
         color: Color = .primary,
         weight: Font.Weight = .regular,
         design: Font.Design = .default,
-        alignment: TextAlignment = .leading
+        alignment: TextAlignment = .center
     ) {
         self._value = value
         self.style = style
@@ -55,6 +55,7 @@ public struct RefdsCurrencyTextField: View {
                 .tint(.clear)
                 .autocorrectionDisabled()
                 .textFieldStyle(.plain)
+                .background(.clear)
     #if os(iOS)
                 .keyboardType(.numberPad)
     #endif
