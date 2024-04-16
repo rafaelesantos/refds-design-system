@@ -47,6 +47,7 @@ public struct RefdsCurrencyTextField: View {
             )
             .contentTransition(.numericText(value: value))
             .animation(.default, value: value)
+            .frame(maxWidth: .infinity)
             
             TextField("", text: $valueText)
                 .font(.system(style, design: design, weight: weight))
@@ -57,6 +58,7 @@ public struct RefdsCurrencyTextField: View {
                 .textFieldStyle(.plain)
                 .background(.clear)
                 .opacity(0.1)
+                .frame(maxWidth: .infinity)
     #if os(iOS)
                 .keyboardType(.numberPad)
     #endif
