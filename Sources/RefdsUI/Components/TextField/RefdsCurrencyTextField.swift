@@ -56,6 +56,7 @@ public struct RefdsCurrencyTextField: View {
                 .autocorrectionDisabled()
                 .textFieldStyle(.plain)
                 .background(.clear)
+                .opacity(0.1)
     #if os(iOS)
                 .keyboardType(.numberPad)
     #endif
