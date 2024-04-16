@@ -1,12 +1,12 @@
 import SwiftUI
 
-public struct RefdsSection<Content: View, Header: View, Footer: View>: View {
-    private let content: () -> Content
+public struct RefdsSection<Header: View, Footer: View>: View {
+    private let content: (() -> any View)?
     private let header: () -> Header
     private let footer: () -> Footer
     
     public init(
-        @ViewBuilder content: @escaping () -> Content,
+        content: (() -> any View)?,
         @ViewBuilder header: @escaping () -> Header = { EmptyView() },
         @ViewBuilder footer: @escaping () -> Footer = { EmptyView() }
     ) {
@@ -27,15 +27,15 @@ public struct RefdsSection<Content: View, Header: View, Footer: View>: View {
         }
         #else
         VStack(alignment: .leading) {
+            HStack { Spacer() }
             header()
                 .textCase(.uppercase)
                 .padding(.horizontal)
-            GroupBox {
-                HStack(spacing: .zero) { Spacer() }
-                    .frame(height: 0)
-                content()
-                    .padding(.padding(.extraSmall))
-                    .padding(.top, -7)
+            if let content = content {
+                GroupBox {
+                    AnyView(content())
+                        .padding(.padding(.extraSmall))
+                }
             }
             footer()
                 .padding(.horizontal)
@@ -47,11 +47,9 @@ public struct RefdsSection<Content: View, Header: View, Footer: View>: View {
 
 #Preview {
     ScrollView {
-        RefdsSection {
-            RefdsText(.someParagraph())
-        } header: {
+        RefdsSection(content: nil, header: {
             RefdsText(.someWord(), style: .footnote, color: .secondary)
-        }
+        })
         
         RefdsSection {
             RefdsText(.someParagraph())
