@@ -4,7 +4,6 @@ import UIKit
 import SwiftUI
 
 public struct RefdsCurrencyTextField: View {
-    @State private var appearText: String = ""
     @State private var valueText: String = ""
     @Binding private var value: Double
     
@@ -63,7 +62,7 @@ public struct RefdsCurrencyTextField: View {
                 .keyboardType(.numberPad)
     #endif
         }
-        .onAppear { valueText = (value * 10).asString }
+        .onAppear { valueText = String(format: "%.02f", value) }
         .onChange(of: valueText) { handlerValue() }
 #if os(iOS)
         .onAppear { UITextField.appearance().clearButtonMode = .never }
@@ -80,15 +79,12 @@ public struct RefdsCurrencyTextField: View {
            let valueDouble = Double(filtered) {
             valueText = filtered
             value = valueDouble / 100
-            appearText = (valueDouble / 100).currency()
         } else if let valueDouble = Double(valueText.replacingOccurrences(of: ",", with: ".")) {
             value = valueDouble / 100
-            appearText = (valueDouble / 100).currency()
         }
         
         if valueText.isEmpty {
             value = .zero
-            appearText = Double.zero.currency()
         }
     }
 }
