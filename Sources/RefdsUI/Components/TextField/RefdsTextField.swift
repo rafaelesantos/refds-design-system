@@ -30,7 +30,7 @@ public struct RefdsTextField: View {
         minimumScaleFactor: CGFloat = 1,
         lineLimit: Int? = nil,
         keyboardType: UIKeyboardType = .default,
-        textInputAutocapitalization: TextInputAutocapitalization = .never
+        textInputAutocapitalization: TextInputAutocapitalization = .sentences
     ) {
         self._text = text
         self.placeholder = placeholder
