@@ -5,7 +5,7 @@ public struct RefdsToast: View {
     private let title: String?
     private let message: String
     private let action: () -> Void
-    private let timer = Timer.publish(every: 3, on: .current, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 5, on: .current, in: .common).autoconnect()
     
     public init(
         icon: (() -> any View)? = nil,
