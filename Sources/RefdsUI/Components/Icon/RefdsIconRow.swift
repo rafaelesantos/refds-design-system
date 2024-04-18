@@ -4,7 +4,7 @@ import RefdsShared
 public struct RefdsIconRow: View {
     private let symbol: RefdsIconSymbol
     
-    public init(symbol: RefdsIconSymbol) {
+    public init(_ symbol: RefdsIconSymbol) {
         self.symbol = symbol
     }
     
@@ -17,5 +17,5 @@ public struct RefdsIconRow: View {
 }
 
 #Preview {
-    RefdsIconRow(symbol: .random)
+    RefdsIconRow(.random)
 }
