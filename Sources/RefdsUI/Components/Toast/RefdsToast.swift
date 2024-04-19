@@ -50,7 +50,7 @@ public struct RefdsToast: View {
                 )
             }
         }
-        .refdsCard()
+        .refdsCard(hasMaterial: true)
         .onReceive(timer) { _ in
             makeAction()
         }
