@@ -41,11 +41,17 @@ public extension View {
     
     func refdsCard(
         padding: CGFloat.Padding = .medium,
-        hasShadow: Bool = true
+        hasShadow: Bool = true,
+        hasMaterial: Bool = false
     ) -> some View {
         self
             .padding(.padding(padding))
-            .refdsBackground(with: .secondaryBackground)
+            .if(hasMaterial) {
+                $0.background(.ultraThinMaterial)
+            }
+            .if(!hasMaterial) {
+                $0.refdsBackground(with: .secondaryBackground)
+            }
             .cornerRadius(.cornerRadius)
             .if(hasShadow) {
                 $0.shadow(
