@@ -25,7 +25,7 @@ public struct RefdsSection<Content: View, Header: View, Footer: View>: View {
         } footer: {
             footer()
         }
-        #else
+        #elseif os(macOS)
         VStack(alignment: .leading) {
             HStack { Spacer() }
             header()
