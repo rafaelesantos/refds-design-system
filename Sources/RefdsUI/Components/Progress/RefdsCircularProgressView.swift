@@ -13,7 +13,7 @@ public struct RefdsCircularProgressView: View {
         _ progress: Double,
         size: CGFloat = 30,
         color: Color = .accentColor,
-        scale: CGFloat = 0.15
+        scale: CGFloat = 0.1
     ) {
         self.progress = progress
         self.size = size
@@ -24,21 +24,28 @@ public struct RefdsCircularProgressView: View {
     public var body: some View {
         ZStack {
             Circle()
-                .stroke(
-                    progressColor.opacity(0.2),
-                    lineWidth: size * scale
-                )
+                .trim(from: 0.3, to: 0.9)
+                .stroke(style: StrokeStyle(lineWidth: size * scale, lineCap: .round, lineJoin: .round))
+                .opacity(0.2)
+                .foregroundColor(Color.gray)
+                .rotationEffect(.degrees(54.5))
+            
             Circle()
-                .trim(from: 0, to: value)
-                .stroke(
-                    progressColor,
-                    style: StrokeStyle(
-                        lineWidth: size * scale,
-                        lineCap: .round
-                    )
-                )
-                .rotationEffect(.degrees(-90))
-                .animation(.easeOut(duration: 1), value: value)
+                .trim(from: 0.3, to: value)
+                .stroke(style: StrokeStyle(lineWidth: size * scale, lineCap: .round, lineJoin: .round))
+                .fill(AngularGradient(gradient: Gradient(stops: [
+                    .init(color: Color.green, location: 0.5),
+                    .init(color: Color.yellow, location: 0.7),
+                    .init(color: Color.orange, location: 0.8),
+                    .init(color: Color.red, location: 0.9)
+                ]), center: .center))
+                .rotationEffect(.degrees(54.5))
+                .animation(.easeInOut(duration: 1), value: value)
+            
+            VStack(spacing: .zero) {
+                RefdsText(progress.percent(), style: .callout, weight: .bold)
+                RefdsText(progress.riskDescription, style: .footnote, color: .secondary)
+            }
         }
         .frame(width: size, height: size)
         .onAppear { reload() }
@@ -49,15 +56,16 @@ public struct RefdsCircularProgressView: View {
         value = 0
         progressColor = .secondary.opacity(0.7)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            value = 1
+            value = 0.9
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 progressColor = color
-                value = progress
+                let progress = progress * 0.6
+                value = (progress + 0.3) > 0.9 ? 0.9 : (progress + 0.3)
             }
         }
     }
 }
 
 #Preview {
-    RefdsCircularProgressView(0.8, size: 80)
+    RefdsCircularProgressView(1, size: 80)
 }
