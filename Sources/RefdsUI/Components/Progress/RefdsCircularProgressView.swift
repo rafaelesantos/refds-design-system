@@ -1,4 +1,5 @@
 import SwiftUI
+import RefdsShared
 
 public struct RefdsCircularProgressView: View {
     @State private var value: Double = 0
@@ -11,7 +12,7 @@ public struct RefdsCircularProgressView: View {
     
     public init(
         _ progress: Double,
-        size: CGFloat = 30,
+        size: CGFloat = 100,
         color: Color = .accentColor,
         scale: CGFloat = 0.1
     ) {
@@ -47,7 +48,7 @@ public struct RefdsCircularProgressView: View {
                 RefdsText(progress.riskDescription, style: .footnote, color: .secondary)
             }
         }
-        .frame(width: size, height: size)
+        .frame(width: size)
         .onAppear { reload() }
         .onChange(of: progress) { reload() }
     }
@@ -67,5 +68,5 @@ public struct RefdsCircularProgressView: View {
 }
 
 #Preview {
-    RefdsCircularProgressView(1, size: 80)
+    RefdsCircularProgressView(1)
 }
