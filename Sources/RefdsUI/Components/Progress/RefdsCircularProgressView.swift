@@ -45,8 +45,13 @@ public struct RefdsCircularProgressView: View {
             
             VStack(spacing: .zero) {
                 Spacer(minLength: .zero)
-                RefdsText(progress.percent(), style: .callout, weight: .bold)
-                RefdsText(progress.riskDescription, style: .footnote, color: .secondary)
+                RefdsText(progress.percent(), style: .title3, weight: .bold)
+                RefdsText(
+                    progress.riskDescription.uppercased(),
+                    style: .caption2,
+                    color: progress.riskColor,
+                    weight: .bold
+                )
                 Spacer(minLength: .zero)
             }
             .frame(width: size, height: size)
