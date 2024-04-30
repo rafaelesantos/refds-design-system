@@ -2,6 +2,7 @@ import SwiftUI
 
 public struct RefdsCircularProgressView: View {
     @State private var value: Double = 0
+    @State private var progressColor: Color = .secondary.opacity(0.7)
     
     private let progress: Double
     private let size: CGFloat
@@ -24,20 +25,20 @@ public struct RefdsCircularProgressView: View {
         ZStack {
             Circle()
                 .stroke(
-                    color.opacity(0.2),
+                    progressColor.opacity(0.2),
                     lineWidth: size * scale
                 )
             Circle()
                 .trim(from: 0, to: value)
                 .stroke(
-                    color,
+                    progressColor,
                     style: StrokeStyle(
                         lineWidth: size * scale,
                         lineCap: .round
                     )
                 )
                 .rotationEffect(.degrees(-90))
-                .animation(.easeOut, value: value)
+                .animation(.easeOut(duration: 1), value: value)
         }
         .frame(width: size, height: size)
         .onAppear { reload() }
@@ -45,7 +46,15 @@ public struct RefdsCircularProgressView: View {
     }
     
     private func reload() {
-        value = progress
+        value = 0
+        progressColor = .secondary.opacity(0.7)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            value = 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                progressColor = color
+                value = progress
+            }
+        }
     }
 }
 
