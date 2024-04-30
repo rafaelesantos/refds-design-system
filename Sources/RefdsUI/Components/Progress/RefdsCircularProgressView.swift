@@ -44,29 +44,28 @@ public struct RefdsCircularProgressView: View {
                 .animation(.easeInOut(duration: 1), value: value)
             
             VStack(spacing: .zero) {
+                Spacer(minLength: .zero)
                 RefdsText(progress.percent(), style: .callout, weight: .bold)
                 RefdsText(progress.riskDescription, style: .footnote, color: .secondary)
+                Spacer(minLength: .zero)
             }
+            .frame(width: size, height: size)
         }
         .frame(width: size)
+        .padding(.bottom, -(size * 0.2))
         .onAppear { reload() }
         .onChange(of: progress) { reload() }
     }
     
     private func reload() {
-        value = 0
-        progressColor = .secondary.opacity(0.7)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            value = 0.9
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                progressColor = color
-                let progress = progress * 0.6
-                value = (progress + 0.3) > 0.9 ? 0.9 : (progress + 0.3)
-            }
+            progressColor = color
+            let progress = progress * 0.6
+            value = (progress + 0.3) > 0.9 ? 0.9 : (progress + 0.3)
         }
     }
 }
 
 #Preview {
-    RefdsCircularProgressView(1)
+    RefdsCircularProgressView(1.5)
 }
