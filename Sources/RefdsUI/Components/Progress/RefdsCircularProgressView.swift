@@ -6,15 +6,18 @@ public struct RefdsCircularProgressView: View {
     private let progress: Double
     private let size: CGFloat
     private let color: Color
+    private let scale: CGFloat
     
     public init(
         _ progress: Double,
         size: CGFloat = 30,
-        color: Color = .accentColor
+        color: Color = .accentColor,
+        scale: CGFloat = 0.15
     ) {
         self.progress = progress
         self.size = size
         self.color = color
+        self.scale = scale
     }
     
     public var body: some View {
@@ -22,14 +25,14 @@ public struct RefdsCircularProgressView: View {
             Circle()
                 .stroke(
                     color.opacity(0.2),
-                    lineWidth: size * 0.2
+                    lineWidth: size * scale
                 )
             Circle()
                 .trim(from: 0, to: value)
                 .stroke(
                     color,
                     style: StrokeStyle(
-                        lineWidth: size * 0.2,
+                        lineWidth: size * scale,
                         lineCap: .round
                     )
                 )
@@ -47,5 +50,5 @@ public struct RefdsCircularProgressView: View {
 }
 
 #Preview {
-    RefdsCircularProgressView(0.8)
+    RefdsCircularProgressView(0.8, size: 80)
 }
