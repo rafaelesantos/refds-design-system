@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct RefdsText: View {
     private let content: String
-    private let style: Font.TextStyle
+    private let style: Font
     private let color: Color
     private let weight: Font.Weight
     private let design: Font.Design
@@ -11,7 +11,7 @@ public struct RefdsText: View {
     
     public init (
         _ content: String,
-        style: Font.TextStyle = .body,
+        style: Font = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
         design: Font.Design = .default,
@@ -29,10 +29,12 @@ public struct RefdsText: View {
     
     public var body: some View {
         Text(content)
-            .font(.system(style, design: design, weight: weight))
+            .font(style)
+            .fontDesign(design)
+            .fontWeight(weight)
             .lineLimit(lineLimit)
             .multilineTextAlignment(alignment)
-            .foregroundColor(color)
+            .foregroundStyle(color)
     }
 }
 

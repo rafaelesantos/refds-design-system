@@ -7,7 +7,7 @@ public struct RefdsCurrencyTextField: View {
     @State private var valueText: String = ""
     @Binding private var value: Double
     
-    private let style: Font.TextStyle
+    private let style: Font
     private let color: Color
     private let weight: Font.Weight
     private let design: Font.Design
@@ -15,7 +15,7 @@ public struct RefdsCurrencyTextField: View {
     
     public init(
         value: Binding<Double>,
-        style: Font.TextStyle = .body,
+        style: Font = .body,
         color: Color = .primary,
         weight: Font.Weight = .regular,
         design: Font.Design = .default,
@@ -49,7 +49,9 @@ public struct RefdsCurrencyTextField: View {
             .frame(maxWidth: .infinity)
             
             TextField("", text: $valueText)
-                .font(.system(style, design: design, weight: weight))
+                .font(style)
+                .fontDesign(design)
+                .fontWeight(weight)
                 .multilineTextAlignment(alignment)
                 .foregroundColor(.clear)
                 .tint(.clear)

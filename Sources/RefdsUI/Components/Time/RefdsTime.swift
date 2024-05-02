@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct RefdsTime: View {
     private let format: Format
-    private let font: Font.TextStyle
+    private let font: Font
     private let color: Color
     @State private var minute: Int
     @State private var second: Int
@@ -13,7 +13,7 @@ public struct RefdsTime: View {
     public init(
         time: Binding<Int>,
         format: Format = .hourMinute,
-        font: Font.TextStyle = .body,
+        font: Font = .body,
         color: Color = RefdsUI.shared.accentColor
     ) {
         self._time = time

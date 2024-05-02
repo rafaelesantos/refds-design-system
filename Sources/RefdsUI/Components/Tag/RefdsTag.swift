@@ -4,7 +4,7 @@ import RefdsShared
 public struct RefdsTag: View {
     private let content: String
     private let icon: RefdsIconSymbol?
-    private let style: Font.TextStyle
+    private let style: Font
     private let color: Color
     private let weight: Font.Weight
     private let design: Font.Design
@@ -13,7 +13,7 @@ public struct RefdsTag: View {
     public init(
         _ content: String,
         icon: RefdsIconSymbol? = nil,
-        style: Font.TextStyle = .footnote,
+        style: Font = .footnote,
         weight: Font.Weight = .bold,
         color: Color = .primary,
         design: Font.Design = .default,

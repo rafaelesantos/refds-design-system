@@ -7,7 +7,7 @@ public struct RefdsMenu<Content: View>: View {
     private let text: String?
     private let description: String?
     private let detail: String?
-    private let font: Font.TextStyle
+    private let font: Font
     private let color: Color
     private let style: Style
     
@@ -18,7 +18,7 @@ public struct RefdsMenu<Content: View>: View {
         text: String?,
         description: String? = nil,
         detail: String? = nil,
-        font: Font.TextStyle = .body,
+        font: Font = .body,
         @ViewBuilder content:  @escaping () -> Content
     ) {
         self.color = color
