@@ -143,6 +143,14 @@ public extension View {
             }
     }
     
+    func refdsTag(color: Color = .secondary) -> some View {
+        self
+            .padding(3)
+            .padding(.horizontal, 3)
+            .background(color.opacity(0.1))
+            .clipShape(.rect(cornerRadius: 3))
+    }
+    
     @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,
