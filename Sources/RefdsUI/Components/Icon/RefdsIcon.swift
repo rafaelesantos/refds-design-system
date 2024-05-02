@@ -7,7 +7,7 @@ public struct RefdsIcon: View {
     private let symbol: RefdsIconSymbol
     private let color: Color
     private let size: CGFloat?
-    private let style: Font.TextStyle?
+    private let style: Font?
     private let weight: Font.Weight
     private let renderingMode: SymbolRenderingMode
     
@@ -15,7 +15,7 @@ public struct RefdsIcon: View {
         _ symbol: RefdsIconSymbol,
         color: Color = .accentColor,
         size: CGFloat? = nil,
-        style: Font.TextStyle? = .body,
+        style: Font? = .body,
         weight: Font.Weight = .regular,
         renderingMode: SymbolRenderingMode = .monochrome
     ) {
@@ -34,7 +34,7 @@ public struct RefdsIcon: View {
                 $0.font(.system(size: $1, weight: weight))
             }
             .if(style) {
-                $0.font(.system($1, weight: weight))
+                $0.font($1).fontWeight(weight)
             }
             .symbolRenderingMode(renderingMode)
             .foregroundColor(color)
