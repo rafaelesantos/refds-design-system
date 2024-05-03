@@ -3,23 +3,28 @@ import RefdsShared
 
 public struct RefdsCircularProgressView: View {
     @State private var value: Double = 0
-    @State private var progressColor: Color = .secondary.opacity(0.7)
     
     private let progress: Double
     private let size: CGFloat
     private let color: Color
     private let scale: CGFloat
+    private let hasAnimation: Bool
+    private let progressAdapted: Double
     
     public init(
         _ progress: Double,
         size: CGFloat = 100,
         color: Color = .accentColor,
-        scale: CGFloat = 0.1
+        scale: CGFloat = 0.1,
+        hasAnimation: Bool = true
     ) {
         self.progress = progress
         self.size = size
         self.color = color
         self.scale = scale
+        self.hasAnimation = hasAnimation
+        let progressAdapted = progress * 0.6
+        self.progressAdapted = (progressAdapted + 0.3) > 0.9 ? 0.9 : (progressAdapted + 0.3)
     }
     
     public var body: some View {
@@ -28,11 +33,11 @@ public struct RefdsCircularProgressView: View {
                 .trim(from: 0.3, to: 0.9)
                 .stroke(style: StrokeStyle(lineWidth: size * scale, lineCap: .round, lineJoin: .round))
                 .opacity(0.2)
-                .foregroundColor(Color.gray)
+                .foregroundColor(Color.secondary.opacity(0.4))
                 .rotationEffect(.degrees(54.5))
             
             Circle()
-                .trim(from: 0.3, to: value)
+                .trim(from: 0.3, to: hasAnimation ? value : progressAdapted)
                 .stroke(style: StrokeStyle(lineWidth: size * scale, lineCap: .round, lineJoin: .round))
                 .fill(AngularGradient(gradient: Gradient(stops: [
                     .init(color: Color.green, location: 0.5),
@@ -48,7 +53,7 @@ public struct RefdsCircularProgressView: View {
                 RefdsText(progress.percent(), style: .title3, weight: .bold)
                 RefdsText(
                     progress.riskDescription.uppercased(),
-                    style: .caption2,
+                    style: .system(size: size * 0.08),
                     color: progress.riskColor,
                     weight: .bold
                 )
@@ -64,9 +69,7 @@ public struct RefdsCircularProgressView: View {
     
     private func reload() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            progressColor = color
-            let progress = progress * 0.6
-            value = (progress + 0.3) > 0.9 ? 0.9 : (progress + 0.3)
+            value = progressAdapted
         }
     }
 }
