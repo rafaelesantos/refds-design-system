@@ -1,6 +1,7 @@
 import SwiftUI
 import SafariServices
 
+#if os(iOS)
 public struct RefdsSafari: UIViewControllerRepresentable {
     private let url: URL
     
@@ -17,7 +18,7 @@ public struct RefdsSafari: UIViewControllerRepresentable {
         context: UIViewControllerRepresentableContext<RefdsSafari>
     ) {}
 }
-
+#endif
 extension URL: Identifiable {
     public var id: String { absoluteString }
 }
