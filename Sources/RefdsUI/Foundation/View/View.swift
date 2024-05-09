@@ -143,12 +143,15 @@ public extension View {
             }
     }
     
-    func refdsTag(color: Color = .secondary) -> some View {
+    func refdsTag(
+        color: Color = .secondary,
+        cornerRadius: CGFloat = 3
+    ) -> some View {
         self
             .padding(3)
             .padding(.horizontal, 3)
             .background(color.opacity(0.1))
-            .clipShape(.rect(cornerRadius: 3))
+            .clipShape(.rect(cornerRadius: cornerRadius))
     }
     
     @ViewBuilder
