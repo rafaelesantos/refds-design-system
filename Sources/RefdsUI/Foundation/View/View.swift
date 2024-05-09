@@ -154,6 +154,12 @@ public extension View {
             .clipShape(.rect(cornerRadius: cornerRadius))
     }
     
+    func refdsSafari(url: Binding<URL?>) -> some View {
+        self.sheet(item: url) { url in
+            RefdsSafari(url: url)
+        }
+    }
+    
     @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,
