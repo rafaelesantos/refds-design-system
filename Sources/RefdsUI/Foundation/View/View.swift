@@ -157,6 +157,7 @@ public extension View {
     func refdsSafari(url: Binding<URL?>) -> some View {
         self.sheet(item: url) { url in
             RefdsSafari(url: url)
+                .ignoresSafeArea()
         }
     }
     
