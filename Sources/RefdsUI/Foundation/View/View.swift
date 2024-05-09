@@ -154,11 +154,14 @@ public extension View {
             .clipShape(.rect(cornerRadius: cornerRadius))
     }
     
+    @ViewBuilder
     func refdsSafari(url: Binding<URL?>) -> some View {
+        #if os(iOS)
         self.fullScreenCover(item: url) { url in
             RefdsSafari(url: url)
                 .ignoresSafeArea()
         }
+        #endif
     }
     
     @ViewBuilder
