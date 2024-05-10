@@ -19,7 +19,7 @@ public struct RefdsIconRow: View {
             color: color,
             size: 16
         )
-        .frame(width: 30, height: 30)
+        .frame(width: 33, height: 33)
         .background(color.opacity(0.2))
         .clipShape(.rect(cornerRadius: 8))
         .padding(.vertical, 4)
