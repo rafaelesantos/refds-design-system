@@ -165,6 +165,11 @@ public extension View {
     }
     
     @ViewBuilder
+    func refdsRedacted(if condition: @autoclosure () -> Bool) -> some View {
+        redacted(reason: condition() ? .placeholder : [])
+    }
+    
+    @ViewBuilder
     func `if`<Content: View>(
         _ condition: Bool,
         transform: (Self) -> Content
