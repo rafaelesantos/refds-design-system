@@ -6,30 +6,38 @@ public struct RefdsCollapse: View {
     private var title: String?
     private var content: () -> any View
     private var header: (() -> any View)?
+    private let action: ((Bool) -> Void)?
     
     public init(
         isCollapsed: Bool = true,
         title: String,
-        content: @escaping () -> any View
+        content: @escaping () -> any View,
+        action: ((Bool) -> Void)? = nil
     ) {
         self._isCollapsed = State(initialValue: isCollapsed)
         self.title = title
         self.content = content
+        self.action = action
     }
     
     public init(
         isCollapsed: Bool = true,
         header: (() -> any View)? = nil,
-        content: @escaping () -> any View
+        content: @escaping () -> any View,
+        action: ((Bool) -> Void)? = nil
     ) {
         self._isCollapsed = State(initialValue: isCollapsed)
         self.content = content
         self.header = header
+        self.action = action
     }
     
     public var body: some View {
         RefdsButton {
-            withAnimation { isCollapsed.toggle() }
+            withAnimation { 
+                isCollapsed.toggle()
+                action?(isCollapsed)
+            }
         } label: { toggle }
         
         if isCollapsed { AnyView(content()) }
