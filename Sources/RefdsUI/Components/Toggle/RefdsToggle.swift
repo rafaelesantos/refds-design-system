@@ -23,7 +23,7 @@ public struct RefdsToggle: View {
         #else
         .toggleStyle(.switch)
         #endif
-        .tint(RefdsUI.shared.accentColor)
+        .tint(.accentColor)
     }
 }
 
