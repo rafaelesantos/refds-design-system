@@ -39,12 +39,7 @@ public struct RefdsCircularProgressView: View {
             Circle()
                 .trim(from: 0.3, to: hasAnimation ? value : progressAdapted)
                 .stroke(style: StrokeStyle(lineWidth: size * scale, lineCap: .round, lineJoin: .round))
-                .fill(AngularGradient(gradient: Gradient(stops: [
-                    .init(color: Color.green, location: 0.5),
-                    .init(color: Color.yellow, location: 0.7),
-                    .init(color: Color.orange, location: 0.8),
-                    .init(color: Color.red, location: 0.9)
-                ]), center: .center))
+                .fill(progress.riskColor)
                 .rotationEffect(.degrees(54.5))
                 .animation(.easeInOut(duration: 1), value: value)
             
