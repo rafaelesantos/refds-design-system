@@ -150,7 +150,12 @@ public extension View {
         self
             .padding(3)
             .padding(.horizontal, 3)
-            .background(color.opacity(0.1))
+            .if(color == .secondary) {
+                $0.refdsBackground(with: .secondaryBackground)
+            }
+            .if(color != .secondary) {
+                $0.background(color.opacity(0.1))
+            }
             .clipShape(.rect(cornerRadius: cornerRadius))
     }
     
