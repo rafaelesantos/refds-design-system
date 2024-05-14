@@ -1,14 +1,17 @@
 import SwiftUI
 
-public struct RefdsToggle: View {
+public struct RefdsToggle<Style: ToggleStyle>: View {
     @Binding private var isOn: Bool
+    private let style: Style
     private let content: (() -> any View)?
     
     public init(
         isOn: Binding<Bool>,
+        style: Style = .automatic,
         content: (() -> any View)? = nil
     ) {
         self._isOn = isOn
+        self.style = style
         self.content = content
     }
     
@@ -19,9 +22,9 @@ public struct RefdsToggle: View {
             }
         }
         #if os(tvOS)
-        .toggleStyle(.automatic)
-        #else
         .toggleStyle(.switch)
+        #else
+        .toggleStyle(style)
         #endif
         .tint(.accentColor)
     }
@@ -32,7 +35,7 @@ public struct RefdsToggle: View {
         @State private var isOn = false
         var body: some View {
             VStack(alignment: .leading, spacing: .padding(.medium)) {
-                RefdsToggle(isOn: $isOn) {
+                RefdsToggle(isOn: $isOn, style: .checkmark) {
                     VStack(alignment: .leading) {
                         RefdsText(.someWord(), style: .title3, weight: .bold)
                         RefdsText(.someParagraph(), color: .secondary)
