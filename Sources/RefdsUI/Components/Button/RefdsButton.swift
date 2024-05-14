@@ -117,7 +117,7 @@ public struct RefdsButton: View {
             .frame(height: 48)
             .padding(.padding(.small))
             .if(background == nil) { $0.background() }
-            .if(background != nil) { $0.background(isDisable ? background?.opacity(0.2) : background) }
+            .if(background != nil) { $0.background(isDisable ? background?.opacity(0.1) : background) }
         }
         .padding(.padding(.small) * -1)
     }
