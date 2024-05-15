@@ -154,7 +154,7 @@ public extension View {
                 $0.refdsBackground(with: .secondaryBackground)
             }
             .if(color != .secondary) {
-                $0.background(color.opacity(0.1))
+                $0.background(color.opacity(0.2))
             }
             .clipShape(.rect(cornerRadius: cornerRadius))
     }
