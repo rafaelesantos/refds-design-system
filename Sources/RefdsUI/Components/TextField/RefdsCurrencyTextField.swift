@@ -99,8 +99,7 @@ public struct RefdsCurrencyTextField: View {
                 RefdsCurrencyTextField(
                     value: $value,
                     style: .largeTitle,
-                    weight: .heavy,
-                    design: .rounded
+                    weight: .heavy
                 )
             }
             .padding(.padding(.large))
