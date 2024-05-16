@@ -2,19 +2,21 @@ import SwiftUI
 
 public struct RefdsCheckBoxStyle: ToggleStyle {
     public func makeBody(configuration: Configuration) -> some View {
-        HStack(spacing: .padding(.medium)) {
-            RefdsButton {
-                withAnimation { configuration.isOn.toggle() }
-            } label: {
+        
+        RefdsButton {
+            withAnimation { configuration.isOn.toggle() }
+        } label: {
+            HStack(spacing: .padding(.medium)) {
                 RefdsIcon(
                     configuration.isOn ? .checkmarkCircleFill : .circle,
-                    color: .accentColor
+                    color: .accentColor,
+                    size: 20
                 )
+                
+                configuration.label
+                
+                Spacer(minLength: .zero)
             }
-            
-            configuration.label
-            
-            Spacer(minLength: .zero)
         }
     }
 }
