@@ -31,9 +31,6 @@ public struct RefdsStarShower: View {
             .if(backgroundColor, transform: { view, color in
                 view.background(color.opacity(0.2))
             })
-            .if(backgroundColor == nil, transform: { view in
-                view.refdsBackground(with: .secondaryBackground)
-            })
             .onAppear { makeStars(width: proxy.size.width) }
             .onReceive(timer) { _ in moveStars(width: proxy.size.width) }
             .frame(height: galaxyHeight)
