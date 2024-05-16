@@ -28,9 +28,6 @@ public struct RefdsStarShower: View {
                     newContext.fill(Path(ellipseIn: rect), with: .color(star.color))
                 }
             }
-            .if(backgroundColor, transform: { view, color in
-                view.background(color.opacity(0.2))
-            })
             .onAppear { makeStars(width: proxy.size.width) }
             .onReceive(timer) { _ in moveStars(width: proxy.size.width) }
             .frame(height: galaxyHeight)
