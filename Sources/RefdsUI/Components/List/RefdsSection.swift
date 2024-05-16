@@ -17,7 +17,6 @@ public struct RefdsSection<Content: View, Header: View, Footer: View>: View {
     
     @ViewBuilder
     public var body: some View {
-        #if os(iOS)
         Section {
            content()
         } header: {
@@ -25,22 +24,8 @@ public struct RefdsSection<Content: View, Header: View, Footer: View>: View {
         } footer: {
             footer()
         }
-        #elseif os(macOS)
-        VStack(alignment: .leading) {
-            HStack { Spacer() }
-            header()
-                .textCase(.uppercase)
-                .padding(.horizontal)
-            if Content.self != EmptyView.self {
-                GroupBox {
-                    content()
-                        .padding(.padding(.extraSmall))
-                }
-            }
-            footer()
-                .padding(.horizontal)
-        }
-        .padding()
+        #if os(macOS)
+        .listStyle(.sidebar)
         #endif
     }
 }
