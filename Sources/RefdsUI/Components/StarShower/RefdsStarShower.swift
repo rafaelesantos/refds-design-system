@@ -31,7 +31,7 @@ public struct RefdsStarShower: View {
             .onAppear { makeStars(width: proxy.size.width) }
             .onReceive(timer) { _ in moveStars(width: proxy.size.width) }
             .frame(height: galaxyHeight)
-            .background(color)
+            .background(backgroundColor)
         }
     }
     
