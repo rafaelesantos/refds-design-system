@@ -42,7 +42,7 @@ public struct RefdsStarShower: View {
     
     private func makeStars(width: CGFloat) {
         for _ in 1 ... 200 {
-            let position = CGPoint(x: .random(in: 0 ... width), y: .random(in: 0 ... galaxyHeight))
+            let position = CGPoint(x: .random(in: 0 ... 1000), y: .random(in: 0 ... 1000))
             let star = RefdsStarViewData(
                 size: .random(in: 2 ... 5),
                 position: position,
