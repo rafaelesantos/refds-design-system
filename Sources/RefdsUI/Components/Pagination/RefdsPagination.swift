@@ -114,12 +114,12 @@ public struct RefdsPagination: View {
     
     private func updatedPages(_ pages: [Int], page: Int) {
         var pages = pages
-        if pages.max() == currentPage {
+        if pages.max() == page {
             pages = pages.map({ $0 + 1 })
-        } else if pages.min() == currentPage && (pages.min() ?? 0) > 1 {
+        } else if pages.min() == page && (pages.min() ?? 0) > 1 {
             pages = pages.map({ $0 - 1 })
-        } else if pages.max() ?? 0 < currentPage {
-            pages = Array(((currentPage - 2) ... (currentPage + 1)))
+        } else if pages.max() ?? 0 < page {
+            pages = Array(((page - 2) ... (page + 1)))
         }
         self.pages = pages
     }
