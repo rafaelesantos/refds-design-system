@@ -22,3 +22,7 @@ public struct RefdsSafari: UIViewControllerRepresentable {
 extension URL: Identifiable {
     public var id: String { absoluteString }
 }
+
+extension String: Identifiable {
+    public var id: String { self }
+}
