@@ -9,7 +9,6 @@ public struct RefdsShareRepresentable: UIViewControllerRepresentable {
     
     public func makeUIViewController(context: UIViewControllerRepresentableContext<RefdsShareRepresentable>) -> UIActivityViewController {
         let controller = UIActivityViewController(activityItems: [item], applicationActivities: nil)
-        controller.sheetPresentationController?.detents = [.medium()]
         return controller
     }
     
