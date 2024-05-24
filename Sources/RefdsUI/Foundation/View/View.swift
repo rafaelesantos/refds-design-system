@@ -162,7 +162,7 @@ public extension View {
     @ViewBuilder
     func refdsSafari(url: Binding<URL?>) -> some View {
         #if os(iOS)
-        self.fullScreenCover(item: url) { url in
+        fullScreenCover(item: url) { url in
             RefdsSafari(url: url)
                 .ignoresSafeArea()
         }
@@ -172,6 +172,12 @@ public extension View {
     @ViewBuilder
     func refdsRedacted(if condition: @autoclosure () -> Bool) -> some View {
         redacted(reason: condition() ? .placeholder : [])
+    }
+    
+    func refdsShare<T: Identifiable>(item: Binding<T?>) -> some View {
+        sheet(item: item) { item in
+            RefdsShareRepresentable(item: item)
+        }
     }
     
     @ViewBuilder
