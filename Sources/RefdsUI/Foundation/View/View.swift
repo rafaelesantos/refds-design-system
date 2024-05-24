@@ -177,12 +177,14 @@ public extension View {
     func refdsShareText(item: Binding<String?>) -> some View {
         sheet(item: item) { item in
             RefdsShareRepresentable(item: item)
+                .presentationDetents([.medium, .large])
         }
     }
     
     func refdsShare(item: Binding<URL?>) -> some View {
         sheet(item: item) { item in
             RefdsShareRepresentable(item: item)
+                .presentationDetents([.medium, .large])
         }
     }
     
