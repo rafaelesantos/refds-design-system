@@ -174,7 +174,13 @@ public extension View {
         redacted(reason: condition() ? .placeholder : [])
     }
     
-    func refdsShare<T: Identifiable>(item: Binding<T?>) -> some View {
+    func refdsShareText(item: Binding<String?>) -> some View {
+        sheet(item: item) { item in
+            RefdsShareRepresentable(item: item)
+        }
+    }
+    
+    func refdsShare(item: Binding<URL?>) -> some View {
         sheet(item: item) { item in
             RefdsShareRepresentable(item: item)
         }
