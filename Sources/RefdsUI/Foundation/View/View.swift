@@ -181,9 +181,9 @@ public extension View {
         }
     }
     
-    func refdsShare(item: Binding<[URL]?>) -> some View {
+    func refdsShare(item: Binding<URL?>) -> some View {
         sheet(item: item) { item in
-            RefdsShareRepresentable(items: item)
+            RefdsShareRepresentable(items: [item])
                 .presentationDetents([.medium, .large])
         }
     }
