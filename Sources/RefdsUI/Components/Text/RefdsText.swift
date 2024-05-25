@@ -41,8 +41,12 @@ public struct RefdsText: View {
 #Preview {
     VStack(alignment: .leading, spacing: .padding(.medium)) {
         RefdsText(.someWord(), style: .title, color: .orange, weight: .heavy, design: .serif)
-        
         RefdsText(.someParagraph(), design: .serif)
+        Divider()
+        let hex = "#195AB4"
+        let color = Color(hex: hex)
+        RefdsText(color.asHex, style: .title, color: color, weight: .heavy, design: .serif)
+        
     }
     .padding(.padding(.large))
 }
