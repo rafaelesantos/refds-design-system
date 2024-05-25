@@ -174,18 +174,24 @@ public extension View {
         redacted(reason: condition() ? .placeholder : [])
     }
     
+    @ViewBuilder
     func refdsShareText(item: Binding<String?>) -> some View {
+        #if os(iOS)
         sheet(item: item) { item in
             RefdsShareRepresentable(items: [item])
                 .presentationDetents([.medium, .large])
         }
+        #endif
     }
     
+    @ViewBuilder
     func refdsShare(item: Binding<URL?>) -> some View {
+        #if os(iOS)
         sheet(item: item) { item in
             RefdsShareRepresentable(items: [item])
                 .presentationDetents([.medium, .large])
         }
+        #endif
     }
     
     @ViewBuilder
