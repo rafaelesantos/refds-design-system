@@ -23,6 +23,10 @@ extension URL: Identifiable {
     public var id: String { absoluteString }
 }
 
+extension Array: Identifiable where Element == URL {
+    public var id: String { self.map { $0.absoluteString }.joined(separator: "-") }
+}
+
 extension String: Identifiable {
     public var id: String { self }
 }
