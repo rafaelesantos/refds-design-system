@@ -22,7 +22,7 @@ public struct RefdsIconRow: View {
         .frame(width: 33, height: 33)
         .background(color.opacity(0.2))
         .clipShape(.rect(cornerRadius: 8))
-        .padding(.vertical, 4)
+        .padding(.vertical, 2)
     }
 }
 
