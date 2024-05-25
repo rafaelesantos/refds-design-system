@@ -1,14 +1,14 @@
 import SwiftUI
 
 public struct RefdsShareRepresentable: UIViewControllerRepresentable {
-    private var item: Any
+    private var items: [Any]
     
-    public init(item: Any) {
-        self.item = item
+    public init(items: [Any]) {
+        self.items = items
     }
     
     public func makeUIViewController(context: UIViewControllerRepresentableContext<RefdsShareRepresentable>) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: [item], applicationActivities: nil)
+        let controller = UIActivityViewController(activityItems: items, applicationActivities: nil)
         return controller
     }
     
