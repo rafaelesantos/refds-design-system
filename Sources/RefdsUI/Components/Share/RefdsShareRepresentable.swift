@@ -1,5 +1,6 @@
 import SwiftUI
 
+#if os(iOS)
 public struct RefdsShareRepresentable: UIViewControllerRepresentable {
     private var items: [Any]
     
@@ -17,3 +18,4 @@ public struct RefdsShareRepresentable: UIViewControllerRepresentable {
         context: UIViewControllerRepresentableContext<RefdsShareRepresentable>
     ) {}
 }
+#endif
