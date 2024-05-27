@@ -6,12 +6,12 @@ public struct RefdsScaleProgressView: View {
     
     public init(
         riskColor: Color,
-        size: CGFloat = 30
+        size: CGFloat = 16
     ) {
         self.riskColor = riskColor
         self.size = size
     }
-
+    
     public var body: some View {
         HStack(alignment: .bottom, spacing: size * 0.1) {
             ForEach((0 ... 3).map({ $0 }), id: \.self) { level in
@@ -21,7 +21,7 @@ public struct RefdsScaleProgressView: View {
             }
         }
     }
-
+    
     func color(for level: Int) -> Color {
         switch level {
         case 0: return .green
@@ -44,5 +44,10 @@ public struct RefdsScaleProgressView: View {
 }
 
 #Preview {
-    RefdsScaleProgressView(riskColor: .orange)
+    List {
+        HStack(spacing: .padding(.medium)) {
+            RefdsScaleProgressView(riskColor: .orange)
+            RefdsText(.someWord())
+        }
+    }
 }
