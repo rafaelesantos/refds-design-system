@@ -4,6 +4,16 @@ public struct RefdsScaleProgressView: View {
     private let riskColor: Color
     private let size: CGFloat
     
+    private var level: Int {
+        switch riskColor {
+        case .green: return 0
+        case .yellow: return 1
+        case .orange: return 2
+        case .red: return 3
+        default: return 4
+        }
+    }
+    
     public init(
         riskColor: Color,
         size: CGFloat = 16
@@ -17,7 +27,7 @@ public struct RefdsScaleProgressView: View {
             ForEach((0 ... 3).map({ $0 }), id: \.self) { level in
                 RoundedRectangle(cornerRadius: size * 0.08)
                     .frame(width: size * 0.3, height: height(for: level))
-                    .foregroundColor(color(for: level))
+                    .foregroundColor(self.level >= level ? color(for: level) : .secondary.opacity(0.1))
             }
         }
     }
