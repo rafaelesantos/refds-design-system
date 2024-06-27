@@ -64,25 +64,33 @@ public struct RefdsCurrencyTextField: View {
                 .keyboardType(.numberPad)
                 #endif
         }
-        .task { valueText = String(format: "%.02f", value) }
+        .onAppear { valueText = String(format: "%.02f", value) }
         .onChange(of: valueText) { handlerValue() }
     }
     
     private func handlerValue() {
-        let filtered = valueText
-            .replacingOccurrences(of: ",", with: ".")
-            .filter { $0.isNumber }
-        
-        if valueText != filtered,
-           let valueDouble = Double(filtered) {
-            valueText = filtered
-            value = valueDouble / 100
-        } else if let valueDouble = Double(valueText.replacingOccurrences(of: ",", with: ".")) {
-            value = valueDouble / 100
-        }
-        
-        if valueText.isEmpty {
-            value = .zero
+        Task(priority: .background) {
+            let filtered = valueText
+                .replacingOccurrences(of: ",", with: ".")
+                .filter { $0.isNumber }
+            
+            if valueText != filtered,
+               let valueDouble = Double(filtered) {
+                Task { @MainActor in
+                    valueText = filtered
+                    value = valueDouble / 100
+                }
+            } else if let valueDouble = Double(valueText.replacingOccurrences(of: ",", with: ".")) {
+                Task { @MainActor in
+                    value = valueDouble / 100
+                }
+            }
+            
+            if valueText.isEmpty {
+                Task { @MainActor in
+                    value = .zero
+                }
+            }
         }
     }
 }
