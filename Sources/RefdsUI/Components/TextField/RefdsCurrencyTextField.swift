@@ -66,6 +66,10 @@ public struct RefdsCurrencyTextField: View {
         }
         .onAppear { valueText = String(format: "%.02f", value) }
         .onChange(of: valueText) { handlerValue() }
+        #if os(iOS)
+        .onAppear { UITextField.appearance().clearButtonMode = .never }
+        .onDisappear { UITextField.appearance().clearButtonMode = .whileEditing }
+        #endif
     }
     
     private func handlerValue() {
