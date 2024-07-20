@@ -5,15 +5,18 @@ public struct RefdsIconRow: View {
     private let symbol: RefdsIconSymbol
     private let color: Color
     private let size: CGFloat
+    private let opacity: CGFloat
     
     public init(
         _ symbol: RefdsIconSymbol,
         color: Color = .accentColor,
-        size: CGFloat = 33
+        size: CGFloat = 33,
+        opacity: CGFloat = 0.2
     ) {
         self.symbol = symbol
         self.color = color
         self.size = size
+        self.opacity = opacity
     }
     
     public var body: some View {
@@ -23,7 +26,7 @@ public struct RefdsIconRow: View {
             size: size / 2
         )
         .frame(width: size, height: size)
-        .background(color.opacity(0.2))
+        .background(color.opacity(opacity))
         .clipShape(.rect(cornerRadius: size * 0.24))
         .padding(.vertical, size * 0.07)
     }
