@@ -4,25 +4,28 @@ import RefdsShared
 public struct RefdsIconRow: View {
     private let symbol: RefdsIconSymbol
     private let color: Color
+    private let size: CGFloat
     
     public init(
         _ symbol: RefdsIconSymbol,
-        color: Color = .accentColor
+        color: Color = .accentColor,
+        size: CGFloat = 33
     ) {
         self.symbol = symbol
         self.color = color
+        self.size = size
     }
     
     public var body: some View {
         RefdsIcon(
             symbol,
             color: color,
-            size: 16
+            size: size / 2
         )
-        .frame(width: 33, height: 33)
+        .frame(width: size, height: size)
         .background(color.opacity(0.2))
-        .clipShape(.rect(cornerRadius: 8))
-        .padding(.vertical, 2)
+        .clipShape(.rect(cornerRadius: size * 0.24))
+        .padding(.vertical, size * 0.07)
     }
 }
 
