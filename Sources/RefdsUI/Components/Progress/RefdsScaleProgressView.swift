@@ -1,6 +1,12 @@
 import SwiftUI
 
 public struct RefdsScaleProgressView: View {
+    public enum Style {
+        case chart
+        case circle
+    }
+    
+    private let style: Style
     private let riskColor: Color
     private let size: CGFloat
     
@@ -15,18 +21,38 @@ public struct RefdsScaleProgressView: View {
     }
     
     public init(
+        _ style: Style = .chart,
         riskColor: Color,
         size: CGFloat = 16
     ) {
+        self.style = style
         self.riskColor = riskColor
         self.size = size
     }
     
+    @ViewBuilder
     public var body: some View {
+        switch style {
+        case .chart: chartView
+        case .circle: circleView
+        }
+    }
+    
+    private var chartView: some View {
         HStack(alignment: .bottom, spacing: size * 0.1) {
             ForEach((0 ... 3).map({ $0 }), id: \.self) { level in
                 RoundedRectangle(cornerRadius: size * 0.08)
                     .frame(width: size * 0.3, height: height(for: level))
+                    .foregroundColor(self.level >= level ? color(for: level) : .secondary.opacity(0.1))
+            }
+        }
+    }
+    
+    private var circleView: some View {
+        HStack(alignment: .bottom, spacing: size * 0.1) {
+            ForEach((0 ... 3).map({ $0 }), id: \.self) { level in
+                Circle()
+                    .frame(width: size * 0.3, height: size * 0.3)
                     .foregroundColor(self.level >= level ? color(for: level) : .secondary.opacity(0.1))
             }
         }
@@ -57,6 +83,11 @@ public struct RefdsScaleProgressView: View {
     List {
         HStack(spacing: .padding(.medium)) {
             RefdsScaleProgressView(riskColor: .orange)
+            RefdsText(.someWord())
+        }
+        
+        HStack(spacing: .padding(.medium)) {
+            RefdsScaleProgressView(.circle, riskColor: .orange)
             RefdsText(.someWord())
         }
     }
