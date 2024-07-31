@@ -4,6 +4,7 @@ public struct RefdsScaleProgressView: View {
     public enum Style {
         case chart
         case circle
+        case lockScreen
     }
     
     private let style: Style
@@ -35,6 +36,7 @@ public struct RefdsScaleProgressView: View {
         switch style {
         case .chart: chartView
         case .circle: circleView
+        case .lockScreen: lockScreenView
         }
     }
     
@@ -54,6 +56,16 @@ public struct RefdsScaleProgressView: View {
                 Circle()
                     .frame(width: size * 0.3, height: size * 0.3)
                     .foregroundColor(self.level >= level ? color(for: level) : .secondary.opacity(0.1))
+            }
+        }
+    }
+    
+    private var lockScreenView: some View {
+        HStack(alignment: .bottom, spacing: size * 0.1) {
+            ForEach((0 ... 3).map({ $0 }), id: \.self) { level in
+                Circle()
+                    .frame(width: size * 0.3, height: size * 0.3)
+                    .foregroundColor(self.level >= level ? .primary : .secondary.opacity(0.1))
             }
         }
     }
