@@ -43,6 +43,11 @@ public struct RefdsStories: View {
                 }
                 .padding(.horizontal, 30)
             }
+            .onChange(of: selection) {
+                withAnimation {
+                    proxy.scrollTo(selection ?? "", anchor: .center)
+                }
+            }
         }
         .padding(.horizontal, -30)
         .onAppear {
@@ -60,7 +65,6 @@ public struct RefdsStories: View {
         RefdsButton {
             withAnimation {
                 selection = story.name
-                proxy.scrollTo(story.name, anchor: .center)
             }
         } label: {
             VStack {
