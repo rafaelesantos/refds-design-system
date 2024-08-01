@@ -18,12 +18,12 @@ public struct RefdsStoriesViewData {
 }
 
 public struct RefdsStories: View {
-    @Binding private var selection: RefdsStoriesViewData?
+    @Binding private var selection: String?
     private let stories: [RefdsStoriesViewData]
     private let size: CGFloat
     
     public init(
-        selection: Binding<RefdsStoriesViewData?>,
+        selection: Binding<String?>,
         stories: [RefdsStoriesViewData],
         size: CGFloat = 40
     ) {
@@ -45,7 +45,12 @@ public struct RefdsStories: View {
             }
         }
         .padding(.horizontal, -30)
-        .onAppear { selection = stories.first }
+        .onAppear {
+            guard selection == nil else { return }
+            withAnimation {
+                selection = stories.first?.name
+            }
+        }
     }
     
     private func storyItem(
@@ -54,7 +59,7 @@ public struct RefdsStories: View {
     ) -> some View {
         RefdsButton {
             withAnimation {
-                selection = story
+                selection = story.name
                 proxy.scrollTo(story.name, anchor: .center)
             }
         } label: {
@@ -63,13 +68,13 @@ public struct RefdsStories: View {
                     story.icon,
                     color: story.color,
                     size: size * 0.375,
-                    weight: selection?.name == story.name ? .bold : .regular
+                    weight: selection == story.name ? .bold : .regular
                 )
                 .frame(width: size, height: size)
                 .background(story.color.opacity(0.2))
                 .clipShape(.circle)
                 .padding(size * 0.075)
-                .if(selection?.name == story.name) { view in
+                .if(selection == story.name) { view in
                     view.overlay {
                         Circle()
                             .stroke(story.color, lineWidth: size * 0.05)
@@ -80,7 +85,7 @@ public struct RefdsStories: View {
                 RefdsText(
                     story.name,
                     style: .caption2,
-                    color: selection?.name == story.name ? .primary : .secondary,
+                    color: selection == story.name ? .primary : .secondary,
                     lineLimit: 1
                 )
             }
@@ -93,8 +98,8 @@ public struct RefdsStories: View {
 
 #Preview {
     struct ContainerView: View {
-        @State private var selection: RefdsStoriesViewData?
-        private let stories = (1 ... 20).map { _ in 
+        @State private var selection: String?
+        private let stories = (1 ... 20).map { _ in
             RefdsStoriesViewData(
                 name: .someWord(),
                 color: .random,
