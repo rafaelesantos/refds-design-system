@@ -1,28 +1,30 @@
 import SwiftUI
 import RefdsShared
 
-public protocol RefdsStoriesProtocol {
-    var name: String { get set }
-    var color: Color { get set }
-    var icon: RefdsIconSymbol { get set }
-}
-
-private struct RefdsStoriesViewDataMock: RefdsStoriesProtocol {
-    var name: String = .someWord()
-    var color: Color = .random
-    var icon: RefdsIconSymbol = .random
+public struct RefdsStoriesViewData {
+    public var name: String
+    public var color: Color
+    public var icon: RefdsIconSymbol
     
-    init() {}
+    public init(
+        name: String,
+        color: Color,
+        icon: RefdsIconSymbol
+    ) {
+        self.name = name
+        self.color = color
+        self.icon = icon
+    }
 }
 
 public struct RefdsStories: View {
-    @Binding private var selection: RefdsStoriesProtocol?
-    private let stories: [RefdsStoriesProtocol]
+    @Binding private var selection: RefdsStoriesViewData?
+    private let stories: [RefdsStoriesViewData]
     private let size: CGFloat
     
     public init(
-        selection: Binding<RefdsStoriesProtocol?>,
-        stories: [RefdsStoriesProtocol],
+        selection: Binding<RefdsStoriesViewData?>,
+        stories: [RefdsStoriesViewData],
         size: CGFloat = 40
     ) {
         self._selection = selection
@@ -47,7 +49,7 @@ public struct RefdsStories: View {
     }
     
     private func storyItem(
-        for story: RefdsStoriesProtocol,
+        for story: RefdsStoriesViewData,
         _ proxy: ScrollViewProxy
     ) -> some View {
         RefdsButton {
@@ -91,8 +93,14 @@ public struct RefdsStories: View {
 
 #Preview {
     struct ContainerView: View {
-        @State private var selection: RefdsStoriesProtocol?
-        private let stories = (1 ... 20).map { _ in RefdsStoriesViewDataMock() }
+        @State private var selection: RefdsStoriesViewData?
+        private let stories = (1 ... 20).map { _ in 
+            RefdsStoriesViewData(
+                name: .someWord(),
+                color: .random,
+                icon: .random
+            )
+        }
         var body: some View {
             List {
                 RefdsStories(
